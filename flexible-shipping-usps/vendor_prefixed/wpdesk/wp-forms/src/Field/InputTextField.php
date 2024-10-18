@@ -4,13 +4,13 @@ namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer;
 use FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer\TextFieldSanitizer;
-class InputTextField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\BasicField
+class InputTextField extends BasicField
 {
-    public function get_sanitizer() : \FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer
+    public function get_sanitizer(): Sanitizer
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer\TextFieldSanitizer();
+        return new TextFieldSanitizer();
     }
-    public function get_template_name() : string
+    public function get_template_name(): string
     {
         return 'input-text';
     }

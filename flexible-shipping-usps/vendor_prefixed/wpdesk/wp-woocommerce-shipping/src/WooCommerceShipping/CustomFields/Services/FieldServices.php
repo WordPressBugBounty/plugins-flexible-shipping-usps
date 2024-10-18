@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CustomFie
  *
  * @package WPDesk\CustomFields
  */
-class FieldServices implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CustomField
+class FieldServices implements CustomField
 {
     const FIELD_TYPE = 'services';
     /**
@@ -49,7 +49,7 @@ class FieldServices implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
      */
     public function sanitize(array $data = null)
     {
-        $sanitizer = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServicesSanitizer();
+        $sanitizer = new FieldServicesSanitizer();
         return $sanitizer->sanitize_services($data);
     }
     /**
@@ -89,16 +89,16 @@ class FieldServices implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
             $params['class'] = '';
         }
         if (!empty($params['value'])) {
-            if (!\is_array($params['value'])) {
+            if (!is_array($params['value'])) {
                 $params['value'] = array();
             }
             $services = $this->sort_services($services, $params['value']);
         }
         $tooltip_html = $shipping_method ? $shipping_method->get_tooltip_html($params) : '';
         $description_html = $shipping_method ? $shipping_method->get_description_html($params) : '';
-        \ob_start();
+        ob_start();
         include __DIR__ . '/views/services.php';
-        return \ob_get_clean();
+        return ob_get_clean();
     }
     /**
      * Field can render some data after all fields was successfully rendered.

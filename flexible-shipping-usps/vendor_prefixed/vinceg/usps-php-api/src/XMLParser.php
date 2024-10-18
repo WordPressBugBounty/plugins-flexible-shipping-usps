@@ -49,7 +49,7 @@ class XMLParser
      */
     public static function init($version = '1.0', $encoding = 'UTF-8', $format_output = \true)
     {
-        self::$xml = new \DOMDocument($version, $encoding);
+        self::$xml = new DOMDocument($version, $encoding);
         self::$xml->formatOutput = $format_output;
         self::$encoding = $encoding;
     }
@@ -84,14 +84,14 @@ class XMLParser
         //print_arr($node_name);
         $xml = self::getXMLRoot();
         $node = $xml->createElement($node_name);
-        if (\is_array($arr)) {
+        if (is_array($arr)) {
             // get the attributes first.;
             if (isset($arr['@attributes'])) {
                 foreach ($arr['@attributes'] as $key => $value) {
                     if (!self::isValidTagName($key)) {
-                        throw new \Exception('[XMLParser] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
+                        throw new Exception('[XMLParser] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
                     }
-                    $node->setAttribute($key, \htmlspecialchars(self::bool2str($value), \ENT_QUOTES, self::$encoding));
+                    $node->setAttribute($key, htmlspecialchars(self::bool2str($value), \ENT_QUOTES, self::$encoding));
                 }
                 unset($arr['@attributes']);
                 //remove the key from the array once done.
@@ -99,7 +99,7 @@ class XMLParser
             // check if it has a value stored in @value, if yes store the value and return
             // else check if its directly stored as string
             if (isset($arr['@value'])) {
-                $node->appendChild($xml->createTextNode(\htmlspecialchars(self::bool2str($arr['@value']), \ENT_QUOTES, self::$encoding)));
+                $node->appendChild($xml->createTextNode(htmlspecialchars(self::bool2str($arr['@value']), \ENT_QUOTES, self::$encoding)));
                 unset($arr['@value']);
                 //remove the key from the array once done.
                 //return from recursion, as a note with value cannot have child nodes.
@@ -113,13 +113,13 @@ class XMLParser
             }
         }
         //create subnodes using recursion
-        if (\is_array($arr)) {
+        if (is_array($arr)) {
             // recurse to get the node for that key
             foreach ($arr as $key => $value) {
                 if (!self::isValidTagName($key)) {
-                    throw new \Exception('[XMLParser] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
+                    throw new Exception('[XMLParser] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
                 }
-                if (\is_array($value) && \is_numeric(\key($value))) {
+                if (is_array($value) && is_numeric(key($value))) {
                     // MORE THAN ONE NODE OF ITS KIND;
                     // if the new array is numeric index, means it is array of nodes of the same kind
                     // it should follow the parent key name
@@ -136,8 +136,8 @@ class XMLParser
         }
         // after we are done with all the keys in the array (if it is one)
         // we check if it has any text value, if yes, append it.
-        if (!\is_array($arr) && !\is_object($arr)) {
-            $node->appendChild($xml->createTextNode(\htmlspecialchars(self::bool2str($arr), \ENT_QUOTES, self::$encoding)));
+        if (!is_array($arr) && !is_object($arr)) {
+            $node->appendChild($xml->createTextNode(htmlspecialchars(self::bool2str($arr), \ENT_QUOTES, self::$encoding)));
         }
         return $node;
     }
@@ -167,7 +167,7 @@ class XMLParser
      */
     private static function isValidTagName($tag)
     {
-        $pattern = '/^[a-z_]+[a-z0-9\\:\\-\\.\\_]*[^:]*$/i';
-        return \preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
+        $pattern = '/^[a-z_]+[a-z0-9\:\-\.\_]*[^:]*$/i';
+        return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
     }
 }

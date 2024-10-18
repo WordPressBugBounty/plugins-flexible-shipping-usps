@@ -8,9 +8,9 @@
 declare (strict_types=1);
 namespace FlexibleShippingUspsVendor\DVDoug\BoxPacker;
 
-class DefaultItemSorter implements \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemSorter
+class DefaultItemSorter implements ItemSorter
 {
-    public function compare(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemB) : int
+    public function compare(Item $itemA, Item $itemB): int
     {
         $volumeDecider = $itemB->getWidth() * $itemB->getLength() * $itemB->getDepth() <=> $itemA->getWidth() * $itemA->getLength() * $itemA->getDepth();
         if ($volumeDecider !== 0) {

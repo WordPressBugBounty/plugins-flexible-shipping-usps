@@ -103,7 +103,7 @@ class Address
      */
     public function setField($key, $value)
     {
-        $this->addressInfo[\ucwords($key)] = $value;
+        $this->addressInfo[ucwords($key)] = $value;
         return $this;
     }
     /**

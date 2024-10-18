@@ -11,7 +11,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can display order shipping items meta data on front end.
  */
-class FrontOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class FrontOrderMetaDataDisplay implements Hookable
 {
     /**
      * @var SingleFrontOrderMetaDataInterpreter[]
@@ -32,7 +32,7 @@ class FrontOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\Pl
      *
      * @param SingleFrontOrderMetaDataInterpreter $front_interpreter .
      */
-    public function add_interpreter(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\SingleFrontOrderMetaDataInterpreter $front_interpreter)
+    public function add_interpreter(SingleFrontOrderMetaDataInterpreter $front_interpreter)
     {
         $this->interpreters[] = $front_interpreter;
     }
@@ -41,8 +41,8 @@ class FrontOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\Pl
      */
     public function hooks()
     {
-        \add_action('woocommerce_order_details_after_order_table', array($this, 'maybe_display_order_meta_for_customer'));
-        \add_action('woocommerce_email_order_meta', array($this, 'maybe_display_order_meta_for_customer'));
+        add_action('woocommerce_order_details_after_order_table', array($this, 'maybe_display_order_meta_for_customer'));
+        add_action('woocommerce_email_order_meta', array($this, 'maybe_display_order_meta_for_customer'));
     }
     /**
      * Maybe display order meta for customer.

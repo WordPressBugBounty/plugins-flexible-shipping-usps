@@ -25,36 +25,36 @@ use function usort;
 /**
  * List of items to be packed, ordered by volume.
  */
-class ItemList implements \Countable, \IteratorAggregate
+class ItemList implements Countable, IteratorAggregate
 {
     /**
      * @var Item[]
      */
     private array $list = [];
     private bool $isSorted = \false;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemSorter $sorter;
+    private ItemSorter $sorter;
     /**
      * Does this list contain constrained items?
      */
     private ?bool $hasConstrainedItems = null;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemSorter $sorter = null)
+    public function __construct(ItemSorter $sorter = null)
     {
-        $this->sorter = $sorter ?: new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\DefaultItemSorter();
+        $this->sorter = $sorter ?: new DefaultItemSorter();
     }
     /**
      * Do a bulk create.
      *
      * @param Item[] $items
      */
-    public static function fromArray(array $items, bool $preSorted = \false) : self
+    public static function fromArray(array $items, bool $preSorted = \false): self
     {
         $list = new self();
-        $list->list = \array_reverse($items);
+        $list->list = array_reverse($items);
         // internal sort is largest at the end
         $list->isSorted = $preSorted;
         return $list;
     }
-    public function insert(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item, int $qty = 1) : void
+    public function insert(Item $item, int $qty = 1): void
     {
         for ($i = 0; $i < $qty; ++$i) {
             $this->list[] = $item;
@@ -62,111 +62,111 @@ class ItemList implements \Countable, \IteratorAggregate
         $this->isSorted = \false;
         if (isset($this->hasConstrainedItems)) {
             // normally lazy evaluated, override if that's already been done
-            $this->hasConstrainedItems = $this->hasConstrainedItems || $item instanceof \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ConstrainedPlacementItem;
+            $this->hasConstrainedItems = $this->hasConstrainedItems || $item instanceof ConstrainedPlacementItem;
         }
     }
     /**
      * Remove item from list.
      */
-    public function remove(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item) : void
+    public function remove(Item $item): void
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
-            $this->list = \array_reverse($this->list);
+            usort($this->list, [$this->sorter, 'compare']);
+            $this->list = array_reverse($this->list);
             // internal sort is largest at the end
             $this->isSorted = \true;
         }
-        \end($this->list);
+        end($this->list);
         do {
-            if (\current($this->list) === $item) {
-                unset($this->list[\key($this->list)]);
+            if (current($this->list) === $item) {
+                unset($this->list[key($this->list)]);
                 return;
             }
-        } while (\prev($this->list) !== \false);
+        } while (prev($this->list) !== \false);
     }
-    public function removePackedItems(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $packedItemList) : void
+    public function removePackedItems(PackedItemList $packedItemList): void
     {
         foreach ($packedItemList as $packedItem) {
-            \end($this->list);
+            end($this->list);
             do {
-                if (\current($this->list) === $packedItem->getItem()) {
-                    unset($this->list[\key($this->list)]);
+                if (current($this->list) === $packedItem->getItem()) {
+                    unset($this->list[key($this->list)]);
                     break;
                 }
-            } while (\prev($this->list) !== \false);
+            } while (prev($this->list) !== \false);
         }
     }
     /**
      * @internal
      */
-    public function extract() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+    public function extract(): Item
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
-            $this->list = \array_reverse($this->list);
+            usort($this->list, [$this->sorter, 'compare']);
+            $this->list = array_reverse($this->list);
             // internal sort is largest at the end
             $this->isSorted = \true;
         }
-        return \array_pop($this->list);
+        return array_pop($this->list);
     }
     /**
      * @internal
      */
-    public function top() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+    public function top(): Item
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
-            $this->list = \array_reverse($this->list);
+            usort($this->list, [$this->sorter, 'compare']);
+            $this->list = array_reverse($this->list);
             // internal sort is largest at the end
             $this->isSorted = \true;
         }
-        return $this->list[\array_key_last($this->list)];
+        return $this->list[array_key_last($this->list)];
     }
     /**
      * @internal
      */
-    public function topN(int $n) : self
+    public function topN(int $n): self
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
-            $this->list = \array_reverse($this->list);
+            usort($this->list, [$this->sorter, 'compare']);
+            $this->list = array_reverse($this->list);
             // internal sort is largest at the end
             $this->isSorted = \true;
         }
         $topNList = new self();
-        $topNList->list = \array_slice($this->list, -$n, $n);
+        $topNList->list = array_slice($this->list, -$n, $n);
         $topNList->isSorted = \true;
         return $topNList;
     }
     /**
      * @return Traversable<Item>
      */
-    public function getIterator() : \Traversable
+    public function getIterator(): Traversable
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
-            $this->list = \array_reverse($this->list);
+            usort($this->list, [$this->sorter, 'compare']);
+            $this->list = array_reverse($this->list);
             // internal sort is largest at the end
             $this->isSorted = \true;
         }
-        return new \ArrayIterator(\array_reverse($this->list));
+        return new ArrayIterator(array_reverse($this->list));
     }
     /**
      * Number of items in list.
      */
-    public function count() : int
+    public function count(): int
     {
-        return \count($this->list);
+        return count($this->list);
     }
     /**
      * Does this list contain items with constrained placement criteria.
      */
-    public function hasConstrainedItems() : bool
+    public function hasConstrainedItems(): bool
     {
         if (!isset($this->hasConstrainedItems)) {
             $this->hasConstrainedItems = \false;
             foreach ($this->list as $item) {
-                if ($item instanceof \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ConstrainedPlacementItem) {
+                if ($item instanceof ConstrainedPlacementItem) {
                     $this->hasConstrainedItems = \true;
                     break;
                 }

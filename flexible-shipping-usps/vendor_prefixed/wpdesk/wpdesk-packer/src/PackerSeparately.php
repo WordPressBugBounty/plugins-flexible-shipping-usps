@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\WPDesk\Packer\Exception\NoItemsException;
  *
  * @package WPDesk\Packer
  */
-class PackerSeparately extends \FlexibleShippingUspsVendor\WPDesk\Packer\Packer
+class PackerSeparately extends Packer
 {
     /**
      * Box name.
@@ -34,13 +34,13 @@ class PackerSeparately extends \FlexibleShippingUspsVendor\WPDesk\Packer\Packer
      */
     public function pack()
     {
-        if (0 === \count($this->items)) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\Packer\Exception\NoItemsException('No items to pack!');
+        if (0 === count($this->items)) {
+            throw new NoItemsException('No items to pack!');
         }
         $this->packages = [];
         // Pack items.
         foreach ($this->items as $item) {
-            $packed_box = new \FlexibleShippingUspsVendor\WPDesk\Packer\PackedBox(new \FlexibleShippingUspsVendor\WPDesk\Packer\Box\BoxImplementation($item->get_length(), $item->get_width(), $item->get_height(), 0, null, $this->box_name, $this->box_name, ['name' => $this->box_name, 'box' => ['name' => $this->box_name, 'length' => $item->get_length(), 'width' => $item->get_width(), 'height' => $item->get_height()]]), [$item]);
+            $packed_box = new PackedBox(new Box\BoxImplementation($item->get_length(), $item->get_width(), $item->get_height(), 0, null, $this->box_name, $this->box_name, ['name' => $this->box_name, 'box' => ['name' => $this->box_name, 'length' => $item->get_length(), 'width' => $item->get_width(), 'height' => $item->get_height()]]), [$item]);
             $packed_box->get_packed_items();
             // Calculates weight!
             $this->packages[] = $packed_box;

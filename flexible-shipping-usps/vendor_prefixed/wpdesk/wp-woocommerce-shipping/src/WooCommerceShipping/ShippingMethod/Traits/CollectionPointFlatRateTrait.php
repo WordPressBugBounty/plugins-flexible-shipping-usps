@@ -22,6 +22,6 @@ trait CollectionPointFlatRateTrait
      */
     public function get_flat_rate_cost($shipping_method)
     {
-        return \floatval($shipping_method->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\FlatRateRateMethod\CollectionPointFlatRateRateMethod::OPTION_FLAT_RATE_COSTS, '0'));
+        return floatval($shipping_method->get_option(CollectionPointFlatRateRateMethod::OPTION_FLAT_RATE_COSTS, '0'));
     }
 }

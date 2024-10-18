@@ -35,7 +35,7 @@ class OnboardingButton implements \JsonSerializable
     /**
      * @return string
      */
-    public function getLabel() : string
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -43,7 +43,7 @@ class OnboardingButton implements \JsonSerializable
      * @param string $label
      * @return OnboardingButton
      */
-    public function set_label(string $label) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingButton
+    public function set_label(string $label): OnboardingButton
     {
         $this->label = $label;
         return $this;
@@ -51,7 +51,7 @@ class OnboardingButton implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_type() : string
+    public function get_type(): string
     {
         return $this->type;
     }
@@ -59,7 +59,7 @@ class OnboardingButton implements \JsonSerializable
      * @param string $type
      * @return OnboardingButton
      */
-    public function set_type(string $type) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingButton
+    public function set_type(string $type): OnboardingButton
     {
         $this->type = $type;
         return $this;
@@ -67,7 +67,7 @@ class OnboardingButton implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_popup() : string
+    public function get_popup(): string
     {
         return $this->popup;
     }
@@ -75,7 +75,7 @@ class OnboardingButton implements \JsonSerializable
      * @param string $popup
      * @return OnboardingButton
      */
-    public function set_popup(string $popup) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingButton
+    public function set_popup(string $popup): OnboardingButton
     {
         $this->popup = $popup;
         return $this;
@@ -83,7 +83,7 @@ class OnboardingButton implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_classes() : string
+    public function get_classes(): string
     {
         return $this->classes;
     }
@@ -91,7 +91,7 @@ class OnboardingButton implements \JsonSerializable
      * @param string $classes
      * @return OnboardingButton
      */
-    public function set_classes(string $classes) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingButton
+    public function set_classes(string $classes): OnboardingButton
     {
         $this->classes = $classes;
         return $this;
@@ -99,7 +99,7 @@ class OnboardingButton implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return ['label' => $this->getLabel(), 'type' => $this->get_type(), 'popup' => $this->get_popup(), 'classes' => $this->get_classes()];
     }

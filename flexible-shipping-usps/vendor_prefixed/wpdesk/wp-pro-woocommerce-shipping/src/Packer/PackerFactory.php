@@ -33,13 +33,13 @@ class PackerFactory
      */
     public function create_packer(array $boxes)
     {
-        if ($this->packaging_method === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::PACKING_METHOD_SEPARATELY) {
-            $packer = new \FlexibleShippingUspsVendor\WPDesk\Packer\PackerSeparately();
+        if ($this->packaging_method === PackerSettings::PACKING_METHOD_SEPARATELY) {
+            $packer = new PackerSeparately();
         } else {
-            if ($this->packaging_method === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::PACKING_METHOD_BOX_3D) {
-                $packer = new \FlexibleShippingUspsVendor\WPDesk\Packer\Packer3D();
+            if ($this->packaging_method === PackerSettings::PACKING_METHOD_BOX_3D) {
+                $packer = new Packer3D();
             } else {
-                $packer = new \FlexibleShippingUspsVendor\WPDesk\Packer\Packer();
+                $packer = new Packer();
             }
             foreach ($boxes as $box) {
                 $packer->add_box($box);

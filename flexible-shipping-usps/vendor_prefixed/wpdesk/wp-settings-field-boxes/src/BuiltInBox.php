@@ -11,7 +11,7 @@ use FlexibleShippingUspsVendor\WPDesk\Packer\Box;
  *
  * @package WpDesk\WooCommerce\ShippingMethod
  */
-class BuiltInBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\AbstractBox implements \JsonSerializable
+class BuiltInBox extends AbstractBox implements \JsonSerializable
 {
     /**
      * Create from code and array.
@@ -50,7 +50,7 @@ class BuiltInBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\Shipping
      *
      * @return BuiltInBox
      */
-    public static function create_from_code_and_packer_box($code, \FlexibleShippingUspsVendor\WPDesk\Packer\Box $packer_box)
+    public static function create_from_code_and_packer_box($code, Box $packer_box)
     {
         $box = new self();
         $box->set_code($code);

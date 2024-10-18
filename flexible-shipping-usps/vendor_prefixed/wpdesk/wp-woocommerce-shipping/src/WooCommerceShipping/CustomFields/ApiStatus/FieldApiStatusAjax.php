@@ -17,7 +17,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
  *
  * @package WPDesk\CustomFields
  */
-class FieldApiStatusAjax implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class FieldApiStatusAjax implements Hookable
 {
     /**
      * Shipping service.
@@ -42,7 +42,7 @@ class FieldApiStatusAjax implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      * @param SettingsValues  $settings .
      * @param LoggerInterface $logger .
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingService $shipping_service, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValues $settings, \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger)
+    public function __construct(ShippingService $shipping_service, SettingsValues $settings, LoggerInterface $logger)
     {
         $this->shipping_service = $shipping_service;
         $this->settings = $settings;
@@ -50,7 +50,7 @@ class FieldApiStatusAjax implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
     }
     public function hooks()
     {
-        \add_action('wp_ajax_wpdesk_wc_shipping_api_status_' . $this->shipping_service->get_unique_id(), [$this, 'handle_api_status_ajax_request']);
+        add_action('wp_ajax_wpdesk_wc_shipping_api_status_' . $this->shipping_service->get_unique_id(), [$this, 'handle_api_status_ajax_request']);
     }
     /**
      * Handle ajax request.
@@ -61,17 +61,17 @@ class FieldApiStatusAjax implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      */
     public function handle_api_status_ajax_request($return = \false)
     {
-        \check_ajax_referer($this->get_nonce_name(), 'security');
-        $json_response = array('connected' => \true, 'status' => \__('OK', 'flexible-shipping-usps'), 'class_name' => 'wpdesk_wc_shipping_api_status_ok');
+        check_ajax_referer($this->get_nonce_name(), 'security');
+        $json_response = array('connected' => \true, 'status' => __('OK', 'flexible-shipping-usps'), 'class_name' => 'wpdesk_wc_shipping_api_status_ok');
         $connection_errors = $this->check_connection_error();
         if ($connection_errors) {
             $json_response = array('connected' => \false, 'status' => $connection_errors, 'class_name' => 'wpdesk_wc_shipping_api_status_error');
         }
         if (!$return) {
-            echo \json_encode($json_response);
+            echo json_encode($json_response);
             die;
         } else {
-            return \json_encode($json_response);
+            return json_encode($json_response);
         }
     }
     /**
@@ -117,9 +117,9 @@ class FieldApiStatusAjax implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      */
     protected function check_connection_error()
     {
-        if ($this->shipping_service instanceof \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanTestSettings) {
+        if ($this->shipping_service instanceof CanTestSettings) {
             return $this->shipping_service->check_connection($this->settings, $this->logger);
         }
-        return \__('Shipping service should implements CanTestSettings interface! Or overwrite this method');
+        return __('Shipping service should implements CanTestSettings interface! Or overwrite this method');
     }
 }

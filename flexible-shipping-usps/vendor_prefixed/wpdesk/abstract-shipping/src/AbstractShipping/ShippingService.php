@@ -14,30 +14,30 @@ use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsDefiniti
  *
  * @package WPDesk\AbstractShipping
  */
-abstract class ShippingService implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInterface
+abstract class ShippingService implements LoggerAwareInterface
 {
     /**
      * Get unique ID.
      *
      * @return string
      */
-    public abstract function get_unique_id();
+    abstract public function get_unique_id();
     /**
      * Get name.
      *
      * @return string
      */
-    public abstract function get_name();
+    abstract public function get_name();
     /**
      * Get description.
      *
      * @return string
      */
-    public abstract function get_description();
+    abstract public function get_description();
     /**
      * Get settings definitions.
      *
      * @return SettingsDefinition
      */
-    public abstract function get_settings_definition();
+    abstract public function get_settings_definition();
 }

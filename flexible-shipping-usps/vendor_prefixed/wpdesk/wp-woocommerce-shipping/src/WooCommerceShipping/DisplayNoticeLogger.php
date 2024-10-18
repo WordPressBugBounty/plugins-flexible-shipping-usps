@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\Psr\Log\LogLevel;
 /**
  * Wants to show all logs using wc_add_notice
  */
-class DisplayNoticeLogger implements \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface
+class DisplayNoticeLogger implements LoggerInterface
 {
     const WC_NOTICE = 'notice';
     const WC_ERROR = 'error';
@@ -42,7 +42,7 @@ class DisplayNoticeLogger implements \FlexibleShippingUspsVendor\Psr\Log\LoggerI
      * @param string $service_name .
      * @param int $instance_id .
      */
-    public function __construct(\FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger, $service_name, $instance_id)
+    public function __construct(LoggerInterface $logger, $service_name, $instance_id)
     {
         $this->logger = $logger;
         $this->service_name = $service_name;
@@ -60,7 +60,7 @@ class DisplayNoticeLogger implements \FlexibleShippingUspsVendor\Psr\Log\LoggerI
     public function log($level, $message, array $context = [])
     {
         $this->logger->log($level, $message, $context);
-        if (\in_array($level, [\FlexibleShippingUspsVendor\Psr\Log\LogLevel::DEBUG, \FlexibleShippingUspsVendor\Psr\Log\LogLevel::INFO], \true)) {
+        if (in_array($level, [LogLevel::DEBUG, LogLevel::INFO], \true)) {
             $this->show($message, $context, self::WC_NOTICE);
         } else {
             $this->show($message, $context, self::WC_ERROR);
@@ -77,18 +77,18 @@ class DisplayNoticeLogger implements \FlexibleShippingUspsVendor\Psr\Log\LoggerI
      */
     private function show($message, array $context, $type)
     {
-        $message = \sprintf('%1$s: %2$s', $this->service_name, $message);
+        $message = sprintf('%1$s: %2$s', $this->service_name, $message);
         $dump = '';
         foreach ($context as $label => $value) {
-            if (!\is_string($value)) {
-                $value = \print_r($value, \true);
+            if (!is_string($value)) {
+                $value = print_r($value, \true);
             }
-            \ob_start();
+            ob_start();
             include __DIR__ . '/view/display-notice-context-single-value.php';
-            $dump .= \ob_get_clean();
+            $dump .= ob_get_clean();
         }
-        if (!\wc_has_notice($message . $dump, $type)) {
-            \wc_add_notice($message . $dump, $type, [self::SERVICE_NAME => $this->service_name, self::INSTANCE_ID => $this->instance_id]);
+        if (!wc_has_notice($message . $dump, $type)) {
+            wc_add_notice($message . $dump, $type, [self::SERVICE_NAME => $this->service_name, self::INSTANCE_ID => $this->instance_id]);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Server')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_Server')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Server
      */
@@ -27,7 +27,7 @@ if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Ser
          */
         public function get_data()
         {
-            $server_data = array();
+            $server_data = [];
             if (isset($_SERVER['SERVER_SOFTWARE']) && !empty($_SERVER['SERVER_SOFTWARE'])) {
                 $server_data['software'] = $_SERVER['SERVER_SOFTWARE'];
             }

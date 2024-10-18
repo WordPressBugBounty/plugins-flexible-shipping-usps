@@ -24,14 +24,14 @@ use FlexibleShippingUspsVendor\PHPUnit\Framework\Assert;
 /**
  * Defines application features from the specific context.
  */
-class PackerContext implements \FlexibleShippingUspsVendor\Behat\Behat\Context\Context
+class PackerContext implements Context
 {
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $box;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\BoxList $boxList;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList $itemList;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBox $packedBox;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBoxList $packedBoxList;
-    protected string $packerClass = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Packer::class;
+    protected Box $box;
+    protected BoxList $boxList;
+    protected ItemList $itemList;
+    protected PackedBox $packedBox;
+    protected PackedBoxList $packedBoxList;
+    protected string $packerClass = Packer::class;
     /**
      * Initializes context.
      *
@@ -41,45 +41,45 @@ class PackerContext implements \FlexibleShippingUspsVendor\Behat\Behat\Context\C
      */
     public function __construct()
     {
-        $this->boxList = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\BoxList();
-        $this->itemList = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList();
+        $this->boxList = new BoxList();
+        $this->itemList = new ItemList();
     }
     /**
      * @Given /^there is a box "([^"]+)", which has external dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d × (\d+)g and internal dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d and has a max weight of (\d+)g$/
      */
-    public function thereIsABox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight) : void
+    public function thereIsABox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight): void
     {
-        $box = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Test\TestBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight);
+        $box = new TestBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight);
         $this->boxList->insert($box);
     }
     /**
      * @Given /^the box "([^"]+)", which has external dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d × (\d+)g and internal dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d and has a max weight of (\d+)g$/
      */
-    public function theBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight) : void
+    public function theBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight): void
     {
-        $box = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Test\TestBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight);
+        $box = new TestBox($boxType, $outerWidth, $outerLength, $outerDepth, $emptyWeight, $innerWidth, $innerLength, $innerDepth, $maxWeight);
         $this->box = $box;
     }
     /**
      * @When /^I add (\d+) x "([^"]+)" with dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d × (\d+)g$/
      */
-    public function thereIsAnItem($qty, $itemName, $width, $length, $depth, $weight) : void
+    public function thereIsAnItem($qty, $itemName, $width, $length, $depth, $weight): void
     {
-        $item = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Test\TestItem($itemName, $width, $length, $depth, $weight, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Rotation::BestFit);
+        $item = new TestItem($itemName, $width, $length, $depth, $weight, Rotation::BestFit);
         $this->itemList->insert($item, $qty);
     }
     /**
      * @When /^I add (\d+) x keep flat "([^"]+)" with dimensions (\d+)mm w × (\d+)mm l × (\d+)mm d × (\d+)g$/
      */
-    public function thereIsAKeepFlatItem($qty, $itemName, $width, $length, $depth, $weight) : void
+    public function thereIsAKeepFlatItem($qty, $itemName, $width, $length, $depth, $weight): void
     {
-        $item = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Test\TestItem($itemName, $width, $length, $depth, $weight, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Rotation::KeepFlat);
+        $item = new TestItem($itemName, $width, $length, $depth, $weight, Rotation::KeepFlat);
         $this->itemList->insert($item, $qty);
     }
     /**
      * @When I do a packing
      */
-    public function iDoAPacking() : void
+    public function iDoAPacking(): void
     {
         $packer = new $this->packerClass();
         $packer->setBoxes($this->boxList);
@@ -89,15 +89,15 @@ class PackerContext implements \FlexibleShippingUspsVendor\Behat\Behat\Context\C
     /**
      * @When I do a volume-only packing
      */
-    public function iDoAVolumePacking() : void
+    public function iDoAVolumePacking(): void
     {
-        $packer = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\VolumePacker($this->box, $this->itemList);
+        $packer = new VolumePacker($this->box, $this->itemList);
         $this->packedBox = $packer->pack();
     }
     /**
      * @Then /^I should have (\d+) boxes of type "([^"]+)"$/
      */
-    public function thereExistsBoxes($qty, $boxType) : void
+    public function thereExistsBoxes($qty, $boxType): void
     {
         $foundBoxes = 0;
         foreach ($this->packedBoxList as $packedBox) {
@@ -105,12 +105,12 @@ class PackerContext implements \FlexibleShippingUspsVendor\Behat\Behat\Context\C
                 ++$foundBoxes;
             }
         }
-        \FlexibleShippingUspsVendor\PHPUnit\Framework\Assert::assertEquals($qty, $foundBoxes);
+        Assert::assertEquals($qty, $foundBoxes);
     }
     /**
      * @Then /^the packed box should have (\d+) items of type "([^"]+)"$/
      */
-    public function thePackedBoxShouldHaveItems($qty, $itemType) : void
+    public function thePackedBoxShouldHaveItems($qty, $itemType): void
     {
         $foundItems = 0;
         foreach ($this->packedBox->getItems() as $packedItem) {
@@ -118,12 +118,12 @@ class PackerContext implements \FlexibleShippingUspsVendor\Behat\Behat\Context\C
                 ++$foundItems;
             }
         }
-        \FlexibleShippingUspsVendor\PHPUnit\Framework\Assert::assertEquals($qty, $foundItems);
+        Assert::assertEquals($qty, $foundItems);
     }
     /**
      * @Transform /^(\d+)$/
      */
-    public function castStringToNumber($string) : int
+    public function castStringToNumber($string): int
     {
         return (int) $string;
     }

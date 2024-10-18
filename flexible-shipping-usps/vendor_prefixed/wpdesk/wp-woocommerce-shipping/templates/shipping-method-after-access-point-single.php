@@ -25,7 +25,7 @@ echo \esc_attr($shipping_method_id);
     <td colspan="2">
         <h4><?php 
 echo \esc_html($label);
-// wpcs: XSS ok.
+// wpcs: XSS ok. 
 ?></h4>
 		<?php 
 if (\count($select_options)) {
@@ -40,7 +40,7 @@ if (\count($select_options)) {
     ?>" />
             <p><?php 
     echo $select_options[$selected_access_point];
-    // WPCS: XSS ok.
+    // WPCS: XSS ok. 
     ?></p>
 		<?php 
 } else {

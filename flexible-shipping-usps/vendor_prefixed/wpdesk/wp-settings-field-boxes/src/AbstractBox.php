@@ -130,7 +130,7 @@ abstract class AbstractBox implements \JsonSerializable
      *
      * @return array
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [self::CODE => $this->get_code(), self::NAME => $this->get_name(), self::LENGTH => $this->get_length(), self::WIDTH => $this->get_width(), self::HEIGHT => $this->get_height(), self::MAX_WEIGHT => $this->get_max_weight()];
     }

@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class FirstClassServiceStandards.
  */
-class FirstClassServiceStandards extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class FirstClassServiceStandards extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call

@@ -6,7 +6,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can append reminder data to deactivation tracker.
  */
-class DeactivationTrackerData implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class DeactivationTrackerData implements Hookable
 {
     use TrackerOption;
     const ADDITIONAL_DATA = 'additional_data';
@@ -23,7 +23,7 @@ class DeactivationTrackerData implements \FlexibleShippingUspsVendor\WPDesk\Plug
     }
     public function hooks()
     {
-        \add_filter('wpdesk_tracker_deactivation_data', [$this, 'append_deactivation_tracker_data']);
+        add_filter('wpdesk_tracker_deactivation_data', [$this, 'append_deactivation_tracker_data']);
     }
     /**
      * @param array $data
@@ -32,8 +32,8 @@ class DeactivationTrackerData implements \FlexibleShippingUspsVendor\WPDesk\Plug
      */
     public function append_deactivation_tracker_data($data)
     {
-        if (\is_array($data)) {
-            if (!isset($data[self::ADDITIONAL_DATA]) || !\is_array($data[self::ADDITIONAL_DATA])) {
+        if (is_array($data)) {
+            if (!isset($data[self::ADDITIONAL_DATA]) || !is_array($data[self::ADDITIONAL_DATA])) {
                 $data[self::ADDITIONAL_DATA] = [];
             }
             $data[self::ADDITIONAL_DATA][$this->get_tracker_option_name($this->method_id)] = $this->get_tracker_option_value($this->method_id);

@@ -66,14 +66,14 @@ class WooCommerceShippingBuilder
     /**
      * @param AddressProvider $sender_address Sender address.
      */
-    public function set_sender_address(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\AddressProvider $sender_address)
+    public function set_sender_address(AddressProvider $sender_address)
     {
         $this->sender_address = $sender_address;
     }
     /**
      * @param AddressProvider $receiver_address Receiver address.
      */
-    public function set_receiver_address(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\AddressProvider $receiver_address)
+    public function set_receiver_address(AddressProvider $receiver_address)
     {
         $this->receiver_address = $receiver_address;
     }
@@ -134,13 +134,13 @@ class WooCommerceShippingBuilder
     {
         switch ($this->dimension_unit) {
             case 'mm':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_MM;
+                return Dimensions::DIMENSION_UNIT_MM;
             case 'cm':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_CM;
+                return Dimensions::DIMENSION_UNIT_CM;
             case 'm':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_M;
+                return Dimensions::DIMENSION_UNIT_M;
             case 'in':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_IN;
+                return Dimensions::DIMENSION_UNIT_IN;
         }
         return $this->dimension_unit;
     }
@@ -153,11 +153,11 @@ class WooCommerceShippingBuilder
     {
         switch ($this->weight_unit) {
             case 'g':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_G;
+                return Weight::WEIGHT_UNIT_G;
             case 'kg':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG;
+                return Weight::WEIGHT_UNIT_KG;
             case 'lb':
-                return \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LB;
+                return Weight::WEIGHT_UNIT_LB;
         }
         return $this->weight_unit;
     }
@@ -170,8 +170,8 @@ class WooCommerceShippingBuilder
      */
     protected function get_weight($package_item)
     {
-        $weight = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight();
-        $weight->weight = \floatval($package_item['data']->get_weight());
+        $weight = new Weight();
+        $weight->weight = floatval($package_item['data']->get_weight());
         $weight->weight_unit = $this->get_woocommerce_weight_unit();
         return $weight;
     }
@@ -195,12 +195,12 @@ class WooCommerceShippingBuilder
      */
     protected function add_package_item($package_item)
     {
-        $item = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Item();
+        $item = new Item();
         $item->name = $this->get_item_name($package_item['data']);
         $item->dimensions = $this->get_dimensions($package_item);
         $item->weight = $this->get_weight($package_item);
-        $item->declared_value = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\Money();
-        $item->declared_value->amount = \round($package_item['line_total'] / $package_item['quantity'], $this->rounding_precision);
+        $item->declared_value = new Money();
+        $item->declared_value->amount = round($package_item['line_total'] / $package_item['quantity'], $this->rounding_precision);
         $item->declared_value->currency = $this->currency;
         return $item;
     }
@@ -213,7 +213,7 @@ class WooCommerceShippingBuilder
      */
     protected function get_dimensions($package_item)
     {
-        $dimension = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions();
+        $dimension = new Dimensions();
         $dimension->dimensions_unit = $this->get_woocommerce_dimension_unit();
         $dimension->length = $package_item['data']->get_length();
         $dimension->width = $package_item['data']->get_width();
@@ -227,9 +227,9 @@ class WooCommerceShippingBuilder
      */
     protected function get_packages()
     {
-        $shipping_package = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Package();
+        $shipping_package = new Package();
         $shipping_package->items = [];
-        $package_weight = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight();
+        $package_weight = new Weight();
         $package_weight->weight_unit = $this->get_woocommerce_weight_unit();
         $package_weight->weight = 0.0;
         foreach ($this->package['contents'] as $item) {
@@ -249,10 +249,10 @@ class WooCommerceShippingBuilder
      */
     public function build_shipment()
     {
-        $shipment = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment();
-        $ship_from = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Client();
+        $shipment = new Shipment();
+        $ship_from = new Client();
         $ship_from->address = $this->sender_address->get_address();
-        $ship_to = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Client();
+        $ship_to = new Client();
         $ship_to->address = $this->receiver_address->get_address();
         $shipment->ship_from = $ship_from;
         $shipment->ship_to = $ship_to;

@@ -7,7 +7,7 @@ use FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingOption;
 /**
  * Can handle plugin upgrade onboarding Ajax actions.
  */
-class PluginUpgradeAjax extends \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingAjax
+class PluginUpgradeAjax extends OnboardingAjax
 {
     /**
      * @var string
@@ -16,7 +16,7 @@ class PluginUpgradeAjax extends \FlexibleShippingUspsVendor\Octolize\Onboarding\
     /**
      * @param string $plugin_version
      */
-    public function __construct(\FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingOption $onboarding_option, string $plugin_version)
+    public function __construct(OnboardingOption $onboarding_option, string $plugin_version)
     {
         parent::__construct($onboarding_option);
         $this->plugin_version = $plugin_version;

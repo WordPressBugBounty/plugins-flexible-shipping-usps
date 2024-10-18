@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\Packer\BoxFactory;
 /**
  * Boxes array.
  */
-interface BoxesWithUnit extends \FlexibleShippingUspsVendor\WPDesk\Packer\BoxFactory\Boxes
+interface BoxesWithUnit extends Boxes
 {
     /**
      * Returns true when metric units are used in boxes.

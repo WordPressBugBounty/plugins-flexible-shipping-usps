@@ -20,11 +20,11 @@ use FlexibleShippingUspsVendor\Doctrine\CouchDB\CouchDBClient;
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class DoctrineCouchDBHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\AbstractProcessingHandler
+class DoctrineCouchDBHandler extends AbstractProcessingHandler
 {
     /** @var CouchDBClient */
     private $client;
-    public function __construct(\FlexibleShippingUspsVendor\Doctrine\CouchDB\CouchDBClient $client, $level = \FlexibleShippingUspsVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct(CouchDBClient $client, $level = Logger::DEBUG, bool $bubble = \true)
     {
         $this->client = $client;
         parent::__construct($level, $bubble);
@@ -32,12 +32,12 @@ class DoctrineCouchDBHandler extends \FlexibleShippingUspsVendor\Monolog\Handler
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->client->postDocument($record['formatted']);
     }
-    protected function getDefaultFormatter() : \FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FlexibleShippingUspsVendor\Monolog\Formatter\NormalizerFormatter();
+        return new NormalizerFormatter();
     }
 }

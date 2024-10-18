@@ -52,25 +52,25 @@ class FreeShipping
      */
     public function debug($is_applied, $subtotal)
     {
-        $label = $is_applied ? \__('Cart value exceeds %s. Free shipping has been applied.', 'flexible-shipping-usps') : \__('Cart value doesn\'t exceed %s. Free shipping hasn\'t been applied.', 'flexible-shipping-usps');
-        $this->logger->debug(\sprintf($label, \wc_price($this->get_free_shipping_amount())), array(\__('Subtotal', 'flexible-shipping-usps') => $subtotal, \__('Free Shipping Amount', 'flexible-shipping-usps') => $this->get_free_shipping_amount()));
+        $label = $is_applied ? __('Cart value exceeds %s. Free shipping has been applied.', 'flexible-shipping-usps') : __('Cart value doesn\'t exceed %s. Free shipping hasn\'t been applied.', 'flexible-shipping-usps');
+        $this->logger->debug(sprintf($label, wc_price($this->get_free_shipping_amount())), array(__('Subtotal', 'flexible-shipping-usps') => $subtotal, __('Free Shipping Amount', 'flexible-shipping-usps') => $this->get_free_shipping_amount()));
     }
     /**
      * @return bool
      */
     public function is_enabled()
     {
-        return 'yes' === $this->shipping_method->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\FreeShipping\FreeShippingFields::FIELD_STATUS, 'no');
+        return 'yes' === $this->shipping_method->get_option(FreeShippingFields::FIELD_STATUS, 'no');
     }
     /**
      * @return float
      */
-    private function get_free_shipping_amount() : float
+    private function get_free_shipping_amount(): float
     {
-        return $this->get_free_shipping_amount_converted_to_current_currency((float) \str_replace(',', '.', $this->shipping_method->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\FreeShipping\FreeShippingFields::FIELD_AMOUNT)));
+        return $this->get_free_shipping_amount_converted_to_current_currency((float) str_replace(',', '.', $this->shipping_method->get_option(FreeShippingFields::FIELD_AMOUNT)));
     }
-    private function get_free_shipping_amount_converted_to_current_currency(float $amount) : float
+    private function get_free_shipping_amount_converted_to_current_currency(float $amount): float
     {
-        return (float) \apply_filters($this->shipping_method->id . '/currency-switchers/amount', $amount, $this->logger);
+        return (float) apply_filters($this->shipping_method->id . '/currency-switchers/amount', $amount, $this->logger);
     }
 }

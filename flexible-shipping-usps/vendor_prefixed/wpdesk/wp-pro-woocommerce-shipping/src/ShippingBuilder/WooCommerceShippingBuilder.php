@@ -38,10 +38,10 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
      * @param string $packaging_method One of packaging method names
      * @param bool   $is_unit_metric
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\Packer\Packer $packer, $packaging_method, $is_unit_metric)
+    public function __construct(Packer $packer, $packaging_method, $is_unit_metric)
     {
         $this->packer = $packer;
-        $this->should_use_packer = $packaging_method !== \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::PACKING_METHOD_WEIGHT;
+        $this->should_use_packer = $packaging_method !== PackerSettings::PACKING_METHOD_WEIGHT;
         $this->is_unit_metric = $is_unit_metric;
     }
     /**
@@ -53,14 +53,14 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
     private function add_converted_item_to_packer(\WC_Product $item, array $package_item)
     {
         if ($this->is_unit_metric) {
-            $packer_dimension_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_CM;
-            $packer_weight_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG;
+            $packer_dimension_unit = Dimensions::DIMENSION_UNIT_CM;
+            $packer_weight_unit = Weight::WEIGHT_UNIT_KG;
         } else {
-            $packer_dimension_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_IN;
-            $packer_weight_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LBS;
+            $packer_dimension_unit = Dimensions::DIMENSION_UNIT_IN;
+            $packer_weight_unit = Weight::WEIGHT_UNIT_LBS;
         }
         $item_value = ($package_item['line_total'] + $package_item['line_tax']) / $package_item['quantity'];
-        $this->packer->add_item(new \FlexibleShippingUspsVendor\WPDesk\Packer\Item\ItemImplementation(\wc_get_dimension($item->get_length(), $packer_dimension_unit), \wc_get_dimension($item->get_width(), $packer_dimension_unit), \wc_get_dimension($item->get_height(), $packer_dimension_unit), \wc_get_weight($item->get_weight(), $packer_weight_unit), $item_value, $package_item));
+        $this->packer->add_item(new ItemImplementation(wc_get_dimension($item->get_length(), $packer_dimension_unit), wc_get_dimension($item->get_width(), $packer_dimension_unit), wc_get_dimension($item->get_height(), $packer_dimension_unit), wc_get_weight($item->get_weight(), $packer_weight_unit), $item_value, $package_item));
     }
     /**
      * Put WooCommerce packages to packer and pack them.
@@ -74,7 +74,7 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
             /** @var \WC_Product $item */
             // phpcs:ignore
             $item = $package_item['data'];
-            for ($i = 1; $i <= \intval($package_item['quantity']); $i++) {
+            for ($i = 1; $i <= intval($package_item['quantity']); $i++) {
                 // phpcs:ignore
                 $this->verify_item($item);
                 $this->add_converted_item_to_packer($item, $package_item);
@@ -82,8 +82,8 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
         }
         $this->packer->pack();
         $items_cannot_pack = $this->packer->get_items_cannot_pack();
-        if (!empty($items_cannot_pack) && \count($items_cannot_pack)) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\ShippingBuilder\CannotPackItemsException($items_cannot_pack);
+        if (!empty($items_cannot_pack) && count($items_cannot_pack)) {
+            throw new CannotPackItemsException($items_cannot_pack);
         }
     }
     /**
@@ -97,23 +97,23 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
     {
         $reason = '';
         if (empty($item->get_weight())) {
-            $reason .= \__('weight', 'flexible-shipping-usps') . ', ';
+            $reason .= __('weight', 'flexible-shipping-usps') . ', ';
         }
         if (empty($item->get_width())) {
-            $reason .= \__('width', 'flexible-shipping-usps') . ', ';
+            $reason .= __('width', 'flexible-shipping-usps') . ', ';
         }
         if (empty($item->get_length())) {
-            $reason .= \__('length', 'flexible-shipping-usps') . ', ';
+            $reason .= __('length', 'flexible-shipping-usps') . ', ';
         }
         if (empty($item->get_height())) {
-            $reason .= \__('height', 'flexible-shipping-usps') . ', ';
+            $reason .= __('height', 'flexible-shipping-usps') . ', ';
         }
         if (!empty($reason)) {
-            \wc_clear_notices();
-            $reason = \trim(\trim($reason), ',');
+            wc_clear_notices();
+            $reason = trim(trim($reason), ',');
             // Translators: reasons.
-            $reason = \sprintf(\__('Item %1$s not set!', 'flexible-shipping-usps'), $reason);
-            throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\ShippingBuilder\CannotPackItemException($item, $reason);
+            $reason = sprintf(__('Item %1$s not set!', 'flexible-shipping-usps'), $reason);
+            throw new CannotPackItemException($item, $reason);
         }
     }
     /**
@@ -139,16 +139,16 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
      *
      * @return Package warning: Returned package does not have weight value!
      */
-    private function create_package_from_box(\FlexibleShippingUspsVendor\WPDesk\Packer\Box $box)
+    private function create_package_from_box(Box $box)
     {
         $settings_box = null;
-        if (isset($box->get_internal_data()['box']) && $box->get_internal_data()['box'] instanceof \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\SettingsBox) {
+        if (isset($box->get_internal_data()['box']) && $box->get_internal_data()['box'] instanceof SettingsBox) {
             $settings_box = $box->get_internal_data()['box'];
         }
-        $package = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Package();
+        $package = new Package();
         $package->package_type = $box->get_unique_id();
         $package->description = $box->get_name();
-        $dimension = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions();
+        $dimension = new Dimensions();
         $dimension->length = $box->get_length();
         $dimension->width = $box->get_width();
         $dimension->height = $box->get_height();
@@ -158,17 +158,17 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
             $dimension->height += $settings_box->get_padding();
         }
         if ($this->is_unit_metric) {
-            $dimension->dimensions_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_CM;
+            $dimension->dimensions_unit = Dimensions::DIMENSION_UNIT_CM;
         } else {
-            $dimension->dimensions_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_IN;
+            $dimension->dimensions_unit = Dimensions::DIMENSION_UNIT_IN;
         }
         $package->dimensions = $dimension;
-        $weight = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight();
+        $weight = new Weight();
         $weight->weight = 0.0;
         if ($this->is_unit_metric) {
-            $weight->weight_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG;
+            $weight->weight_unit = Weight::WEIGHT_UNIT_KG;
         } else {
-            $weight->weight_unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LBS;
+            $weight->weight_unit = Weight::WEIGHT_UNIT_LBS;
         }
         $package->weight = $weight;
         return $package;

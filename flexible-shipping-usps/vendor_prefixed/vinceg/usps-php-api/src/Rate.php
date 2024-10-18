@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\USPS;
  *
  * @author Vincent Gabriel
  */
-class Rate extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class Rate extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -65,9 +65,9 @@ class Rate extends \FlexibleShippingUspsVendor\USPS\USPSBase
      * @param RatePackage $data
      * @param string      $id   the address unique id
      */
-    public function addPackage(\FlexibleShippingUspsVendor\USPS\RatePackage $data, $id = null)
+    public function addPackage(RatePackage $data, $id = null)
     {
-        $packageId = $id !== null ? $id : \count($this->packages) + 1;
-        $this->packages['Package'][] = \array_merge(['@attributes' => ['ID' => $packageId]], $data->getPackageInfo());
+        $packageId = $id !== null ? $id : count($this->packages) + 1;
+        $this->packages['Package'][] = array_merge(['@attributes' => ['ID' => $packageId]], $data->getPackageInfo());
     }
 }

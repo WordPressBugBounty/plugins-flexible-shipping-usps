@@ -28,6 +28,9 @@
 		"platform": {
 			"php": "7.4"
 		},
+		"gitlab-domains": [
+			"gitlab.wpdesk.dev"
+		],
 		"allow-plugins": {
 			"cweagans/composer-patches": true,
 			"kylekatarnls/update-helper": true,
@@ -44,18 +47,20 @@
 	},
 	"require-dev": {
 		"10up/wp_mock": "*",
+		"octolize/usps-rest-api-client": "^1.0.0",
+		"octolize/wp-octolize-brand-assets": "^1.3",
 		"octolize/wp-octolize-tracker": "^1.2",
 		"octolize/wp-onboarding": "^1.6",
 		"octolize/wp-shipping-extensions": "^1.5",
-		"phpunit/phpunit": "<7",
-		"wpdesk/usps-shipping-service": "^1.9.0",
+		"phpunit/phpunit": "^7||^8||^9",
+		"wpdesk/usps-shipping-service": "^1.12.0",
 		"wpdesk/wp-codeception": "^2.3.0",
 		"wpdesk/wp-logs": "^1.7.3",
 		"wpdesk/wp-plugin-flow-free": "^1.0.2",
 		"wpdesk/wp-pro-woocommerce-shipping": "^2",
-		"wpdesk/wp-usps-shipping-method": "^1",
+		"wpdesk/wp-usps-shipping-method": "^1.6.0",
 		"wpdesk/wp-woocommerce-shipping": "^3.18.0",
-		"wpdesk/wp-wpdesk-composer": "^2.16.0",
+		"wpdesk/wp-wpdesk-composer": "^3",
 		"wpdesk/wp-wpdesk-rating-petition": "^1.1",
 		"wpdesk/wpdesk-packer": "^3.0"
 	},

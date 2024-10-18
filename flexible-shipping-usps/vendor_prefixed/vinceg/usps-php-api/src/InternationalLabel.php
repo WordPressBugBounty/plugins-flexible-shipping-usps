@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class InternationalLabel.
  */
-class InternationalLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class InternationalLabel extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -24,7 +24,7 @@ class InternationalLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
     public function createLabel()
     {
         // Add contents
-        if ($this->contents && \count($this->contents)) {
+        if ($this->contents && count($this->contents)) {
             $this->setField(31, 'ShippingContents', $this->contents);
         }
         // Add missing required
@@ -33,11 +33,11 @@ class InternationalLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
         // Hack by the only way this will work properly
         // since usps wants the tags to be in
         // a certain order
-        \ksort($this->fields, \SORT_NUMERIC);
+        ksort($this->fields, \SORT_NUMERIC);
         // remove the \d. from the key
         foreach ($this->fields as $key => $value) {
-            $newKey = \str_replace('.', '', $key);
-            $newKey = \preg_replace('/\\d+\\:/', '', $newKey);
+            $newKey = str_replace('.', '', $key);
+            $newKey = preg_replace('/\d+\:/', '', $newKey);
             unset($this->fields[$key]);
             $this->fields[$newKey] = $value;
         }
@@ -223,17 +223,17 @@ class InternationalLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
         // We need to add additional fields based on api we are using
         switch ($this->apiVersion) {
             case 'ExpressMailIntl':
-                $required = \array_merge($required, ['29:NonDeliveryOption' => 'Return']);
+                $required = array_merge($required, ['29:NonDeliveryOption' => 'Return']);
                 break;
             case 'PriorityMailIntl':
-                $required = \array_merge($required, ['29:NonDeliveryOption' => 'Return', '31.1:Insured' => 'N', '40.1:EELPFC' => '']);
+                $required = array_merge($required, ['29:NonDeliveryOption' => 'Return', '31.1:Insured' => 'N', '40.1:EELPFC' => '']);
                 break;
             case 'FirstClassMailIntl':
-                $required = \array_merge($required, ['30.1:FirstClassMailType' => 'PARCEL', '31.1:Insured' => 'N', '33.1:Machinable' => 'false', '40.1:EELPFC' => '']);
+                $required = array_merge($required, ['30.1:FirstClassMailType' => 'PARCEL', '31.1:Insured' => 'N', '33.1:Machinable' => 'false', '40.1:EELPFC' => '']);
                 break;
         }
         foreach ($required as $item => $value) {
-            $explode = \explode(':', $item);
+            $explode = explode(':', $item);
             if (!isset($this->fields[$item])) {
                 $this->setField($explode[0], $explode[1], $value);
             }

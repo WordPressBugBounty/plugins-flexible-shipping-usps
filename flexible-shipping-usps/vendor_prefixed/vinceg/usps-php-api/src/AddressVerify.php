@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\USPS;
  *
  * @author Vincent Gabriel
  */
-class AddressVerify extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class AddressVerify extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -41,7 +41,7 @@ class AddressVerify extends \FlexibleShippingUspsVendor\USPS\USPSBase
     public function getPostFields()
     {
         $postFields = !empty($this->revision) ? ['Revision' => $this->revision] : [];
-        return \array_merge($postFields, $this->addresses);
+        return array_merge($postFields, $this->addresses);
     }
     /**
      * Add Address to the stack.
@@ -49,10 +49,10 @@ class AddressVerify extends \FlexibleShippingUspsVendor\USPS\USPSBase
      * @param Address $data
      * @param string  $id   the address unique id
      */
-    public function addAddress(\FlexibleShippingUspsVendor\USPS\Address $data, $id = null)
+    public function addAddress(Address $data, $id = null)
     {
-        $packageId = $id !== null ? $id : \count($this->addresses) + 1;
-        $this->addresses['Address'][] = \array_merge(['@attributes' => ['ID' => $packageId]], $data->getAddressInfo());
+        $packageId = $id !== null ? $id : count($this->addresses) + 1;
+        $this->addresses['Address'][] = array_merge(['@attributes' => ['ID' => $packageId]], $data->getAddressInfo());
     }
     /**
      * Set the revision value

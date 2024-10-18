@@ -16,9 +16,9 @@ use function sort;
 /**
  * An item to be packed.
  */
-class OrientatedItem implements \JsonSerializable
+class OrientatedItem implements JsonSerializable
 {
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item;
+    protected Item $item;
     protected int $width;
     protected int $length;
     protected int $depth;
@@ -31,7 +31,7 @@ class OrientatedItem implements \JsonSerializable
      * @var int[]
      */
     protected array $dimensionsAsArray;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item, int $width, int $length, int $depth)
+    public function __construct(Item $item, int $width, int $length, int $depth)
     {
         $this->item = $item;
         $this->width = $width;
@@ -39,40 +39,40 @@ class OrientatedItem implements \JsonSerializable
         $this->depth = $depth;
         $this->surfaceFootprint = $width * $length;
         $this->dimensionsAsArray = [$width, $length, $depth];
-        \sort($this->dimensionsAsArray);
+        sort($this->dimensionsAsArray);
     }
     /**
      * Item.
      */
-    public function getItem() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+    public function getItem(): Item
     {
         return $this->item;
     }
     /**
      * Item width in mm in it's packed orientation.
      */
-    public function getWidth() : int
+    public function getWidth(): int
     {
         return $this->width;
     }
     /**
      * Item length in mm in it's packed orientation.
      */
-    public function getLength() : int
+    public function getLength(): int
     {
         return $this->length;
     }
     /**
      * Item depth in mm in it's packed orientation.
      */
-    public function getDepth() : int
+    public function getDepth(): int
     {
         return $this->depth;
     }
     /**
      * Calculate the surface footprint of the current orientation.
      */
-    public function getSurfaceFootprint() : int
+    public function getSurfaceFootprint(): int
     {
         return $this->surfaceFootprint;
     }
@@ -81,23 +81,23 @@ class OrientatedItem implements \JsonSerializable
      *
      * N.B. Assumes equal weight distribution.
      */
-    public function isStable() : bool
+    public function isStable(): bool
     {
         $cacheKey = $this->width . '|' . $this->length . '|' . $this->depth;
-        return static::$stabilityCache[$cacheKey] ?? (static::$stabilityCache[$cacheKey] = \atan(\min($this->length, $this->width) / ($this->depth ?: 1)) > 0.261);
+        return static::$stabilityCache[$cacheKey] ?? static::$stabilityCache[$cacheKey] = atan(min($this->length, $this->width) / ($this->depth ?: 1)) > 0.261;
     }
     /**
      * Is the supplied item the same size as this one?
      *
      * @internal
      */
-    public function isSameDimensions(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item) : bool
+    public function isSameDimensions(Item $item): bool
     {
         if ($item === $this->item) {
             return \true;
         }
         $itemDimensions = [$item->getWidth(), $item->getLength(), $item->getDepth()];
-        \sort($itemDimensions);
+        sort($itemDimensions);
         return $this->dimensionsAsArray === $itemDimensions;
     }
     #[ReturnTypeWillChange]
@@ -105,7 +105,7 @@ class OrientatedItem implements \JsonSerializable
     {
         return ['item' => $this->item, 'width' => $this->width, 'length' => $this->length, 'depth' => $this->depth];
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->width . '|' . $this->length . '|' . $this->depth;
     }

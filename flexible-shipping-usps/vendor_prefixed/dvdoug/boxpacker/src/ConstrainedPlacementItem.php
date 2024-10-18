@@ -12,10 +12,10 @@ namespace FlexibleShippingUspsVendor\DVDoug\BoxPacker;
  * An item to be packed where additional constraints need to be considered. Only implement this interface if you actually
  * need this additional functionality as it will slow down the packing algorithm.
  */
-interface ConstrainedPlacementItem extends \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+interface ConstrainedPlacementItem extends Item
 {
     /**
      * Hook for user implementation of item-specific constraints, e.g. max <x> batteries per box.
      */
-    public function canBePacked(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $box, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $alreadyPackedItems, int $proposedX, int $proposedY, int $proposedZ, int $width, int $length, int $depth) : bool;
+    public function canBePacked(Box $box, PackedItemList $alreadyPackedItems, int $proposedX, int $proposedY, int $proposedZ, int $width, int $length, int $depth): bool;
 }

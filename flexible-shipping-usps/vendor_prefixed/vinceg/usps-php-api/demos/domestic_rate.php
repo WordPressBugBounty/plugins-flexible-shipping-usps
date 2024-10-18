@@ -12,15 +12,15 @@ $rate = new \FlexibleShippingUspsVendor\USPS\Rate('xxxx');
 // apartently the order you assign them is important so make sure
 // to set them as the example below
 // set the RatePackage for more info about the constants
-$package = new \FlexibleShippingUspsVendor\USPS\RatePackage();
-$package->setService(\FlexibleShippingUspsVendor\USPS\RatePackage::SERVICE_FIRST_CLASS);
-$package->setFirstClassMailType(\FlexibleShippingUspsVendor\USPS\RatePackage::MAIL_TYPE_LETTER);
+$package = new RatePackage();
+$package->setService(RatePackage::SERVICE_FIRST_CLASS);
+$package->setFirstClassMailType(RatePackage::MAIL_TYPE_LETTER);
 $package->setZipOrigination(91601);
 $package->setZipDestination(91730);
 $package->setPounds(0);
 $package->setOunces(3.5);
 $package->setContainer('');
-$package->setSize(\FlexibleShippingUspsVendor\USPS\RatePackage::SIZE_REGULAR);
+$package->setSize(RatePackage::SIZE_REGULAR);
 $package->setField('Machinable', \true);
 // add the package to the rate stack
 $rate->addPackage($package);

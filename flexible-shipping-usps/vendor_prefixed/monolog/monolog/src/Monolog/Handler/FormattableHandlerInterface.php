@@ -25,11 +25,11 @@ interface FormattableHandlerInterface
      * @param  FormatterInterface $formatter
      * @return HandlerInterface   self
      */
-    public function setFormatter(\FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface $formatter) : \FlexibleShippingUspsVendor\Monolog\Handler\HandlerInterface;
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface;
     /**
      * Gets the formatter.
      *
      * @return FormatterInterface
      */
-    public function getFormatter() : \FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface;
+    public function getFormatter(): FormatterInterface;
 }

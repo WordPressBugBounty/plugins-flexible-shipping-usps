@@ -51,42 +51,42 @@ class PluginUpgradeMessage
     /**
      * @return string
      */
-    public function get_plugin_version() : string
+    public function get_plugin_version(): string
     {
         return $this->plugin_version;
     }
     /**
      * @return string
      */
-    public function get_image_url() : string
+    public function get_image_url(): string
     {
         return $this->image_url;
     }
     /**
      * @return string
      */
-    public function get_title() : string
+    public function get_title(): string
     {
         return $this->title;
     }
     /**
      * @return string
      */
-    public function get_message() : string
+    public function get_message(): string
     {
         return $this->message;
     }
     /**
      * @return string
      */
-    public function get_link_text() : string
+    public function get_link_text(): string
     {
         return $this->link_text;
     }
     /**
      * @return string
      */
-    public function get_link_url() : string
+    public function get_link_url(): string
     {
         return $this->link_url;
     }

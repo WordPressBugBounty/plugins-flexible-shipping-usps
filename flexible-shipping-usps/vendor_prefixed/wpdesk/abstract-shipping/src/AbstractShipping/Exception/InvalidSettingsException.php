@@ -12,6 +12,6 @@ namespace FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception;
  *
  * @package WPDesk\AbstractShipping\Exception
  */
-class InvalidSettingsException extends \RuntimeException implements \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\ShippingException
+class InvalidSettingsException extends \RuntimeException implements ShippingException
 {
 }

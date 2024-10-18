@@ -129,7 +129,7 @@ abstract class USPSBase
      */
     public function getResponseApiName()
     {
-        return \str_replace('Request', 'Response', $this->apiCodes[$this->apiVersion]);
+        return str_replace('Request', 'Response', $this->apiCodes[$this->apiVersion]);
     }
     /**
      * Makes an HTTP request. This method can be overriden by subclasses if
@@ -143,23 +143,23 @@ abstract class USPSBase
     protected function doRequest($ch = null)
     {
         if (!$ch) {
-            $ch = \curl_init();
+            $ch = curl_init();
         }
         $opts = self::$CURL_OPTS;
-        $opts[\CURLOPT_POSTFIELDS] = \http_build_query($this->getPostData(), null, '&');
+        $opts[\CURLOPT_POSTFIELDS] = http_build_query($this->getPostData(), null, '&');
         $opts[\CURLOPT_URL] = $this->getEndpoint();
         // Replace 443 with 80 if it's not secured
-        if (\strpos($opts[\CURLOPT_URL], 'https://') === \false) {
+        if (strpos($opts[\CURLOPT_URL], 'https://') === \false) {
             $opts[\CURLOPT_PORT] = 80;
         }
         // set options
-        \curl_setopt_array($ch, $opts);
+        curl_setopt_array($ch, $opts);
         // execute
-        $this->setResponse(\curl_exec($ch));
-        $this->setHeaders(\curl_getinfo($ch));
+        $this->setResponse(curl_exec($ch));
+        $this->setHeaders(curl_getinfo($ch));
         // fetch errors
-        $this->setErrorCode(\curl_errno($ch));
-        $this->setErrorMessage(\curl_error($ch));
+        $this->setErrorCode(curl_errno($ch));
+        $this->setErrorMessage(curl_error($ch));
         // Convert response to array
         $this->convertResponseToArray();
         // If it failed then set error code and message
@@ -173,14 +173,14 @@ abstract class USPSBase
             }
         }
         // close
-        \curl_close($ch);
+        curl_close($ch);
         return $this->getResponse();
     }
     public function getEndpoint()
     {
         return self::$testMode ? self::TEST_API_URL : self::LIVE_API_URL;
     }
-    public abstract function getPostFields();
+    abstract public function getPostFields();
     /**
      * Return the xml string built that we are about to send over to the api.
      *
@@ -191,8 +191,8 @@ abstract class USPSBase
         // Add in the defaults
         $postFields = ['@attributes' => ['USERID' => $this->username]];
         // Add in the sub class data
-        $postFields = \array_merge($postFields, $this->getPostFields());
-        $xml = \FlexibleShippingUspsVendor\USPS\XMLParser::createXML($this->apiCodes[$this->apiVersion], $postFields);
+        $postFields = array_merge($postFields, $this->getPostFields());
+        $xml = XMLParser::createXML($this->apiCodes[$this->apiVersion], $postFields);
         return $xml->saveXML();
     }
     /**
@@ -213,7 +213,7 @@ abstract class USPSBase
             return \true;
         }
         // Check to see if we have the Error word in the response
-        if (\strpos($this->getResponse(), '<Error>') !== \false) {
+        if (strpos($this->getResponse(), '<Error>') !== \false) {
             return \true;
         }
         // No error
@@ -236,7 +236,7 @@ abstract class USPSBase
     public function convertResponseToArray()
     {
         if ($this->getResponse()) {
-            $this->setArrayResponse(\FlexibleShippingUspsVendor\USPS\XML2Array::createArray($this->getResponse()));
+            $this->setArrayResponse(XML2Array::createArray($this->getResponse()));
         }
         return $this->getArrayResponse();
     }
@@ -358,7 +358,7 @@ abstract class USPSBase
             if ($k === $key) {
                 return $each;
             }
-            if (\is_array($each)) {
+            if (is_array($each)) {
                 if ($return = $this->getValueByKey($each, $key)) {
                     return $return;
                 }

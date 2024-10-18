@@ -17,7 +17,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Ups\MetaDataInterprete
 /**
  * Can display order shipping items meta data on admin pages.
  */
-class AdminOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class AdminOrderMetaDataDisplay implements Hookable
 {
     /**
      * @var SingleAdminOrderMetaDataInterpreter[]
@@ -58,7 +58,7 @@ class AdminOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\Pl
      *
      * @param SingleAdminOrderMetaDataInterpreter $admin_interpreter .
      */
-    public function add_interpreter(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\SingleAdminOrderMetaDataInterpreter $admin_interpreter)
+    public function add_interpreter(SingleAdminOrderMetaDataInterpreter $admin_interpreter)
     {
         $this->interpreters[] = $admin_interpreter;
     }
@@ -67,9 +67,9 @@ class AdminOrderMetaDataDisplay implements \FlexibleShippingUspsVendor\WPDesk\Pl
      */
     public function hooks()
     {
-        \add_filter('woocommerce_order_item_display_meta_key', array($this, 'get_order_meta_key_on_admin_order_edit_page'), 10, 3);
-        \add_filter('woocommerce_order_item_display_meta_value', array($this, 'get_order_meta_value_on_admin_order_edit_page'), 10, 3);
-        \add_filter('woocommerce_hidden_order_itemmeta', array($this, 'add_hidden_order_item_meta_keys_to_woocommerce'), 10, 3);
+        add_filter('woocommerce_order_item_display_meta_key', array($this, 'get_order_meta_key_on_admin_order_edit_page'), 10, 3);
+        add_filter('woocommerce_order_item_display_meta_value', array($this, 'get_order_meta_value_on_admin_order_edit_page'), 10, 3);
+        add_filter('woocommerce_hidden_order_itemmeta', array($this, 'add_hidden_order_item_meta_keys_to_woocommerce'), 10, 3);
     }
     /**
      * Add hidden order item meta keys to WooCommerce.

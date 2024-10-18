@@ -16,11 +16,11 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\HookableParent;
 use FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\PluginData;
 use FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\ReasonsFactory;
 use FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\TrackerFactory;
-use FlexibleShippingUspsVendor\WPDesk\Tracker\OptInOptOut;
+use FlexibleShippingUspsVendor\WPDesk\Tracker\PluginActionLinks;
 /**
  * Can create complete tracker.
  */
-class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\HookableCollection
+class TrackerInitializer implements HookableCollection
 {
     use HookableParent;
     /**
@@ -55,14 +55,14 @@ class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      * @param ShouldDisplay $should_display Should display.
      * @param ReasonsFactory|null $reasons_factory Reasons factory.
      */
-    public function __construct(string $plugin_file, string $plugin_slug, string $plugin_name, string $shop_url, \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplay $should_display, \FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\ReasonsFactory $reasons_factory = null)
+    public function __construct(string $plugin_file, string $plugin_slug, string $plugin_name, string $shop_url, ShouldDisplay $should_display, ReasonsFactory $reasons_factory = null)
     {
         $this->plugin_file = $plugin_file;
         $this->plugin_slug = $plugin_slug;
         $this->plugin_name = $plugin_name;
         $this->shop_url = $shop_url;
         $this->should_display = $should_display;
-        $this->reasons_factory = $reasons_factory ?? new \FlexibleShippingUspsVendor\Octolize\Tracker\DeactivationTracker\OctolizeReasonsFactory();
+        $this->reasons_factory = $reasons_factory ?? new OctolizeReasonsFactory();
     }
     /**
      * Hooks.
@@ -71,17 +71,16 @@ class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      */
     public function hooks()
     {
-        $this->add_hookable(new \FlexibleShippingUspsVendor\Octolize\Tracker\SenderRegistrator($this->plugin_slug));
-        $opt_in_opt_out = new \FlexibleShippingUspsVendor\WPDesk\Tracker\OptInOptOut($this->plugin_file, $this->plugin_slug, $this->shop_url, $this->plugin_name);
-        $opt_in_opt_out->create_objects();
-        $this->add_hookable($opt_in_opt_out);
-        $this->add_hookable(\FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\TrackerFactory::createCustomTracker(new \FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\PluginData($this->plugin_slug, $this->plugin_file, $this->plugin_name), null, null, null, $this->reasons_factory));
+        $this->add_hookable(new SenderRegistrator($this->plugin_slug));
+        $this->add_hookable(TrackerFactory::createCustomTracker(new PluginData($this->plugin_slug, $this->plugin_file, $this->plugin_name), null, null, null, $this->reasons_factory));
         $tracker_consent = new \FlexibleShippingUspsVendor\WPDesk_Tracker_Persistence_Consent();
         if (!$tracker_consent->is_active()) {
-            $this->add_hookable(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\OptInNotice($this->plugin_slug, $this->shop_url, $this->should_display));
+            $this->add_hookable(new OptInNotice($this->plugin_slug, $this->shop_url, $this->should_display));
         }
         $this->hooks_on_hookable_objects();
-        \add_action('plugins_loaded', [$this, 'init_tracker']);
+        // By returning empty array, we opt out from notice provided by wp-wpdesk-tracker.
+        add_filter('wpdesk_tracker_notice_screens', fn() => []);
+        add_action('plugins_loaded', [$this, 'init_tracker']);
     }
     /**
      * Creates Tracker.
@@ -91,7 +90,7 @@ class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      */
     public function init_tracker()
     {
-        $tracker = \apply_filters('wpdesk_tracker_instance', null);
+        $tracker = apply_filters('wpdesk_tracker_instance', null);
     }
     /**
      * Creates tracker initializer from plugin info.
@@ -102,11 +101,11 @@ class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      *
      * @return TrackerInitializer
      */
-    public static function create_from_plugin_info(\FlexibleShippingUspsVendor\WPDesk_Plugin_Info $plugin_info, $should_display, \FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\ReasonsFactory $reasons_factory = null)
+    public static function create_from_plugin_info(\FlexibleShippingUspsVendor\WPDesk_Plugin_Info $plugin_info, $should_display, ReasonsFactory $reasons_factory = null)
     {
         $shops = $plugin_info->get_plugin_shops();
-        $shop_url = $shops[\get_locale()] ?? $shops['default'] ?? 'https://octolize.com';
-        return new self($plugin_info->get_plugin_file_name(), $plugin_info->get_plugin_slug(), $plugin_info->get_plugin_name(), $shop_url, $should_display ?? new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayAlways(), $reasons_factory);
+        $shop_url = $shops[get_locale()] ?? $shops['default'] ?? 'https://octolize.com';
+        return new self($plugin_info->get_plugin_file_name(), $plugin_info->get_plugin_slug(), $plugin_info->get_plugin_name(), $shop_url, $should_display ?? new ShouldDisplayAlways(), $reasons_factory);
     }
     /**
      * Creates tracker initializer from plugin info for shipping method.
@@ -117,21 +116,21 @@ class TrackerInitializer implements \FlexibleShippingUspsVendor\WPDesk\PluginBui
      *
      * @return TrackerInitializer
      */
-    public static function create_from_plugin_info_for_shipping_method(\FlexibleShippingUspsVendor\WPDesk_Plugin_Info $plugin_info, string $shipping_method_id, \FlexibleShippingUspsVendor\WPDesk\Tracker\Deactivation\ReasonsFactory $reasons_factory = null)
+    public static function create_from_plugin_info_for_shipping_method(\FlexibleShippingUspsVendor\WPDesk_Plugin_Info $plugin_info, string $shipping_method_id, ReasonsFactory $reasons_factory = null)
     {
         $shops = $plugin_info->get_plugin_shops();
-        $shop_url = $shops[\get_locale()] ?? $shops['default'] ?? 'https://octolize.com';
-        $should_display = new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayOrConditions();
-        $should_display_and_conditions = new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayAndConditions();
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue('page', 'wc-settings'));
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue('tab', 'shipping'));
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue('section', $shipping_method_id));
+        $shop_url = $shops[get_locale()] ?? $shops['default'] ?? 'https://octolize.com';
+        $should_display = new ShouldDisplayOrConditions();
+        $should_display_and_conditions = new ShouldDisplayAndConditions();
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterValue('page', 'wc-settings'));
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterValue('tab', 'shipping'));
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterValue('section', $shipping_method_id));
         $should_display->add_should_diaplay_condition($should_display_and_conditions);
-        $should_display_and_conditions = new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayAndConditions();
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue('page', 'wc-settings'));
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue('tab', 'shipping'));
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterPresent('instance_id'));
-        $should_display_and_conditions->add_should_diaplay_condition(new \FlexibleShippingUspsVendor\Octolize\Tracker\OptInNotice\ShouldDisplayShippingMethodInstanceSettings($shipping_method_id));
+        $should_display_and_conditions = new ShouldDisplayAndConditions();
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterValue('page', 'wc-settings'));
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterValue('tab', 'shipping'));
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayGetParameterPresent('instance_id'));
+        $should_display_and_conditions->add_should_diaplay_condition(new ShouldDisplayShippingMethodInstanceSettings($shipping_method_id));
         $should_display->add_should_diaplay_condition($should_display_and_conditions);
         return new self($plugin_info->get_plugin_file_name(), $plugin_info->get_plugin_slug(), $plugin_info->get_plugin_name(), $shop_url, $should_display, $reasons_factory);
     }

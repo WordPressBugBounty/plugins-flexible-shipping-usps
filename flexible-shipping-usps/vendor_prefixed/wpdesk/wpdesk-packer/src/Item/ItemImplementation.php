@@ -3,7 +3,7 @@
 namespace FlexibleShippingUspsVendor\WPDesk\Packer\Item;
 
 use FlexibleShippingUspsVendor\WPDesk\Packer\Item;
-class ItemImplementation implements \FlexibleShippingUspsVendor\WPDesk\Packer\Item, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+class ItemImplementation implements Item, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
 {
     const FAKTOR = 1000;
     /** @var float */
@@ -27,7 +27,7 @@ class ItemImplementation implements \FlexibleShippingUspsVendor\WPDesk\Packer\It
     public function __construct($length, $width, $height, $weight = 0.0, $money_value = 0.0, $internal_data = null)
     {
         $dimensions = [$length, $width, $height];
-        \sort($dimensions);
+        sort($dimensions);
         $this->length = (float) $dimensions[2];
         $this->width = (float) $dimensions[1];
         $this->height = (float) $dimensions[0];
@@ -64,31 +64,31 @@ class ItemImplementation implements \FlexibleShippingUspsVendor\WPDesk\Packer\It
     {
         return $this->internal_data;
     }
-    public function getDescription() : string
+    public function getDescription(): string
     {
         $description = '';
-        if (\is_array($this->internal_data) && isset($this->internal_data['data']) && $this->internal_data['data'] instanceof \WC_Product) {
+        if (is_array($this->internal_data) && isset($this->internal_data['data']) && $this->internal_data['data'] instanceof \WC_Product) {
             $description = $this->internal_data['data']->get_name();
         }
         return $description;
     }
-    public function getWidth() : int
+    public function getWidth(): int
     {
-        return \round($this->get_width() * self::FAKTOR);
+        return round($this->get_width() * self::FAKTOR);
     }
-    public function getLength() : int
+    public function getLength(): int
     {
-        return \round($this->get_length() * self::FAKTOR);
+        return round($this->get_length() * self::FAKTOR);
     }
-    public function getDepth() : int
+    public function getDepth(): int
     {
-        return \round($this->get_height() * self::FAKTOR);
+        return round($this->get_height() * self::FAKTOR);
     }
-    public function getWeight() : int
+    public function getWeight(): int
     {
-        return \round($this->get_weight() * self::FAKTOR);
+        return round($this->get_weight() * self::FAKTOR);
     }
-    public function getKeepFlat() : bool
+    public function getKeepFlat(): bool
     {
         return \true;
     }

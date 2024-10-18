@@ -37,10 +37,10 @@ class SettingsField
      */
     public function get_field_posted_value_as_json($posted_value)
     {
-        if (!empty($posted_value) && \is_array($posted_value)) {
-            $value = \json_encode($posted_value);
+        if (!empty($posted_value) && is_array($posted_value)) {
+            $value = json_encode($posted_value);
         } else {
-            $value = \json_encode(array());
+            $value = json_encode(array());
         }
         return $value;
     }
@@ -53,7 +53,7 @@ class SettingsField
     private function set_boxes_settings_from_built_in_boxes(array $settings_field_value_as_array, array $built_in_boxes_from_packer)
     {
         foreach ($settings_field_value_as_array as $key => $settings_field_box) {
-            $found_built_in_box = \array_reduce($built_in_boxes_from_packer, function ($carry, \FlexibleShippingUspsVendor\WPDesk\Packer\Box $box) use($settings_field_box) {
+            $found_built_in_box = array_reduce($built_in_boxes_from_packer, function ($carry, Box $box) use ($settings_field_box) {
                 if ((string) $box->get_unique_id() === (string) $settings_field_box['code']) {
                     return $box;
                 }
@@ -82,21 +82,21 @@ class SettingsField
     public function render($field_title, $tooltip_html, $settings_field_value_as_json, $built_in_boxes_from_packer, $labels, $description = '')
     {
         $field_key = $this->field_name;
-        $settings_field_value_as_array = \json_decode($settings_field_value_as_json, \true);
+        $settings_field_value_as_array = json_decode($settings_field_value_as_json, \true);
         if (empty($settings_field_value_as_array) || $settings_field_value_as_array === \false) {
             $settings_field_value_as_array = array();
         }
         $settings_field_value_as_array = $this->set_boxes_settings_from_built_in_boxes($settings_field_value_as_array, $built_in_boxes_from_packer);
         if (empty($labels)) {
-            $labels = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\Labels();
+            $labels = new Labels();
         }
         $built_in_boxes = [];
         foreach ($built_in_boxes_from_packer as $built_in_box_from_packer) {
             $internal_data = $built_in_box_from_packer->get_internal_data();
             $code = $built_in_box_from_packer->get_unique_id();
-            $built_in_boxes[] = \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\BuiltInBox::create_from_code_and_packer_box($code, $built_in_box_from_packer);
+            $built_in_boxes[] = BuiltInBox::create_from_code_and_packer_box($code, $built_in_box_from_packer);
         }
-        $json_value = \json_encode(\array_values($settings_field_value_as_array));
+        $json_value = json_encode(array_values($settings_field_value_as_array));
         include __DIR__ . '/views/settings-field.php';
     }
 }

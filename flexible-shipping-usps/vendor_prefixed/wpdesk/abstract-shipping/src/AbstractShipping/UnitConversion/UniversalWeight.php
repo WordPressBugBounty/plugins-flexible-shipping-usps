@@ -20,7 +20,7 @@ class UniversalWeight
      * @var float
      */
     private $weight;
-    const UNIT_CALC = [\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_G => 1, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LB => 453.59237, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG => 1000, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_OZ => 28.34952];
+    const UNIT_CALC = [Weight::WEIGHT_UNIT_G => 1, Weight::WEIGHT_UNIT_LB => 453.59237, Weight::WEIGHT_UNIT_KG => 1000, Weight::WEIGHT_UNIT_OZ => 28.34952];
     /**
      * @var int
      */
@@ -51,21 +51,21 @@ class UniversalWeight
      */
     private function to_grams($weight, $unit)
     {
-        $unit = \strtoupper($unit);
-        if (\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LBS === $unit) {
-            $unit = \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LB;
+        $unit = strtoupper($unit);
+        if (Weight::WEIGHT_UNIT_LBS === $unit) {
+            $unit = Weight::WEIGHT_UNIT_LB;
         }
-        if (\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_G === $unit) {
+        if (Weight::WEIGHT_UNIT_G === $unit) {
             return $weight;
         }
         $calc = self::UNIT_CALC[$unit];
         switch ($unit) {
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG:
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LB:
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_OZ:
-                return \round($weight * $calc, $this->precision);
+            case Weight::WEIGHT_UNIT_KG:
+            case Weight::WEIGHT_UNIT_LB:
+            case Weight::WEIGHT_UNIT_OZ:
+                return round($weight * $calc, $this->precision);
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\UnitConversionException(\sprintf('Can\'t support "%s" unit', $unit));
+        throw new UnitConversionException(sprintf('Can\'t support "%s" unit', $unit));
     }
     /**
      * Convert to target unit. Returns 0 if confused.
@@ -79,17 +79,17 @@ class UniversalWeight
      */
     public function as_unit_rounded($target_unit, $precision = 2)
     {
-        $target_unit = \strtoupper($target_unit);
+        $target_unit = strtoupper($target_unit);
         $calc = self::UNIT_CALC[$target_unit];
         switch ($target_unit) {
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_G:
+            case Weight::WEIGHT_UNIT_G:
                 return $this->weight;
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_KG:
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_LB:
-            case \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight::WEIGHT_UNIT_OZ:
-                return \round($this->weight / $calc, $precision);
+            case Weight::WEIGHT_UNIT_KG:
+            case Weight::WEIGHT_UNIT_LB:
+            case Weight::WEIGHT_UNIT_OZ:
+                return round($this->weight / $calc, $precision);
             default:
-                throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\UnitConversionException(\__('Can\'t convert weight to target unit.', 'flexible-shipping-usps'));
+                throw new UnitConversionException(__('Can\'t convert weight to target unit.', 'flexible-shipping-usps'));
         }
     }
 }

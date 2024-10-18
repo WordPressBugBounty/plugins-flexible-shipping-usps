@@ -39,11 +39,11 @@ class CustomOriginFields
         $new_settings = [];
         foreach ($settings as $key => $field) {
             if ($field['type'] === static::FIELD_TYPE_CUSTOM_ORIGIN) {
-                $new_settings[static::CUSTOM_ORIGIN] = ['title' => \__('Custom Origin', 'flexible-shipping-usps'), 'label' => $this->get_custom_origin_label(), 'type' => 'checkbox', 'description' => $this->get_custom_origin_description(), 'desc_tip' => \true, 'default' => 'no', 'class' => 'custom_origin'];
-                $new_settings[static::ORIGIN_ADDRESS] = ['title' => \__('Origin Address', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
-                $new_settings[static::ORIGIN_CITY] = ['title' => \__('Origin City', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
-                $new_settings[static::ORIGIN_POSTCODE] = ['title' => \__('Origin Postcode', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
-                $new_settings[static::ORIGIN_COUNTRY] = ['title' => \__('Origin Country/State', 'flexible-shipping-usps'), 'type' => 'select', 'options' => [], 'options_generator' => $this->get_options_generator(), 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field custom_origin_country'];
+                $new_settings[static::CUSTOM_ORIGIN] = ['title' => __('Custom Origin', 'flexible-shipping-usps'), 'label' => $this->get_custom_origin_label(), 'type' => 'checkbox', 'description' => $this->get_custom_origin_description(), 'desc_tip' => \true, 'default' => 'no', 'class' => 'custom_origin'];
+                $new_settings[static::ORIGIN_ADDRESS] = ['title' => __('Origin Address', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
+                $new_settings[static::ORIGIN_CITY] = ['title' => __('Origin City', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
+                $new_settings[static::ORIGIN_POSTCODE] = ['title' => __('Origin Postcode', 'flexible-shipping-usps'), 'type' => 'text', 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field'];
+                $new_settings[static::ORIGIN_COUNTRY] = ['title' => __('Origin Country/State', 'flexible-shipping-usps'), 'type' => 'select', 'options' => [], 'options_generator' => $this->get_options_generator(), 'custom_attributes' => ['required' => 'required', 'autocomplete' => 'off', 'list' => 'autocompleteOff', 'aria-autocomplete' => 'list'], 'default' => '', 'class' => 'custom_origin_field custom_origin_country'];
             } else {
                 $new_settings[$key] = $field;
             }
@@ -63,9 +63,9 @@ class CustomOriginFields
     public function get_custom_origin_section_title()
     {
         if ($this->has_instance_custom_origin) {
-            return \__('Origin Settings for the whole store', 'flexible-shipping-usps');
+            return __('Origin Settings for the whole store', 'flexible-shipping-usps');
         } else {
-            return \__('Origin Settings', 'flexible-shipping-usps');
+            return __('Origin Settings', 'flexible-shipping-usps');
         }
     }
     /**
@@ -74,9 +74,9 @@ class CustomOriginFields
     protected function get_custom_origin_label()
     {
         if ($this->has_instance_custom_origin) {
-            return \__('Enable custom origin for the whole store', 'flexible-shipping-usps');
+            return __('Enable custom origin for the whole store', 'flexible-shipping-usps');
         } else {
-            return \__('Enable custom origin', 'flexible-shipping-usps');
+            return __('Enable custom origin', 'flexible-shipping-usps');
         }
     }
     /**
@@ -87,9 +87,9 @@ class CustomOriginFields
     protected function get_custom_origin_description()
     {
         if ($this->has_instance_custom_origin) {
-            return \__('Use this option to use a different shipper\'s address than the one defined in the WooCommerce settings. If not enabled, the one you\'ve entered in WooCommerce → Settings → General → Store Address will be used by default. Each shipping method can have their own custom origin.', 'flexible-shipping-usps');
+            return __('Use this option to use a different shipper\'s address than the one defined in the WooCommerce settings. If not enabled, the one you\'ve entered in WooCommerce → Settings → General → Store Address will be used by default. Each shipping method can have their own custom origin.', 'flexible-shipping-usps');
         } else {
-            return \__('Use this option to use a different shipper\'s address than the one defined in the WooCommerce settings. If not enabled, the one you\'ve entered in WooCommerce → Settings → General → Store Address will be used by default.', 'flexible-shipping-usps');
+            return __('Use this option to use a different shipper\'s address than the one defined in the WooCommerce settings. If not enabled, the one you\'ve entered in WooCommerce → Settings → General → Store Address will be used by default.', 'flexible-shipping-usps');
         }
     }
 }

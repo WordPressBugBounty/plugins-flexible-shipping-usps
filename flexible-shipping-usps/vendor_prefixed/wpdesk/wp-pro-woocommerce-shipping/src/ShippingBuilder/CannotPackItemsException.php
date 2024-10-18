@@ -28,9 +28,9 @@ class CannotPackItemsException extends \RuntimeException
             $product = $internal_data['data'];
             $items_list .= $product->get_name() . ', ';
         }
-        $items_list = \trim(\trim($items_list), ',');
+        $items_list = trim(trim($items_list), ',');
         // Translators: product names.
-        $message = \sprintf(\__('Cannot pack items: %1$s.', 'flexible-shipping-usps'), $items_list);
+        $message = sprintf(__('Cannot pack items: %1$s.', 'flexible-shipping-usps'), $items_list);
         parent::__construct($message);
     }
 }

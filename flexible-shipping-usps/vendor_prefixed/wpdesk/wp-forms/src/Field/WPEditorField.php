@@ -2,9 +2,9 @@
 
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
 
-class WPEditorField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\BasicField
+class WPEditorField extends BasicField
 {
-    public function get_template_name() : string
+    public function get_template_name(): string
     {
         return 'wp-editor';
     }

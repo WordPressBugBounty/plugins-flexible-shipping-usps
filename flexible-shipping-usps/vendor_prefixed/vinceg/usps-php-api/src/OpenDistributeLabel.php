@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class OpenDistributeLabel.
  */
-class OpenDistributeLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class OpenDistributeLabel extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -28,11 +28,11 @@ class OpenDistributeLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
         // Hack by the only way this will work properly
         // since usps wants the tags to be in
         // a certain order
-        \ksort($this->fields, \SORT_NUMERIC);
+        ksort($this->fields, \SORT_NUMERIC);
         // remove the \d. from the key
         foreach ($this->fields as $key => $value) {
-            $newKey = \str_replace('.', '', $key);
-            $newKey = \preg_replace('/\\d+\\:/', '', $newKey);
+            $newKey = str_replace('.', '', $key);
+            $newKey = preg_replace('/\d+\:/', '', $newKey);
             unset($this->fields[$key]);
             $this->fields[$newKey] = $value;
         }
@@ -96,7 +96,7 @@ class OpenDistributeLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
      */
     public function setFromAddress($firstName, $lastName, $company, $address, $city, $state, $zip, $address2 = null, $zip4 = null)
     {
-        $this->setField(5, 'FromName', \trim($firstName . ' ' . $lastName));
+        $this->setField(5, 'FromName', trim($firstName . ' ' . $lastName));
         $this->setField(7, 'FromFirm', $company);
         $this->setField(8, 'FromAddress1', $address2);
         $this->setField(9, 'FromAddress2', $address);
@@ -178,7 +178,7 @@ class OpenDistributeLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
     {
         $required = ['1:Revision' => '', '2:ImageParameters' => '', '2:PermitNumber' => '', '4:PermitIssuingPOZip5' => '', '14:POZipCode' => '', '34:FacilityType' => 'DDU', '35:MailClassEnclosed' => 'Other', '36:MailClassOther' => 'Free Samples', '37:WeightInPounds' => '22', '38:WeightInOunces' => '10', '39:ImageType' => 'PDF', '40:SeparateReceiptPage' => 'false', '41:AllowNonCleansedFacilityAddr' => 'false', '42:HoldForManifest' => 'N', '43:CommercialPrice' => 'N'];
         foreach ($required as $item => $value) {
-            $explode = \explode(':', $item);
+            $explode = explode(':', $item);
             if (!isset($this->fields[$item])) {
                 $this->setField($explode[0], $explode[1], $value);
             }

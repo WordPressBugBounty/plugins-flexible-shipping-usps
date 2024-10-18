@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\WPDesk\Forms\Form;
 use FlexibleShippingUspsVendor\WPDesk\Persistence\ElementNotExistsException;
 use FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer;
 use FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer;
-class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \FlexibleShippingUspsVendor\WPDesk\Forms\ContainerForm, \FlexibleShippingUspsVendor\WPDesk\Forms\FieldProvider
+class FormWithFields implements Form, ContainerForm, FieldProvider
 {
     use Field\Traits\HtmlAttributes;
     /** @var string Unique form_id. */
@@ -33,35 +33,35 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
         $this->set_method('POST');
     }
     /** Set Form action attribute. */
-    public function set_action(string $action) : self
+    public function set_action(string $action): self
     {
         $this->attributes['action'] = $action;
         return $this;
     }
-    public function get_action() : string
+    public function get_action(): string
     {
         return $this->attributes['action'];
     }
     /** Set Form method attribute ie. GET/POST. */
-    public function set_method(string $method) : self
+    public function set_method(string $method): self
     {
         $this->attributes['method'] = $method;
         return $this;
     }
-    public function get_method() : string
+    public function get_method(): string
     {
         return $this->attributes['method'];
     }
-    public function is_submitted() : bool
+    public function is_submitted(): bool
     {
         return null !== $this->updated_data;
     }
     /** @return void */
-    public function add_field(\FlexibleShippingUspsVendor\WPDesk\Forms\Field $field)
+    public function add_field(Field $field)
     {
         $this->fields[] = $field;
     }
-    public function is_active() : bool
+    public function is_active(): bool
     {
         return \true;
     }
@@ -74,9 +74,9 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
      */
     public function add_fields(array $fields)
     {
-        \array_map([$this, 'add_field'], $fields);
+        array_map([$this, 'add_field'], $fields);
     }
-    public function is_valid() : bool
+    public function is_valid(): bool
     {
         foreach ($this->fields as $field) {
             $field_value = $this->updated_data[$field->get_name()] ?? $field->get_default_value();
@@ -107,21 +107,21 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
      *
      * @return void
      */
-    public function set_data(\FlexibleShippingUspsVendor\Psr\Container\ContainerInterface $data)
+    public function set_data(ContainerInterface $data)
     {
         foreach ($this->fields as $field) {
             $data_key = $field->get_name();
             if ($data->has($data_key)) {
                 try {
                     $this->updated_data[$data_key] = $data->get($data_key);
-                } catch (\FlexibleShippingUspsVendor\WPDesk\Persistence\ElementNotExistsException $e) {
+                } catch (ElementNotExistsException $e) {
                     $this->updated_data[$data_key] = \false;
                 }
             }
         }
     }
     /** Renders only fields without form. */
-    public function render_fields(\FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer) : string
+    public function render_fields(Renderer $renderer): string
     {
         $content = '';
         $fields_data = $this->get_data();
@@ -130,7 +130,7 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
         }
         return $content;
     }
-    public function render_form(\FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer) : string
+    public function render_form(Renderer $renderer): string
     {
         $content = $renderer->render('form-start', [
             'form' => $this,
@@ -142,7 +142,7 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
         $content .= $renderer->render('form-end');
         return $content;
     }
-    public function put_data(\FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer $container)
+    public function put_data(PersistentContainer $container)
     {
         foreach ($this->get_fields() as $field) {
             $data_key = $field->get_name();
@@ -156,7 +156,7 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
             }
         }
     }
-    public function get_data() : array
+    public function get_data(): array
     {
         if (empty($this->get_fields())) {
             return [];
@@ -170,19 +170,19 @@ class FormWithFields implements \FlexibleShippingUspsVendor\WPDesk\Forms\Form, \
         }
         return $data;
     }
-    public function get_fields() : array
+    public function get_fields(): array
     {
         $fields = $this->fields;
-        \usort($fields, static function (\FlexibleShippingUspsVendor\WPDesk\Forms\Field $a, \FlexibleShippingUspsVendor\WPDesk\Forms\Field $b) {
+        usort($fields, static function (Field $a, Field $b) {
             return $a->get_priority() <=> $b->get_priority();
         });
         return $fields;
     }
-    public function get_form_id() : string
+    public function get_form_id(): string
     {
         return $this->form_id;
     }
-    public function get_normalized_data() : array
+    public function get_normalized_data(): array
     {
         return $this->get_data();
     }

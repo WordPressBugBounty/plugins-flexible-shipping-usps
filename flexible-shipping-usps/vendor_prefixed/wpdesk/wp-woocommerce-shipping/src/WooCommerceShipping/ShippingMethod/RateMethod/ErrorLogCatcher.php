@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\Psr\Log\LogLevel;
  *
  * @package WPDesk\WooCommerceShipping\ShippingMethod
  */
-class ErrorLogCatcher implements \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface
+class ErrorLogCatcher implements LoggerInterface
 {
     use LoggerTrait;
     /** @var LoggerInterface Decorated logger */
@@ -20,7 +20,7 @@ class ErrorLogCatcher implements \FlexibleShippingUspsVendor\Psr\Log\LoggerInter
     /**
      * @param LoggerInterface $logger Decorated logger.
      */
-    public function __construct(\FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -39,7 +39,7 @@ class ErrorLogCatcher implements \FlexibleShippingUspsVendor\Psr\Log\LoggerInter
      */
     public function log($level, $message, array $context = array())
     {
-        if ($level === \FlexibleShippingUspsVendor\Psr\Log\LogLevel::ERROR) {
+        if ($level === LogLevel::ERROR) {
             $this->error_messages[] = $message;
         }
         $this->logger->log($level, $message, $context);
@@ -51,7 +51,7 @@ class ErrorLogCatcher implements \FlexibleShippingUspsVendor\Psr\Log\LoggerInter
      */
     public function get_last_error_message()
     {
-        return \reset($this->error_messages);
+        return reset($this->error_messages);
     }
     /**
      * Returns true when error occured and was logged.

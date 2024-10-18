@@ -174,5 +174,5 @@ interface MessageInterface
      * @return static
      * @throws \InvalidArgumentException When the body is not valid.
      */
-    public function withBody(\FlexibleShippingUspsVendor\Psr\Http\Message\StreamInterface $body);
+    public function withBody(StreamInterface $body);
 }

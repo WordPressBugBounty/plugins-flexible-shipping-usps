@@ -20,49 +20,49 @@ use function sort;
  *
  * @internal
  */
-class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInterface
+class LayerPacker implements LoggerAwareInterface
 {
-    private \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $box;
+    private LoggerInterface $logger;
+    private Box $box;
     private bool $singlePassMode = \false;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItemFactory $orientatedItemFactory;
+    private OrientatedItemFactory $orientatedItemFactory;
     private bool $beStrictAboutItemOrdering = \false;
     private bool $isBoxRotated = \false;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $box)
+    public function __construct(Box $box)
     {
         $this->box = $box;
-        $this->logger = new \FlexibleShippingUspsVendor\Psr\Log\NullLogger();
-        $this->orientatedItemFactory = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItemFactory($this->box);
+        $this->logger = new NullLogger();
+        $this->orientatedItemFactory = new OrientatedItemFactory($this->box);
         $this->orientatedItemFactory->setLogger($this->logger);
     }
     /**
      * Sets a logger.
      */
-    public function setLogger(\FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger) : void
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
         $this->orientatedItemFactory->setLogger($logger);
     }
-    public function setSinglePassMode(bool $singlePassMode) : void
+    public function setSinglePassMode(bool $singlePassMode): void
     {
         $this->singlePassMode = $singlePassMode;
         $this->orientatedItemFactory->setSinglePassMode($singlePassMode);
     }
-    public function setBoxIsRotated(bool $boxIsRotated) : void
+    public function setBoxIsRotated(bool $boxIsRotated): void
     {
         $this->isBoxRotated = $boxIsRotated;
         $this->orientatedItemFactory->setBoxIsRotated($boxIsRotated);
     }
-    public function beStrictAboutItemOrdering(bool $beStrict) : void
+    public function beStrictAboutItemOrdering(bool $beStrict): void
     {
         $this->beStrictAboutItemOrdering = $beStrict;
     }
     /**
      * Pack items into an individual vertical layer.
      */
-    public function packLayer(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList &$items, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $packedItemList, int $startX, int $startY, int $startZ, int $widthForLayer, int $lengthForLayer, int $depthForLayer, int $guidelineLayerDepth, bool $considerStability) : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedLayer
+    public function packLayer(ItemList &$items, PackedItemList $packedItemList, int $startX, int $startY, int $startZ, int $widthForLayer, int $lengthForLayer, int $depthForLayer, int $guidelineLayerDepth, bool $considerStability): PackedLayer
     {
-        $layer = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedLayer();
+        $layer = new PackedLayer();
         $x = $startX;
         $y = $startY;
         $z = $startZ;
@@ -77,11 +77,11 @@ class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInte
                 continue;
             }
             $orientatedItem = $this->orientatedItemFactory->getBestOrientation($itemToPack, $prevItem, $items, $widthForLayer - $x, $lengthForLayer - $y, $depthForLayer, $rowLength, $x, $y, $z, $packedItemList, $considerStability);
-            if ($orientatedItem instanceof \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem) {
-                $packedItem = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem::fromOrientatedItem($orientatedItem, $x, $y, $z);
+            if ($orientatedItem instanceof OrientatedItem) {
+                $packedItem = PackedItem::fromOrientatedItem($orientatedItem, $x, $y, $z);
                 $layer->insert($packedItem);
                 $packedItemList->insert($packedItem);
-                $rowLength = \max($rowLength, $packedItem->getLength());
+                $rowLength = max($rowLength, $packedItem->getLength());
                 $prevItem = $orientatedItem;
                 // Figure out if we can stack items on top of this rather than side by side
                 // e.g. when we've packed a tall item, and have just put a shorter one next to it.
@@ -96,7 +96,7 @@ class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInte
                 // might be space available lengthwise across the width of this item, up to the current layer length
                 $layer->merge($this->packLayer($items, $packedItemList, $x - $packedItem->getWidth(), $y + $packedItem->getLength(), $z, $x, $y + $rowLength, $depthForLayer, $layer->getDepth(), $considerStability));
                 if ($items->count() === 0 && $skippedItems) {
-                    $items = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList::fromArray(\array_merge($skippedItems, \iterator_to_array($items)), \true);
+                    $items = ItemList::fromArray(array_merge($skippedItems, iterator_to_array($items)), \true);
                     $skippedItems = [];
                 }
                 continue;
@@ -117,14 +117,14 @@ class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInte
                 $x = $startX;
                 $rowLength = 0;
                 $skippedItems[] = $itemToPack;
-                $items = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList::fromArray(\array_merge($skippedItems, \iterator_to_array($items)), \true);
+                $items = ItemList::fromArray(array_merge($skippedItems, iterator_to_array($items)), \true);
                 $skippedItems = [];
                 $prevItem = null;
                 continue;
             }
             $this->logger->debug('no items fit, so starting next vertical layer');
             $skippedItems[] = $itemToPack;
-            $items = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList::fromArray(\array_merge($skippedItems, \iterator_to_array($items)), \true);
+            $items = ItemList::fromArray(array_merge($skippedItems, iterator_to_array($items)), \true);
             return $layer;
         }
         return $layer;
@@ -133,10 +133,10 @@ class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInte
      * As well as purely dimensional constraints, there are other constraints that need to be met
      * e.g. weight limits or item-specific restrictions (e.g. max <x> batteries per box).
      */
-    private function checkNonDimensionalConstraints(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemToPack, int $remainingWeightAllowed, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $packedItemList) : bool
+    private function checkNonDimensionalConstraints(Item $itemToPack, int $remainingWeightAllowed, PackedItemList $packedItemList): bool
     {
         $customConstraintsOK = \true;
-        if ($itemToPack instanceof \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ConstrainedItem && !$this->box instanceof \FlexibleShippingUspsVendor\DVDoug\BoxPacker\WorkingVolume) {
+        if ($itemToPack instanceof ConstrainedItem && !$this->box instanceof WorkingVolume) {
             $customConstraintsOK = $itemToPack->canBePackedInBox($packedItemList, $this->box);
         }
         return $customConstraintsOK && $itemToPack->getWeight() <= $remainingWeightAllowed;
@@ -144,15 +144,15 @@ class LayerPacker implements \FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInte
     /**
      * Compare two items to see if they have same dimensions.
      */
-    private static function isSameDimensions(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemB) : bool
+    private static function isSameDimensions(Item $itemA, Item $itemB): bool
     {
         if ($itemA === $itemB) {
             return \true;
         }
         $itemADimensions = [$itemA->getWidth(), $itemA->getLength(), $itemA->getDepth()];
         $itemBDimensions = [$itemB->getWidth(), $itemB->getLength(), $itemB->getDepth()];
-        \sort($itemADimensions);
-        \sort($itemBDimensions);
+        sort($itemADimensions);
+        sort($itemBDimensions);
         return $itemADimensions === $itemBDimensions;
     }
 }

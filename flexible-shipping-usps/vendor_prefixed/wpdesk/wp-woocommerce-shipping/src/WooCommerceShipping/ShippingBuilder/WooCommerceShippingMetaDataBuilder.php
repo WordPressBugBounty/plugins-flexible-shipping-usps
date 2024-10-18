@@ -39,7 +39,7 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @param ShippingMethod $shipping_method .
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod $shipping_method)
+    public function __construct(ShippingMethod $shipping_method)
     {
         $this->shipping_method = $shipping_method;
     }
@@ -51,7 +51,7 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @return array
      */
-    public function build_meta_data_for_rate(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate $rate, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    public function build_meta_data_for_rate(SingleRate $rate, Shipment $shipment)
     {
         return $this->create_meta_data($rate, self::NO, $shipment);
     }
@@ -64,7 +64,7 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @return array
      */
-    public function build_meta_data_for_rate_to_collection_point(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate $rate, $collection_point, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    public function build_meta_data_for_rate_to_collection_point(SingleRate $rate, $collection_point, Shipment $shipment)
     {
         $meta_data = $this->create_meta_data($rate, self::YES, $shipment);
         if (null !== $collection_point) {
@@ -79,7 +79,7 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @return array
      */
-    public function build_meta_data_to_collection_point(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPoints\CollectionPoint $collection_point)
+    public function build_meta_data_to_collection_point(CollectionPoint $collection_point)
     {
         return $this->append_collection_point_data($this->create_meta_data(null, self::YES), $collection_point);
     }
@@ -97,7 +97,7 @@ class WooCommerceShippingMetaDataBuilder
         $meta_data = [self::COLLECTION_POINT => $collection_point];
         if (isset($rate)) {
             $meta_data[self::SERVICE_TYPE] = $rate->service_type;
-            if ($this->shipping_method instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasEstimatedDeliveryDates) {
+            if ($this->shipping_method instanceof HasEstimatedDeliveryDates) {
                 $meta_data = $this->append_delivery_dates_if_supported_and_exists($meta_data, $rate);
             }
         }
@@ -117,7 +117,7 @@ class WooCommerceShippingMetaDataBuilder
     private function append_collection_point_data(array $meta_data, $collection_point)
     {
         $meta_data[self::COLLECTION_POINT_ID] = $collection_point->collection_point_id;
-        $collection_point_formatter = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CollectionPointFormatter();
+        $collection_point_formatter = new CollectionPointFormatter();
         $meta_data[self::COLLECTION_POINT_ADDRESS] = $collection_point_formatter->get_collection_point_as_label($collection_point);
         return $meta_data;
     }
@@ -129,10 +129,10 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @return array
      */
-    private function append_packages_meta_data_if_packed(array $meta_data, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    private function append_packages_meta_data_if_packed(array $meta_data, Shipment $shipment)
     {
         if ($shipment->packed) {
-            $meta_data_builder = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\PackedPackagesMetaDataBuilder($shipment);
+            $meta_data_builder = new PackedPackagesMetaDataBuilder($shipment);
             $meta_data['packed_packages'] = $meta_data_builder->create_meta_data();
         }
         return $meta_data;
@@ -145,9 +145,9 @@ class WooCommerceShippingMetaDataBuilder
      *
      * @return array
      */
-    private function append_delivery_dates_if_supported_and_exists(array $meta_data, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate $rate)
+    private function append_delivery_dates_if_supported_and_exists(array $meta_data, SingleRate $rate)
     {
-        $metadata_builder = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder($this->shipping_method);
+        $metadata_builder = new EstimatedDeliveryMetaDataBuilder($this->shipping_method);
         $meta_data = $metadata_builder->append_delivery_dates_metadata_if_exists($meta_data, $rate);
         return $meta_data;
     }

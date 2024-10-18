@@ -8,7 +8,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCom
 /**
  * Can build USPS meta data.
  */
-class UspsMetaDataBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder
+class UspsMetaDataBuilder extends WooCommerceShippingMetaDataBuilder
 {
     const META_USPS_SERVICE_CODE = 'usps_service_id';
     /**
@@ -19,7 +19,7 @@ class UspsMetaDataBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooCommerce
      *
      * @return array
      */
-    public function build_meta_data_for_rate(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate $rate, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    public function build_meta_data_for_rate(SingleRate $rate, Shipment $shipment)
     {
         $meta_data = parent::build_meta_data_for_rate($rate, $shipment);
         $meta_data = $this->add_usps_service_code_to_metadata($meta_data, $rate);
@@ -33,7 +33,7 @@ class UspsMetaDataBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooCommerce
      *
      * @return array
      */
-    private function add_usps_service_code_to_metadata(array $meta_data, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate $rate)
+    private function add_usps_service_code_to_metadata(array $meta_data, SingleRate $rate)
     {
         $meta_data[self::META_USPS_SERVICE_CODE] = $rate->service_type;
         return $meta_data;

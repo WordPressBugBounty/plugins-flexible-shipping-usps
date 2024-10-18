@@ -6,7 +6,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can enqueue assets.
  */
-class Assets implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Assets implements Hookable
 {
     /**
      * @var string
@@ -25,15 +25,15 @@ class Assets implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\
     }
     public function hooks()
     {
-        \add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
     }
     public function admin_enqueue_scripts()
     {
-        $screen = \get_current_screen();
-        if ($screen->id == 'admin_page_wpdesk_tracker_' . $this->plugin_slug) {
+        $screen = get_current_screen();
+        if ($screen->id === 'admin_page_wpdesk_tracker_' . $this->plugin_slug) {
             $handle = 'wpdesk-helper-tracker_' . $this->plugin_slug;
-            \wp_register_style($handle, \plugin_dir_url(__FILE__) . '../../../assets/css/tracker.css', array(), $this->script_version);
-            \wp_enqueue_style($handle);
+            wp_register_style($handle, plugin_dir_url(__FILE__) . '../../../assets/css/tracker.css', [], $this->script_version);
+            wp_enqueue_style($handle);
         }
     }
 }

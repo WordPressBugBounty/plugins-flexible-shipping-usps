@@ -3,10 +3,10 @@
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer;
-class EmailSanitizer implements \FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer
+class EmailSanitizer implements Sanitizer
 {
-    public function sanitize($value) : string
+    public function sanitize($value): string
     {
-        return \sanitize_email($value);
+        return sanitize_email($value);
     }
 }

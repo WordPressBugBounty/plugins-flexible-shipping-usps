@@ -21,11 +21,11 @@ abstract class SettingsDefinition
      *
      * @return bool
      */
-    public abstract function validate_settings(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValues $settings);
+    abstract public function validate_settings(SettingsValues $settings);
     /**
      * Get settings.
      *
      * @return array
      */
-    public abstract function get_form_fields();
+    abstract public function get_form_fields();
 }

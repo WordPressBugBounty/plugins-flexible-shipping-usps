@@ -23,7 +23,7 @@ class PackedLayer
     /**
      * Add a packed item to this layer.
      */
-    public function insert(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem $packedItem) : void
+    public function insert(PackedItem $packedItem): void
     {
         $this->items[] = $packedItem;
     }
@@ -32,7 +32,7 @@ class PackedLayer
      *
      * @return PackedItem[]
      */
-    public function getItems() : array
+    public function getItems(): array
     {
         return $this->items;
     }
@@ -41,11 +41,11 @@ class PackedLayer
      *
      * @return int mm^2
      */
-    public function getFootprint() : int
+    public function getFootprint(): int
     {
         return $this->getWidth() * $this->getLength();
     }
-    public function getStartX() : int
+    public function getStartX(): int
     {
         if (!$this->items) {
             return 0;
@@ -54,9 +54,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getX();
         }
-        return \min($values);
+        return min($values);
     }
-    public function getEndX() : int
+    public function getEndX(): int
     {
         if (!$this->items) {
             return 0;
@@ -65,9 +65,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getX() + $item->getWidth();
         }
-        return \max($values);
+        return max($values);
     }
-    public function getWidth() : int
+    public function getWidth(): int
     {
         if (!$this->items) {
             return 0;
@@ -78,9 +78,9 @@ class PackedLayer
             $start[] = $item->getX();
             $end[] = $item->getX() + $item->getWidth();
         }
-        return \max($end) - \min($start);
+        return max($end) - min($start);
     }
-    public function getStartY() : int
+    public function getStartY(): int
     {
         if (!$this->items) {
             return 0;
@@ -89,9 +89,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getY();
         }
-        return \min($values);
+        return min($values);
     }
-    public function getEndY() : int
+    public function getEndY(): int
     {
         if (!$this->items) {
             return 0;
@@ -100,9 +100,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getY() + $item->getLength();
         }
-        return \max($values);
+        return max($values);
     }
-    public function getLength() : int
+    public function getLength(): int
     {
         if (!$this->items) {
             return 0;
@@ -113,9 +113,9 @@ class PackedLayer
             $start[] = $item->getY();
             $end[] = $item->getY() + $item->getLength();
         }
-        return \max($end) - \min($start);
+        return max($end) - min($start);
     }
-    public function getStartZ() : int
+    public function getStartZ(): int
     {
         if (!$this->items) {
             return 0;
@@ -124,9 +124,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getZ();
         }
-        return \min($values);
+        return min($values);
     }
-    public function getEndZ() : int
+    public function getEndZ(): int
     {
         if (!$this->items) {
             return 0;
@@ -135,9 +135,9 @@ class PackedLayer
         foreach ($this->items as $item) {
             $values[] = $item->getZ() + $item->getDepth();
         }
-        return \max($values);
+        return max($values);
     }
-    public function getDepth() : int
+    public function getDepth(): int
     {
         if (!$this->items) {
             return 0;
@@ -148,9 +148,9 @@ class PackedLayer
             $start[] = $item->getZ();
             $end[] = $item->getZ() + $item->getDepth();
         }
-        return \max($end) - \min($start);
+        return max($end) - min($start);
     }
-    public function getWeight() : int
+    public function getWeight(): int
     {
         $weight = 0;
         foreach ($this->items as $item) {
@@ -158,7 +158,7 @@ class PackedLayer
         }
         return $weight;
     }
-    public function merge(self $otherLayer) : void
+    public function merge(self $otherLayer): void
     {
         foreach ($otherLayer->items as $packedItem) {
             $this->items[] = $packedItem;

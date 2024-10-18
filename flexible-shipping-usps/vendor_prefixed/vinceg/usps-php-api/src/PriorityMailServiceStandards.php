@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class PriorityMailServiceStandards.
  */
-class PriorityMailServiceStandards extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class PriorityMailServiceStandards extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call

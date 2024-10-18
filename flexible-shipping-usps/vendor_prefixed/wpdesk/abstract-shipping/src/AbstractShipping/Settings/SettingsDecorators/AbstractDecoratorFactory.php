@@ -22,7 +22,7 @@ abstract class AbstractDecoratorFactory
      *
      * @return SettingsDefinition
      */
-    public function create_decorator(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsDefinition $settings_definition, $related_field_id, $before = \true, $field_id = null)
+    public function create_decorator(SettingsDefinition $settings_definition, $related_field_id, $before = \true, $field_id = null)
     {
         $decorator_class = $this->get_settings_definition_modifier_class($before);
         return new $decorator_class($settings_definition, $related_field_id, empty($field_id) ? $this->get_field_id() : $field_id, $this->get_field_settings());
@@ -30,11 +30,11 @@ abstract class AbstractDecoratorFactory
     /**
      * @return string
      */
-    protected abstract function get_field_settings();
+    abstract protected function get_field_settings();
     /**
      * @return array
      */
-    public abstract function get_field_id();
+    abstract public function get_field_id();
     /**
      * @param bool $before .
      *
@@ -42,6 +42,6 @@ abstract class AbstractDecoratorFactory
      */
     protected function get_settings_definition_modifier_class($before = \true)
     {
-        return $before ? \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\DefinitionModifier\SettingsDefinitionModifierBefore::class : \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\DefinitionModifier\SettingsDefinitionModifierAfter::class;
+        return $before ? SettingsDefinitionModifierBefore::class : SettingsDefinitionModifierAfter::class;
     }
 }

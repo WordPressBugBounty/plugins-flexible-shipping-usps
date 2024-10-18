@@ -4,14 +4,11 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps;
 
 use FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSettingsDefinition;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatusAjax;
-use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\AddressProvider;
-use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\CustomOriginAddressSender;
-use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceAddressSender;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod;
 /**
  * USPS Shipping Method.
  */
-class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasFreeShipping, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasRateCache
+class UspsShippingMethod extends ShippingMethod implements ShippingMethod\HasFreeShipping, ShippingMethod\HasRateCache
 {
     /**
      * Supports.
@@ -28,7 +25,7 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
      *
      * @param FieldApiStatusAjax $api_status_ajax_handler .
      */
-    public static function set_api_status_ajax_handler(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatusAjax $api_status_ajax_handler)
+    public static function set_api_status_ajax_handler(FieldApiStatusAjax $api_status_ajax_handler)
     {
         static::$api_status_ajax_handler = $api_status_ajax_handler;
     }
@@ -41,9 +38,9 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
     private function prepare_description()
     {
         $docs_link = 'https://octol.io/usps-method-docs';
-        return \sprintf(
+        return sprintf(
             // Translators: docs URL.
-            \__('Dynamically calculated USPS live rates based on the established USPS API connection. %1$sLearn more →%2$s', 'flexible-shipping-usps'),
+            __('Dynamically calculated USPS live rates based on the established USPS API connection. %1$sLearn more →%2$s', 'flexible-shipping-usps'),
             '<a target="_blank" href="' . $docs_link . '">',
             '</a>'
         );
@@ -61,7 +58,9 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
      */
     public function build_form_fields()
     {
-        $usps_settings_definition = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\UspsSettingsDefinitionWooCommerce($this->form_fields);
+        $default_api_type_web_api = empty($this->get_option(UspsSettingsDefinition::API_TYPE, '')) && !empty($this->get_option(UspsSettingsDefinition::USER_ID, ''));
+        $current_api_type = $this->get_option(UspsSettingsDefinition::API_TYPE, UspsSettingsDefinition::API_TYPE_WEB);
+        $usps_settings_definition = new UspsSettingsDefinitionWooCommerce($this->form_fields, $default_api_type_web_api, $current_api_type);
         $this->form_fields = $usps_settings_definition->get_form_fields();
         $this->instance_form_fields = $usps_settings_definition->get_instance_form_fields();
     }
@@ -72,7 +71,7 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
      */
     protected function create_metadata_builder()
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\UspsMetaDataBuilder($this);
+        return new UspsMetaDataBuilder($this);
     }
     /**
      * Render shipping method settings.
@@ -82,10 +81,10 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
         if ($this->instance_id) {
             $shipping_zone = $this->get_zone_for_shipping_method($this->instance_id);
             if (!$this->is_zone_for_domestic_services($shipping_zone)) {
-                unset($this->instance_form_fields[\FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSettingsDefinition::SERVICES_DOMESTIC]);
+                unset($this->instance_form_fields[UspsSettingsDefinition::SERVICES_DOMESTIC]);
             }
             if (!$this->is_zone_for_international_services($shipping_zone)) {
-                unset($this->instance_form_fields[\FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSettingsDefinition::SERVICES_INTERNATIONAL]);
+                unset($this->instance_form_fields[UspsSettingsDefinition::SERVICES_INTERNATIONAL]);
             }
         }
         parent::admin_options();
@@ -117,10 +116,10 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
     private function is_zone_for_domestic_services(\WC_Shipping_Zone $zone)
     {
         $zone_locations = $zone->get_zone_locations();
-        $is_domestic = \count($zone_locations) ? \false : \true;
+        $is_domestic = count($zone_locations) ? \false : \true;
         foreach ($zone_locations as $zone_location) {
             if ('country' === $zone_location->type || 'state' === $zone_location->type) {
-                $code_exploded = \explode(':', $zone_location->code);
+                $code_exploded = explode(':', $zone_location->code);
                 $country_code = $code_exploded[0];
                 $is_domestic = $is_domestic || 'US' === $country_code;
             }
@@ -135,10 +134,10 @@ class UspsShippingMethod extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceS
     private function is_zone_for_international_services(\WC_Shipping_Zone $zone)
     {
         $zone_locations = $zone->get_zone_locations();
-        $is_international = \count($zone_locations) ? \false : \true;
+        $is_international = count($zone_locations) ? \false : \true;
         foreach ($zone_locations as $zone_location) {
             if ('country' === $zone_location->type || 'state' === $zone_location->type) {
-                $code_exploded = \explode(':', $zone_location->code);
+                $code_exploded = explode(':', $zone_location->code);
                 $country_code = $code_exploded[0];
                 $is_international = $is_international || 'US' !== $country_code;
             } elseif ('continent' === $zone_location->type) {

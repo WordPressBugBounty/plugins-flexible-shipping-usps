@@ -14,172 +14,172 @@ use FlexibleShippingUspsVendor\WPDesk\Forms\Validator\RequiredValidator;
  * Base class for fields. Is responsible for settings all required field values and provides standard implementation for
  * the field interface.
  */
-abstract class BasicField implements \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+abstract class BasicField implements Field
 {
     use Field\Traits\HtmlAttributes;
     const DEFAULT_PRIORITY = 10;
     /** @var array{default_value: string, possible_values?: string[], sublabel?: string, priority: int, label: string, description: string, description_tip: string, data: array<string|int>} */
     protected $meta = ['priority' => self::DEFAULT_PRIORITY, 'default_value' => '', 'label' => '', 'description' => '', 'description_tip' => '', 'data' => [], 'type' => 'text'];
-    public function should_override_form_template() : bool
+    public function should_override_form_template(): bool
     {
         return \false;
     }
-    public function get_type() : string
+    public function get_type(): string
     {
         return $this->meta['type'];
     }
-    public function set_type(string $type) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    public function set_type(string $type): Field
     {
         $this->meta['type'] = $type;
         return $this;
     }
-    public function get_validator() : \FlexibleShippingUspsVendor\WPDesk\Forms\Validator
+    public function get_validator(): Validator
     {
-        $chain = new \FlexibleShippingUspsVendor\WPDesk\Forms\Validator\ChainValidator();
+        $chain = new ChainValidator();
         if ($this->is_required()) {
-            $chain->attach(new \FlexibleShippingUspsVendor\WPDesk\Forms\Validator\RequiredValidator());
+            $chain->attach(new RequiredValidator());
         }
         return $chain;
     }
-    public function get_sanitizer() : \FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer
+    public function get_sanitizer(): Sanitizer
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\Forms\Sanitizer\NoSanitize();
+        return new NoSanitize();
     }
-    public function has_serializer() : bool
+    public function has_serializer(): bool
     {
         return \false;
     }
-    public function get_serializer() : \FlexibleShippingUspsVendor\WPDesk\Forms\Serializer
+    public function get_serializer(): Serializer
     {
-        throw new \BadMethodCallException('You must define your serializer in a child class.');
+        throw new BadMethodCallException('You must define your serializer in a child class.');
     }
-    public final function get_name() : string
+    final public function get_name(): string
     {
         return $this->attributes['name'] ?? '';
     }
-    public final function get_label() : string
+    final public function get_label(): string
     {
         return $this->meta['label'] ?? '';
     }
-    public final function set_label(string $value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_label(string $value): Field
     {
         $this->meta['label'] = $value;
         return $this;
     }
-    public final function get_description_tip() : string
+    final public function get_description_tip(): string
     {
         return $this->meta['description_tip'] ?? '';
     }
-    public final function has_description_tip() : bool
+    final public function has_description_tip(): bool
     {
         return !empty($this->meta['description_tip']);
     }
-    public final function get_description() : string
+    final public function get_description(): string
     {
         return $this->meta['description'] ?? '';
     }
-    public final function has_label() : bool
+    final public function has_label(): bool
     {
         return !empty($this->meta['label']);
     }
-    public final function has_description() : bool
+    final public function has_description(): bool
     {
         return !empty($this->meta['description']);
     }
-    public final function set_description(string $value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_description(string $value): Field
     {
         $this->meta['description'] = $value;
         return $this;
     }
-    public final function set_description_tip(string $value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_description_tip(string $value): Field
     {
         $this->meta['description_tip'] = $value;
         return $this;
     }
-    public final function set_placeholder(string $value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_placeholder(string $value): Field
     {
         $this->attributes['placeholder'] = $value;
         return $this;
     }
-    public final function has_placeholder() : bool
+    final public function has_placeholder(): bool
     {
         return !empty($this->attributes['placeholder']);
     }
-    public final function get_placeholder() : string
+    final public function get_placeholder(): string
     {
         return $this->attributes['placeholder'] ?? '';
     }
-    public final function set_name(string $name) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_name(string $name): Field
     {
         $this->attributes['name'] = $name;
         return $this;
     }
-    public final function get_meta_value(string $name)
+    final public function get_meta_value(string $name)
     {
         return $this->meta[$name] ?? '';
     }
-    public final function get_classes() : string
+    final public function get_classes(): string
     {
-        return \implode(' ', $this->attributes['class'] ?? []);
+        return implode(' ', $this->attributes['class'] ?? []);
     }
-    public final function has_classes() : bool
+    final public function has_classes(): bool
     {
         return !empty($this->attributes['class']);
     }
-    public final function has_data() : bool
+    final public function has_data(): bool
     {
         return !empty($this->meta['data']);
     }
-    public final function get_data() : array
+    final public function get_data(): array
     {
         return $this->meta['data'] ?? [];
     }
-    public final function get_possible_values()
+    final public function get_possible_values()
     {
         return !empty($this->meta['possible_values']) ? $this->meta['possible_values'] : [];
     }
-    public final function get_id() : string
+    final public function get_id(): string
     {
-        return $this->attributes['id'] ?? \sanitize_title($this->get_name());
+        return $this->attributes['id'] ?? sanitize_title($this->get_name());
     }
-    public final function is_multiple() : bool
+    final public function is_multiple(): bool
     {
         return isset($this->attributes['multiple']);
     }
-    public final function set_disabled() : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_disabled(): Field
     {
         $this->attributes['disabled'] = 'disabled';
         return $this;
     }
-    public final function is_disabled() : bool
+    final public function is_disabled(): bool
     {
         return $this->attributes['disabled'] ?? \false;
     }
-    public final function set_readonly() : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_readonly(): Field
     {
         $this->attributes['readonly'] = 'readonly';
         return $this;
     }
-    public final function is_readonly() : bool
+    final public function is_readonly(): bool
     {
         return $this->attributes['readonly'] ?? \false;
     }
-    public final function set_required() : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_required(): Field
     {
         $this->attributes['required'] = 'required';
         return $this;
     }
-    public final function add_class(string $class_name) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function add_class(string $class_name): Field
     {
         $this->attributes['class'][$class_name] = $class_name;
         return $this;
     }
-    public final function unset_class(string $class_name) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function unset_class(string $class_name): Field
     {
         unset($this->attributes['class'][$class_name]);
         return $this;
     }
-    public final function add_data(string $data_name, string $data_value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function add_data(string $data_name, string $data_value): Field
     {
         if (empty($this->meta['data'])) {
             $this->meta['data'] = [];
@@ -187,33 +187,33 @@ abstract class BasicField implements \FlexibleShippingUspsVendor\WPDesk\Forms\Fi
         $this->meta['data'][$data_name] = $data_value;
         return $this;
     }
-    public final function unset_data(string $data_name) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function unset_data(string $data_name): Field
     {
         unset($this->meta['data'][$data_name]);
         return $this;
     }
-    public final function is_meta_value_set(string $name) : bool
+    final public function is_meta_value_set(string $name): bool
     {
         return !empty($this->meta[$name]);
     }
-    public final function is_class_set(string $name) : bool
+    final public function is_class_set(string $name): bool
     {
         return !empty($this->attributes['class'][$name]);
     }
-    public final function get_default_value() : string
+    final public function get_default_value(): string
     {
         return $this->meta['default_value'] ?? '';
     }
-    public final function set_default_value(string $value) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_default_value(string $value): Field
     {
         $this->meta['default_value'] = $value;
         return $this;
     }
-    public final function is_required() : bool
+    final public function is_required(): bool
     {
         return isset($this->attributes['required']);
     }
-    public final function get_priority() : int
+    final public function get_priority(): int
     {
         return $this->meta['priority'];
     }
@@ -222,7 +222,7 @@ abstract class BasicField implements \FlexibleShippingUspsVendor\WPDesk\Forms\Fi
      *
      * @see FormWithFields::get_fields()
      */
-    public final function set_priority(int $priority) : \FlexibleShippingUspsVendor\WPDesk\Forms\Field
+    final public function set_priority(int $priority): Field
     {
         $this->meta['priority'] = $priority;
         return $this;

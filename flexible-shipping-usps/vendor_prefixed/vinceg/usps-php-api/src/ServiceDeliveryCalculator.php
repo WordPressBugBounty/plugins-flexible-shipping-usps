@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class ServiceDeliveryCalculator.
  */
-class ServiceDeliveryCalculator extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class ServiceDeliveryCalculator extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call

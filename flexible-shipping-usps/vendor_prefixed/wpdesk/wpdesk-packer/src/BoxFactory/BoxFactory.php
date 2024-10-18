@@ -18,7 +18,7 @@ abstract class BoxFactory
      *
      * @param Packer $boxpack .
      */
-    public function append_all_boxes(\FlexibleShippingUspsVendor\WPDesk\Packer\Packer $boxpack)
+    public function append_all_boxes(Packer $boxpack)
     {
         foreach ($this->boxes as $key => $box) {
             $this->append_box($boxpack, $key, $box);
@@ -30,7 +30,7 @@ abstract class BoxFactory
      * @param Packer $boxpack .
      * @param string $key .
      */
-    public function append_single_box(\FlexibleShippingUspsVendor\WPDesk\Packer\Packer $boxpack, $key)
+    public function append_single_box(Packer $boxpack, $key)
     {
         if (isset($this->boxes[$key])) {
             $this->append_box($boxpack, $key, $this->boxes[$key]);
@@ -43,9 +43,9 @@ abstract class BoxFactory
      * @param string $key .
      * @param array  $box .
      */
-    protected function append_box(\FlexibleShippingUspsVendor\WPDesk\Packer\Packer $boxpack, $key, $box)
+    protected function append_box(Packer $boxpack, $key, $box)
     {
-        $newbox = new \FlexibleShippingUspsVendor\WPDesk\Packer\Box\BoxImplementation($box['length'], $box['width'], $box['height'], 0, $box['weight'], array('id' => $key, 'box' => $box));
+        $newbox = new BoxImplementation($box['length'], $box['width'], $box['height'], 0, $box['weight'], array('id' => $key, 'box' => $box));
         $boxpack->add_box($newbox);
     }
     /**
@@ -104,8 +104,8 @@ abstract class BoxFactory
     protected function get_weight($weight, $from_unit = 'lbs', $to_unit = 'lbs')
     {
         $weight = (float) $weight;
-        $from_unit = \strtolower($from_unit);
-        $to_unit = \strtolower($to_unit);
+        $from_unit = strtolower($from_unit);
+        $to_unit = strtolower($to_unit);
         // Unify all units to kg first.
         if ($from_unit !== $to_unit) {
             switch ($from_unit) {

@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees;
 /**
  * Can apply none value to price.
  */
-class PriceAdjustmentNone implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustment
+class PriceAdjustmentNone implements PriceAdjustment
 {
     const ADJUSTMENT_TYPE = 'none';
     /**

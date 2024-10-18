@@ -16,7 +16,7 @@ interface RateMethod
      *
      * @return void
      */
-    public function handle_rates(\WC_Shipping_Method $method, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\ErrorLogCatcher $logger, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder $metadata_builder, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingBuilder $shipment_builder);
+    public function handle_rates(\WC_Shipping_Method $method, ErrorLogCatcher $logger, WooCommerceShippingMetaDataBuilder $metadata_builder, WooCommerceShippingBuilder $shipment_builder);
     /**
      * Add rate method settings to shipment service settings.
      *

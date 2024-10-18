@@ -75,7 +75,7 @@ abstract class CheckoutField
      * @param string            $description .
      * @param string            $shipping_method_id .
      */
-    public function __construct(array $collection_points, $selected_collection_point, \FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer, $label, $unavailable_points_label, $description, $shipping_method_id)
+    public function __construct(array $collection_points, $selected_collection_point, Renderer $renderer, $label, $unavailable_points_label, $description, $shipping_method_id)
     {
         $this->collection_points = $collection_points;
         $this->selected_collection_point = $selected_collection_point;
@@ -94,7 +94,7 @@ abstract class CheckoutField
     {
         $options = array();
         /** @var CollectionPoint $collection_point */
-        $collection_point_formatter = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CollectionPointFormatter();
+        $collection_point_formatter = new CollectionPointFormatter();
         foreach ($this->collection_points as $collection_point) {
             $options[$collection_point->collection_point_id] = $collection_point_formatter->get_collection_point_as_label($collection_point);
         }

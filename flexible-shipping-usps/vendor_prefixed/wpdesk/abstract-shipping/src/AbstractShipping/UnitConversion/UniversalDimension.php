@@ -15,7 +15,7 @@ use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Weight;
  */
 class UniversalDimension
 {
-    private $unit_calc = [\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_IN => 25.4, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_MM => 1, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_CM => 10, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Dimensions::DIMENSION_UNIT_M => 1000];
+    private $unit_calc = [Dimensions::DIMENSION_UNIT_IN => 25.4, Dimensions::DIMENSION_UNIT_MM => 1, Dimensions::DIMENSION_UNIT_CM => 10, Dimensions::DIMENSION_UNIT_M => 1000];
     /**
      * Length.
      *
@@ -51,12 +51,12 @@ class UniversalDimension
      */
     private function to_mm($length, $unit)
     {
-        $unit = \strtoupper($unit);
+        $unit = strtoupper($unit);
         if (isset($this->unit_calc[$unit])) {
             $calc = $this->unit_calc[$unit];
-            return \round($length * $calc, $this->precision);
+            return round($length * $calc, $this->precision);
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\UnitConversionException(\sprintf('Can\'t support "%s" unit', $unit));
+        throw new UnitConversionException(sprintf('Can\'t support "%s" unit', $unit));
     }
     /**
      * Convert to target unit. Returns 0 if confused.
@@ -70,11 +70,11 @@ class UniversalDimension
      */
     public function as_unit_rounded($to_unit, $precision = 2)
     {
-        $to_unit = \strtoupper($to_unit);
+        $to_unit = strtoupper($to_unit);
         if (isset($this->unit_calc[$to_unit])) {
             $calc = $this->unit_calc[$to_unit];
-            return \round($this->length / $calc, $precision);
+            return round($this->length / $calc, $precision);
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\UnitConversionException(\__('Can\'t convert weight to target unit.', 'flexible-shipping-usps'));
+        throw new UnitConversionException(__('Can\'t convert weight to target unit.', 'flexible-shipping-usps'));
     }
 }

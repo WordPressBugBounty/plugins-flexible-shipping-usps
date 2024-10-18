@@ -21,7 +21,7 @@ use FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface;
  * @author Matt Lehner <mlehner@gmail.com>
  * @author Benjamin Zikarsky <benjamin@zikarsky.de>
  */
-class GelfHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\AbstractProcessingHandler
+class GelfHandler extends AbstractProcessingHandler
 {
     /**
      * @var PublisherInterface the publisher object that sends the message to the server
@@ -30,7 +30,7 @@ class GelfHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\AbstractPr
     /**
      * @param PublisherInterface $publisher a gelf publisher object
      */
-    public function __construct(\FlexibleShippingUspsVendor\Gelf\PublisherInterface $publisher, $level = \FlexibleShippingUspsVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct(PublisherInterface $publisher, $level = Logger::DEBUG, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
         $this->publisher = $publisher;
@@ -38,15 +38,15 @@ class GelfHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\AbstractPr
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->publisher->publish($record['formatted']);
     }
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FlexibleShippingUspsVendor\Monolog\Formatter\GelfMessageFormatter();
+        return new GelfMessageFormatter();
     }
 }

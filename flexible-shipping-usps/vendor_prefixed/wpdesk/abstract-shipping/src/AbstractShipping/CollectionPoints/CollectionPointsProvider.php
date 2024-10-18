@@ -23,7 +23,7 @@ interface CollectionPointsProvider
      * @return CollectionPoint[]
      * @throws CollectionPointNotFoundException
      */
-    public function get_nearest_collection_points(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address $address);
+    public function get_nearest_collection_points(Address $address);
     /**
      * Get single nearest collection point to given address.
      *
@@ -32,7 +32,7 @@ interface CollectionPointsProvider
      * @return CollectionPoint
      * @throws CollectionPointNotFoundException
      */
-    public function get_single_nearest_collection_point(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address $address);
+    public function get_single_nearest_collection_point(Address $address);
     /**
      * Get get collection point by given id.
      *

@@ -14,10 +14,10 @@ namespace FlexibleShippingUspsVendor\DVDoug\BoxPacker;
  *
  * @deprecated use ConstrainedPlacementItem instead which has additional flexibility
  */
-interface ConstrainedItem extends \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+interface ConstrainedItem extends Item
 {
     /**
      * Hook for user implementation of item-specific constraints, e.g. max <x> batteries per box.
      */
-    public function canBePackedInBox(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $alreadyPackedItems, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $box) : bool;
+    public function canBePackedInBox(PackedItemList $alreadyPackedItems, Box $box): bool;
 }

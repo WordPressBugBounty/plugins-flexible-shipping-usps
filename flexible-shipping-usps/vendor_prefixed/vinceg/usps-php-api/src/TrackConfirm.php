@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class TrackConfirm.
  */
-class TrackConfirm extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class TrackConfirm extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call

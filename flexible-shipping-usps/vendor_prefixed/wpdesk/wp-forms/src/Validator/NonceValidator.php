@@ -3,7 +3,7 @@
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Validator;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Validator;
-class NonceValidator implements \FlexibleShippingUspsVendor\WPDesk\Forms\Validator
+class NonceValidator implements Validator
 {
     /** @var string */
     private $action;
@@ -12,11 +12,11 @@ class NonceValidator implements \FlexibleShippingUspsVendor\WPDesk\Forms\Validat
     {
         $this->action = $action;
     }
-    public function is_valid($value) : bool
+    public function is_valid($value): bool
     {
-        return (bool) \wp_verify_nonce($value, $this->action);
+        return (bool) wp_verify_nonce($value, $this->action);
     }
-    public function get_messages() : array
+    public function get_messages(): array
     {
         return [];
     }

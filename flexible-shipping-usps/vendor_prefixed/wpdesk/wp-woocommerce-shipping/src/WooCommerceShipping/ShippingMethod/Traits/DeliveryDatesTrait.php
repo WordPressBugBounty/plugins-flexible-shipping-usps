@@ -23,7 +23,7 @@ trait DeliveryDatesTrait
      */
     public function get_delivery_dates_setting($shipping_method)
     {
-        return $shipping_method->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryDatesDisplay::DELIVERY_DATES, 'none');
+        return $shipping_method->get_option(EstimatedDeliveryDatesDisplay::DELIVERY_DATES, 'none');
     }
     /**
      * Get maximum transit time setting.
@@ -47,9 +47,9 @@ trait DeliveryDatesTrait
     public function should_exclude_rate_with_maximum_transit_time($shipping_method, array $shipping_rate_meta_data)
     {
         $maximum_transit_time_setting = $this->get_maximum_transit_time_setting($shipping_method);
-        if ('none' !== $this->get_delivery_dates_setting($shipping_method) && '' !== $maximum_transit_time_setting && isset($shipping_rate_meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT])) {
-            $maximum_transit_time_setting = \intval($maximum_transit_time_setting);
-            $business_days_in_transit = \intval($shipping_rate_meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT]);
+        if ('none' !== $this->get_delivery_dates_setting($shipping_method) && '' !== $maximum_transit_time_setting && isset($shipping_rate_meta_data[EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT])) {
+            $maximum_transit_time_setting = intval($maximum_transit_time_setting);
+            $business_days_in_transit = intval($shipping_rate_meta_data[EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT]);
             if ($business_days_in_transit > $maximum_transit_time_setting) {
                 return \true;
             }

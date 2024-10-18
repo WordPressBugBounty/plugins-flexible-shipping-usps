@@ -11,7 +11,7 @@ use FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence\Wordpress
  */
-final class WordpressTransientContainer implements \FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer
+final class WordpressTransientContainer implements PersistentContainer
 {
     use FallbackFromGetTrait;
     /** @var int */
@@ -22,7 +22,7 @@ final class WordpressTransientContainer implements \FlexibleShippingUspsVendor\W
      * @param string    $namespace  Namespace so transients in different containers would not conflict.
      * @param float|int $expiration Expire transient after xx seconds.
      */
-    public function __construct($namespace = '', $expiration = DAY_IN_SECONDS)
+    public function __construct($namespace = '', $expiration = \DAY_IN_SECONDS)
     {
         $this->expiration = (int) $expiration;
         $this->namespace = $namespace;
@@ -43,7 +43,7 @@ final class WordpressTransientContainer implements \FlexibleShippingUspsVendor\W
         if ($value === null) {
             $this->delete($id);
         } else {
-            \set_transient($this->prepare_key_name($id), $value, $this->expiration);
+            set_transient($this->prepare_key_name($id), $value, $this->expiration);
         }
     }
     /**
@@ -53,13 +53,13 @@ final class WordpressTransientContainer implements \FlexibleShippingUspsVendor\W
      *
      * @return bool
      */
-    public function has($id) : bool
+    public function has($id): bool
     {
-        return \get_transient($this->prepare_key_name($id)) !== \false;
+        return get_transient($this->prepare_key_name($id)) !== \false;
     }
     public function delete(string $id)
     {
-        \delete_transient($this->prepare_key_name($id));
+        delete_transient($this->prepare_key_name($id));
     }
     /**
      * Prepare transient name for key.
@@ -68,15 +68,15 @@ final class WordpressTransientContainer implements \FlexibleShippingUspsVendor\W
      *
      * @return string
      */
-    private function prepare_key_name($key) : string
+    private function prepare_key_name($key): string
     {
-        return \sanitize_key($this->namespace . $key);
+        return sanitize_key($this->namespace . $key);
     }
     public function get($id)
     {
-        $value = \get_transient($this->prepare_key_name($id));
+        $value = get_transient($this->prepare_key_name($id));
         if (\false === $value) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $value;
     }

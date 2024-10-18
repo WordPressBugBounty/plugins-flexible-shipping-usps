@@ -25,7 +25,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShopSettings;
  *
  * @package WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Standard\
  */
-class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\RateMethod
+class CollectionPointRateMethod implements RateMethod
 {
     const COLLECTION_POINT = 'collection-point';
     /**
@@ -41,7 +41,7 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
      *
      * @param CanRateToCollectionPoint $service Service that provides the rates.
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRateToCollectionPoint $service)
+    public function __construct(CanRateToCollectionPoint $service)
     {
         $this->rate_provider = $service;
     }
@@ -50,7 +50,7 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
      *
      * @param CheckoutHandler $collection_points_checkout_handler .
      */
-    public static function set_collection_points_checkout_handler(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutHandler $collection_points_checkout_handler)
+    public static function set_collection_points_checkout_handler(CheckoutHandler $collection_points_checkout_handler)
     {
         self::$collection_points_checkout_handler = $collection_points_checkout_handler;
     }
@@ -64,16 +64,16 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
      *
      * @return void
      */
-    public function handle_rates(\WC_Shipping_Method $method, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\ErrorLogCatcher $logger, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder $metadata_builder, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingBuilder $shipment_builder)
+    public function handle_rates(\WC_Shipping_Method $method, ErrorLogCatcher $logger, WooCommerceShippingMetaDataBuilder $metadata_builder, WooCommerceShippingBuilder $shipment_builder)
     {
         try {
-            $rates_count = \count($method->rates);
+            $rates_count = count($method->rates);
             $this->add_rates_to_collection_point($method, $this->rate_provider, $metadata_builder, $shipment_builder);
-            if ($rates_count === \count($method->rates)) {
-                $logger->info(\__('No rates added from collection point rates!', 'flexible-shipping-usps'));
+            if ($rates_count === count($method->rates)) {
+                $logger->info(__('No rates added from collection point rates!', 'flexible-shipping-usps'));
             }
-        } catch (\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\CollectionPointNotFoundException $cpe) {
-            $logger->error(\__('Collection point not found.', 'flexible-shipping-usps'));
+        } catch (CollectionPointNotFoundException $cpe) {
+            $logger->error(__('Collection point not found.', 'flexible-shipping-usps'));
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
         }
@@ -88,25 +88,25 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
      *
      * @throws CollectionPointNotFoundException .
      */
-    private function add_rates_to_collection_point(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod $method, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRateToCollectionPoint $service, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder $meta_data_builder, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingBuilder $shipment_builder)
+    private function add_rates_to_collection_point(ShippingMethod $method, CanRateToCollectionPoint $service, WooCommerceShippingMetaDataBuilder $meta_data_builder, WooCommerceShippingBuilder $shipment_builder)
     {
         $service_id = $method->id;
-        $service_settings = \apply_filters("{$service_id}_settings_before_rate", $method->create_settings_values_as_array());
+        $service_settings = apply_filters("{$service_id}_settings_before_rate", $method->create_settings_values_as_array());
         if ($service->is_rate_to_collection_point_enabled($service_settings)) {
-            $shipment = \apply_filters("{$service_id}_shipment_before_rate", $shipment_builder->build_shipment(), $method);
+            $shipment = apply_filters("{$service_id}_shipment_before_rate", $shipment_builder->build_shipment(), $method);
             $collection_point = $this->get_collection_point_for_rates($shipment_builder->get_woocommerce_package(), $method);
             if (null !== $collection_point) {
-                if ($method instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasRateCache) {
-                    $cached_rating = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Cache\CachedRating((new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Cache\ShopSettingsMd5HashGenerator())->generate_md5_hash(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShopSettings($service_id)), \WC()->session ? new \FlexibleShippingUspsVendor\WPDesk\Persistence\Adapter\WooCommerce\WooCommerceSessionContainer(\WC()->session) : new \FlexibleShippingUspsVendor\WPDesk\Persistence\Adapter\ArrayContainer());
+                if ($method instanceof HasRateCache) {
+                    $cached_rating = new CachedRating((new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Cache\ShopSettingsMd5HashGenerator())->generate_md5_hash(new ShopSettings($service_id)), WC()->session ? new WooCommerceSessionContainer(WC()->session) : new ArrayContainer());
                     $rates_from_response = $cached_rating->rate_shipment_to_collection_point($service_settings, $shipment, $collection_point, $service);
                 } else {
                     $rates_from_response = $service->rate_shipment_to_collection_point($service_settings, $shipment, $collection_point);
                 }
-                $rates_from_response = \apply_filters("{$service_id}_rates", $rates_from_response, $method);
-                $meta_data_builder = \apply_filters("{$service_id}_meta_data_builder", $meta_data_builder, $method);
+                $rates_from_response = apply_filters("{$service_id}_rates", $rates_from_response, $method);
+                $meta_data_builder = apply_filters("{$service_id}_meta_data_builder", $meta_data_builder, $method);
                 $this->add_rates_to_collection_point_from_response($method, $shipment, $rates_from_response, $collection_point, $meta_data_builder);
             } else {
-                throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\CollectionPointNotFoundException();
+                throw new CollectionPointNotFoundException();
             }
         }
     }
@@ -124,10 +124,10 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
         $service_id = $method->id;
         try {
             $collection_point = self::$collection_points_checkout_handler->get_collection_point_for_rates($package['destination']);
-        } catch (\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\CollectionPointNotFoundException $e) {
+        } catch (CollectionPointNotFoundException $e) {
             $collection_point = null;
         }
-        return \apply_filters("{$service_id}_collection_point_before_rate", $collection_point, $method);
+        return apply_filters("{$service_id}_collection_point_before_rate", $collection_point, $method);
     }
     /**
      * Add Woocommerce shipping rates.
@@ -138,7 +138,7 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
      * @param CollectionPoint|null $collection_point Collection point.
      * @param WooCommerceShippingMetaDataBuilder $meta_data_builder Meta data builder.
      */
-    private function add_rates_to_collection_point_from_response(\WC_Shipping_Method $method, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\ShipmentRating $shipment_ratings, $collection_point, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder $meta_data_builder)
+    private function add_rates_to_collection_point_from_response(\WC_Shipping_Method $method, Shipment $shipment, ShipmentRating $shipment_ratings, $collection_point, WooCommerceShippingMetaDataBuilder $meta_data_builder)
     {
         foreach ($shipment_ratings->get_ratings() as $rate) {
             if (isset($meta_data_builder)) {
@@ -146,7 +146,7 @@ class CollectionPointRateMethod implements \FlexibleShippingUspsVendor\WPDesk\Wo
             } else {
                 $meta_data = [];
             }
-            $meta_data = (array) \apply_filters($method->id . '/rate/meta_data', $meta_data, $method);
+            $meta_data = (array) apply_filters($method->id . '/rate/meta_data', $meta_data, $method);
             $method->add_rate(['id' => $method->id . ':' . $method->instance_id . ':' . $rate->service_type . ':' . self::COLLECTION_POINT, 'label' => $rate->service_name, 'cost' => $rate->total_charge->amount, 'sort' => 0, 'meta_data' => $meta_data]);
         }
     }

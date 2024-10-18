@@ -18,7 +18,7 @@ use function usort;
 /**
  * List of packed items, ordered by volume.
  */
-class PackedItemList implements \Countable, \IteratorAggregate
+class PackedItemList implements Countable, IteratorAggregate
 {
     /**
      * @var PackedItem[]
@@ -26,7 +26,7 @@ class PackedItemList implements \Countable, \IteratorAggregate
     private array $list = [];
     private int $weight = 0;
     private bool $isSorted = \false;
-    public function insert(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem $item) : void
+    public function insert(PackedItem $item): void
     {
         $this->list[] = $item;
         $this->weight += $item->getItem()->getWeight();
@@ -34,20 +34,20 @@ class PackedItemList implements \Countable, \IteratorAggregate
     /**
      * @return Traversable<PackedItem>
      */
-    public function getIterator() : \Traversable
+    public function getIterator(): Traversable
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this, 'compare']);
+            usort($this->list, [$this, 'compare']);
             $this->isSorted = \true;
         }
-        return new \ArrayIterator($this->list);
+        return new ArrayIterator($this->list);
     }
     /**
      * Number of items in list.
      */
-    public function count() : int
+    public function count(): int
     {
-        return \count($this->list);
+        return count($this->list);
     }
     /**
      * Get copy of this list as a standard PHP array.
@@ -56,14 +56,14 @@ class PackedItemList implements \Countable, \IteratorAggregate
      *
      * @return Item[]
      */
-    public function asItemArray() : array
+    public function asItemArray(): array
     {
-        return \array_map(fn(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem $packedItem) => $packedItem->getItem(), $this->list);
+        return array_map(fn(PackedItem $packedItem) => $packedItem->getItem(), $this->list);
     }
     /**
      * Get total volume of these items.
      */
-    public function getVolume() : int
+    public function getVolume(): int
     {
         $volume = 0;
         foreach ($this->list as $item) {
@@ -74,11 +74,11 @@ class PackedItemList implements \Countable, \IteratorAggregate
     /**
      * Get total weight of these items.
      */
-    public function getWeight() : int
+    public function getWeight(): int
     {
         return $this->weight;
     }
-    private function compare(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem $itemA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem $itemB) : int
+    private function compare(PackedItem $itemA, PackedItem $itemB): int
     {
         $itemAVolume = $itemA->getItem()->getWidth() * $itemA->getItem()->getLength() * $itemA->getItem()->getDepth();
         $itemBVolume = $itemB->getItem()->getWidth() * $itemB->getItem()->getLength() * $itemB->getItem()->getDepth();

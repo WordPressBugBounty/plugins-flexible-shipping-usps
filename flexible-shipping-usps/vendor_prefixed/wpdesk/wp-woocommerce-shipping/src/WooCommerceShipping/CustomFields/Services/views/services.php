@@ -23,7 +23,7 @@ echo \esc_attr($params['type']);
 ?>"><?php 
 echo \wp_kses_post($params['title']);
 echo $tooltip_html;
-// WPCS: XSS ok.
+// WPCS: XSS ok. 
 ?></label>
 	</th>
 	<td class="forminp">
@@ -107,7 +107,7 @@ foreach ($services as $service_code => $service_name) {
 		</table>
 		<?php 
 echo $description_html;
-// WPCS: XSS ok.
+// WPCS: XSS ok. 
 ?>
 	</td>
 </tr>

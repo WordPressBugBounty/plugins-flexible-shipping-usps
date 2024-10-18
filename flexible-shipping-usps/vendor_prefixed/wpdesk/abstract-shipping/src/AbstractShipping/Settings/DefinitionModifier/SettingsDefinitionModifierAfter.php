@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValues;
 /**
  * Can decorate settings by adding settings field after given field.
  */
-class SettingsDefinitionModifierAfter extends \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsDefinition
+class SettingsDefinitionModifierAfter extends SettingsDefinition
 {
     /**
      * Decorated settings definition.
@@ -47,7 +47,7 @@ class SettingsDefinitionModifierAfter extends \FlexibleShippingUspsVendor\WPDesk
      * @param string $new_field_id New field id.
      * @param array  $new_field New field.
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsDefinition $decorated_settings_definition, $field_id_after, $new_field_id, array $new_field)
+    public function __construct(SettingsDefinition $decorated_settings_definition, $field_id_after, $new_field_id, array $new_field)
     {
         $this->decorated_settings_definition = $decorated_settings_definition;
         $this->field_id_after = $field_id_after;
@@ -76,7 +76,7 @@ class SettingsDefinitionModifierAfter extends \FlexibleShippingUspsVendor\WPDesk
             }
             return $modified_form_fields;
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\SettingsFieldNotExistsException(\sprintf('Field %1$s not found in settings!', $this->field_id_after));
+        throw new SettingsFieldNotExistsException(sprintf('Field %1$s not found in settings!', $this->field_id_after));
     }
     /**
      * Validate settings.
@@ -85,7 +85,7 @@ class SettingsDefinitionModifierAfter extends \FlexibleShippingUspsVendor\WPDesk
      *
      * @return bool
      */
-    public function validate_settings(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValues $settings)
+    public function validate_settings(SettingsValues $settings)
     {
         return $this->decorated_settings_definition->validate_settings($settings);
     }

@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\WPDesk\Persistence\AllDataAccessContainer;
  *
  * @package WPDesk\Persistence
  */
-final class DelaySinglePersistentContainer extends \FlexibleShippingUspsVendor\WPDesk\Persistence\Decorator\DelayPersistentContainer implements \FlexibleShippingUspsVendor\WPDesk\Persistence\AllDataAccessContainer
+final class DelaySinglePersistentContainer extends DelayPersistentContainer implements AllDataAccessContainer
 {
     /**
      * Key where the data will be saved.
@@ -18,7 +18,7 @@ final class DelaySinglePersistentContainer extends \FlexibleShippingUspsVendor\W
      * @var string
      */
     private $key;
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer $container, string $key)
+    public function __construct(PersistentContainer $container, string $key)
     {
         parent::__construct($container);
         $this->key = $key;
@@ -31,20 +31,20 @@ final class DelaySinglePersistentContainer extends \FlexibleShippingUspsVendor\W
             }
         } else {
             $data = \unserialize($this->container->get($this->key));
-            if (\is_array($data) && isset($data[$id])) {
+            if (is_array($data) && isset($data[$id])) {
                 return $data[$id];
             }
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+        throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
     }
-    public function has($id) : bool
+    public function has($id): bool
     {
         if (isset($this->changed[$id]) && $this->changed[$id]) {
             return isset($this->internal_data[$id]);
         }
         if ($this->container->has($this->key)) {
             $data = \unserialize($this->container->get($this->key));
-            return \is_array($data) && isset($data[$id]);
+            return is_array($data) && isset($data[$id]);
         }
         return \false;
     }
@@ -55,7 +55,7 @@ final class DelaySinglePersistentContainer extends \FlexibleShippingUspsVendor\W
             $this->reset();
         }
     }
-    public function get_all() : array
+    public function get_all(): array
     {
         if (!empty($this->changed)) {
             if (!empty($this->internal_data)) {

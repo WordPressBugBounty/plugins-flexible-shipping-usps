@@ -18,7 +18,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCom
  *
  * @package WPDesk\CustomFields
  */
-class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class CheckoutHandler implements Hookable
 {
     /**
      * @var CollectionPointsProvider
@@ -71,7 +71,7 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      * @param string                   $field_description .
      * @param bool                     $select_field_available .
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPointCapability\CollectionPointsProvider $collection_points_provider, $method_id, \FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer, $field_label, $unavailable_points_label, $field_description, $select_field_available = \false)
+    public function __construct(CollectionPointsProvider $collection_points_provider, $method_id, Renderer $renderer, $field_label, $unavailable_points_label, $field_description, $select_field_available = \false)
     {
         $this->collection_points_provider = $collection_points_provider;
         $this->select_field_available = $select_field_available;
@@ -86,8 +86,8 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     public function hooks()
     {
-        \add_action('woocommerce_review_order_after_shipping', array($this, 'maybe_display_collection_points_field'));
-        \add_action('woocommerce_checkout_update_order_review', array($this, 'force_shipping_recalculation_on_collection_point_change'));
+        add_action('woocommerce_review_order_after_shipping', array($this, 'maybe_display_collection_points_field'));
+        add_action('woocommerce_checkout_update_order_review', array($this, 'force_shipping_recalculation_on_collection_point_change'));
     }
     /**
      * Force shipping recalculation on collection point change.
@@ -96,8 +96,8 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     public function force_shipping_recalculation_on_collection_point_change($unparsed_post_data)
     {
-        \parse_str($unparsed_post_data, $post_data);
-        $checkout_field_name = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
+        parse_str($unparsed_post_data, $post_data);
+        $checkout_field_name = CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
         if (isset($post_data[$checkout_field_name])) {
             if ($post_data[$checkout_field_name] !== $this->get_collection_point_from_session($checkout_field_name, '')) {
                 $this->force_shipping_recalculation();
@@ -113,9 +113,9 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
          * Force shipping recalculation!
          * https://stackoverflow.com/a/45763102
          */
-        foreach (\WC()->cart->get_cart() as $key => $value) {
-            \WC()->cart->set_quantity($key, $value['quantity'] + 1);
-            \WC()->cart->set_quantity($key, $value['quantity']);
+        foreach (WC()->cart->get_cart() as $key => $value) {
+            WC()->cart->set_quantity($key, $value['quantity'] + 1);
+            WC()->cart->set_quantity($key, $value['quantity']);
             break;
         }
     }
@@ -134,7 +134,7 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
     private function prepare_post_data()
     {
         if (!empty($_REQUEST['post_data'])) {
-            \parse_str($_REQUEST['post_data'], $post_data);
+            parse_str($_REQUEST['post_data'], $post_data);
         } else {
             $post_data = array();
         }
@@ -151,10 +151,10 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
     private function get_collection_point_from_posted_data_or_session(array $post_data, $destination_country)
     {
         $collection_point = null;
-        $checkout_field_name = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
+        $checkout_field_name = CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
         $selected_collection_point = '';
         if (isset($post_data[$checkout_field_name])) {
-            $selected_collection_point = \sanitize_text_field($post_data[$checkout_field_name]);
+            $selected_collection_point = sanitize_text_field($post_data[$checkout_field_name]);
         } else {
             $selected_collection_point = $this->get_collection_point_from_session($checkout_field_name, $selected_collection_point);
         }
@@ -172,7 +172,7 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     private function get_collection_point_from_session($checkout_field_name, $default)
     {
-        return $selected_collection_point = \WC()->session->get($checkout_field_name, $default);
+        return $selected_collection_point = WC()->session->get($checkout_field_name, $default);
     }
     /**
      * Get collection point nearest to destination address.
@@ -184,7 +184,7 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     private function get_collection_point_nearest_to_shipping_address(array $destination)
     {
-        $address = (new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutAddress($this->get_request(), $destination))->prepare_address();
+        $address = (new CheckoutAddress($this->get_request(), $destination))->prepare_address();
         return $this->collection_points_provider->get_single_nearest_collection_point($address);
     }
     /**
@@ -213,14 +213,14 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
     private function should_show_collection_point()
     {
         $show_collection_point = \false;
-        $packages = \WC()->shipping()->get_packages();
+        $packages = WC()->shipping()->get_packages();
         foreach ($packages as $i => $package) {
-            $chosen_method = isset(\WC()->session->chosen_shipping_methods[$i]) ? \WC()->session->chosen_shipping_methods[$i] : '';
+            $chosen_method = isset(WC()->session->chosen_shipping_methods[$i]) ? WC()->session->chosen_shipping_methods[$i] : '';
             if (isset($package['rates'][$chosen_method])) {
                 /** @var \WC_Shipping_Rate $shipping_rate */
                 $shipping_rate = $package['rates'][$chosen_method];
                 $shipping_rate_meta_data = $shipping_rate->get_meta_data();
-                if (isset($shipping_rate_meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder::COLLECTION_POINT]) && $shipping_rate_meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder::COLLECTION_POINT] === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder::YES) {
+                if (isset($shipping_rate_meta_data[WooCommerceShippingMetaDataBuilder::COLLECTION_POINT]) && $shipping_rate_meta_data[WooCommerceShippingMetaDataBuilder::COLLECTION_POINT] === WooCommerceShippingMetaDataBuilder::YES) {
                     $show_collection_point = \true;
                     break;
                 }
@@ -239,14 +239,14 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     private function get_selected_collection_point($collection_points, $field_name)
     {
-        $selected_collection_point = \array_keys($collection_points)[0];
+        $selected_collection_point = array_keys($collection_points)[0];
         if ($this->select_field_available) {
             $post_data = $this->prepare_post_data();
             if (isset($post_data[$field_name])) {
-                $selected_collection_point = \sanitize_text_field($post_data[$field_name]);
-                \WC()->session->set($field_name, $selected_collection_point);
+                $selected_collection_point = sanitize_text_field($post_data[$field_name]);
+                WC()->session->set($field_name, $selected_collection_point);
             } else {
-                $selected_collection_point = \WC()->session->get($field_name, $selected_collection_point);
+                $selected_collection_point = WC()->session->get($field_name, $selected_collection_point);
             }
         }
         return $selected_collection_point;
@@ -258,7 +258,7 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
      */
     private function get_collection_points_nearest_to_destination_address()
     {
-        $address = (new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutAddress($this->get_request()))->prepare_address();
+        $address = (new CheckoutAddress($this->get_request()))->prepare_address();
         return $this->collection_points_provider->get_nearest_collection_points($address);
     }
     /**
@@ -267,19 +267,19 @@ class CheckoutHandler implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilde
     public function maybe_display_collection_points_field()
     {
         if ($this->should_show_collection_point()) {
-            $field_name = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
+            $field_name = CheckoutField::prepare_field_name_from_shipping_method_id($this->method_id);
             try {
                 $nearest_collection_points = $this->get_collection_points_nearest_to_destination_address();
                 $selected_collection_point = $this->get_selected_collection_point($nearest_collection_points, $field_name);
                 if ($this->select_field_available) {
-                    $checkout_field_class = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutSelectField::class;
+                    $checkout_field_class = CheckoutSelectField::class;
                 } else {
-                    $checkout_field_class = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutHtmlField::class;
+                    $checkout_field_class = CheckoutHtmlField::class;
                 }
-            } catch (\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Exception\CollectionPointNotFoundException $e) {
+            } catch (CollectionPointNotFoundException $e) {
                 $nearest_collection_points = array();
                 $selected_collection_point = '';
-                $checkout_field_class = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutHtmlField::class;
+                $checkout_field_class = CheckoutHtmlField::class;
             }
             /** @var CheckoutField $checkout_field */
             $checkout_field = new $checkout_field_class($nearest_collection_points, $selected_collection_point, $this->renderer, $this->field_label, $this->unavailable_points_label, $this->field_description, $this->method_id);

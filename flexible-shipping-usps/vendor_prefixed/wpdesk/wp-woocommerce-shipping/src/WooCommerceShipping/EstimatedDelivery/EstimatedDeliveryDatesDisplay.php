@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod;
 /**
  * Can display estimated delivery dates and times on checkout.
  */
-class EstimatedDeliveryDatesDisplay implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class EstimatedDeliveryDatesDisplay implements Hookable
 {
     const DELIVERY_DATES = 'delivery_dates';
     const OPTION_NONE = 'none';
@@ -43,7 +43,7 @@ class EstimatedDeliveryDatesDisplay implements \FlexibleShippingUspsVendor\WPDes
      * @param Renderer $renderer
      * @param string $service_id
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer, $service_id)
+    public function __construct(Renderer $renderer, $service_id)
     {
         $this->renderer = $renderer;
         $this->service_id = $service_id;
@@ -53,8 +53,8 @@ class EstimatedDeliveryDatesDisplay implements \FlexibleShippingUspsVendor\WPDes
      */
     public function hooks()
     {
-        \add_action('woocommerce_after_shipping_rate', array($this, 'display_estimated_delivery_time_for_method_if_enabled_and_present'), 10, 2);
-        \add_action('woocommerce_hidden_order_itemmeta', array($this, 'add_hidden_order_item_meta'), 10);
+        add_action('woocommerce_after_shipping_rate', array($this, 'display_estimated_delivery_time_for_method_if_enabled_and_present'), 10, 2);
+        add_action('woocommerce_hidden_order_itemmeta', array($this, 'add_hidden_order_item_meta'), 10);
     }
     /**
      * Display delivery time for method.
@@ -79,12 +79,12 @@ class EstimatedDeliveryDatesDisplay implements \FlexibleShippingUspsVendor\WPDes
     {
         if ($this->should_display_for_this_method($shipping_rate->get_method_id())) {
             $meta_data = $shipping_rate->get_meta_data();
-            if ($delivery_dates_settings === self::OPTION_DAYS_TO_ARRIVAL_DATE && isset($meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE])) {
-                $params = ['days_to_arrival_date' => $meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE]];
+            if ($delivery_dates_settings === self::OPTION_DAYS_TO_ARRIVAL_DATE && isset($meta_data[EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE])) {
+                $params = ['days_to_arrival_date' => $meta_data[EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE]];
                 echo $this->renderer->render('after-shipping-rate-days-to-arrival', $params);
             }
-            if ($delivery_dates_settings === self::OPTION_DELIVERY_DATE && isset($meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE])) {
-                $params = ['delivery_date' => $meta_data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE]];
+            if ($delivery_dates_settings === self::OPTION_DELIVERY_DATE && isset($meta_data[EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE])) {
+                $params = ['delivery_date' => $meta_data[EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE]];
                 echo $this->renderer->render('after-shipping-rate-delivery-date', $params);
             }
             $this->rendered_delivery_dates[] = $shipping_rate->get_id();
@@ -110,10 +110,10 @@ class EstimatedDeliveryDatesDisplay implements \FlexibleShippingUspsVendor\WPDes
      */
     public function add_hidden_order_item_meta($hidden_order_item_meta)
     {
-        $hidden_order_item_meta[] = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT;
-        $hidden_order_item_meta[] = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE;
-        $hidden_order_item_meta[] = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE;
-        $hidden_order_item_meta[] = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\EstimatedDelivery\EstimatedDeliveryDatesDisplay::DELIVERY_DATES;
+        $hidden_order_item_meta[] = EstimatedDeliveryMetaDataBuilder::BUSINESS_DAYS_IN_TRANSIT;
+        $hidden_order_item_meta[] = EstimatedDeliveryMetaDataBuilder::ESTIMATED_DELIVERY_DATE;
+        $hidden_order_item_meta[] = EstimatedDeliveryMetaDataBuilder::DAYS_TO_DELIVERY_DATE;
+        $hidden_order_item_meta[] = EstimatedDeliveryDatesDisplay::DELIVERY_DATES;
         return $hidden_order_item_meta;
     }
 }

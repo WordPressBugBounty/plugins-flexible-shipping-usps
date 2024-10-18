@@ -7,7 +7,7 @@ use FlexibleShippingUspsVendor\USPS\RatePackage;
 $rate = new \FlexibleShippingUspsVendor\USPS\Rate('xxxx');
 $rate->setInternationalCall(\true);
 $rate->addExtraOption('Revision', 2);
-$package = new \FlexibleShippingUspsVendor\USPS\RatePackage();
+$package = new RatePackage();
 $package->setPounds(15.12345678);
 $package->setOunces(0);
 $package->setField('Machinable', 'True');

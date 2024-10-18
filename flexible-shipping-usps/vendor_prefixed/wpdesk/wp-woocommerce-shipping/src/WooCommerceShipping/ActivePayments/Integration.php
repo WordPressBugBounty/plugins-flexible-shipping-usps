@@ -11,7 +11,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Handles Active Payment integration.
  */
-class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Integration implements Hookable
 {
     const SHIPPING_METHOD_WITH_SERVICE_PARTS_COUNT = 3;
     const SHIPPING_METHOD_WITH_SERVICE_TO_COLLECTION_POINT_PARTS_COUNT = 4;
@@ -36,7 +36,7 @@ class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
      */
     public function hooks()
     {
-        \add_action('woocommerce_active_payments_checkout_shipping_method', array($this, 'get_shipping_method_for_active_payments_checkout'));
+        add_action('woocommerce_active_payments_checkout_shipping_method', array($this, 'get_shipping_method_for_active_payments_checkout'));
     }
     /**
      * Returns shipping method for checkout.
@@ -50,7 +50,7 @@ class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
      */
     public function get_shipping_method_for_active_payments_checkout($shipping_method_from_checkout)
     {
-        $shipping_method_from_checkout_parts = \explode(self::SHIPPING_METHOD_PARTS_DELIMITER, $shipping_method_from_checkout);
+        $shipping_method_from_checkout_parts = explode(self::SHIPPING_METHOD_PARTS_DELIMITER, $shipping_method_from_checkout);
         if ($this->is_current_shipping_method_with_service($shipping_method_from_checkout_parts) || $this->is_current_shipping_method_to_collection_point($shipping_method_from_checkout_parts)) {
             return $this->get_shipping_method_id_without_service($shipping_method_from_checkout_parts);
         } else {
@@ -67,7 +67,7 @@ class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
     private function get_shipping_method_id_without_service(array $shipping_method_from_checkout_parts)
     {
         $shipping_method_without_service_parts = array($shipping_method_from_checkout_parts[self::METHOD_ID_PART], $shipping_method_from_checkout_parts[self::ZONE_ID_PART]);
-        return \implode(self::SHIPPING_METHOD_PARTS_DELIMITER, $shipping_method_without_service_parts);
+        return implode(self::SHIPPING_METHOD_PARTS_DELIMITER, $shipping_method_without_service_parts);
     }
     /**
      * Is current shipping method with service?
@@ -78,7 +78,7 @@ class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
      */
     private function is_current_shipping_method_with_service(array $shipping_method_from_checkout_parts)
     {
-        return self::SHIPPING_METHOD_WITH_SERVICE_PARTS_COUNT === \count($shipping_method_from_checkout_parts) && $this->is_current_shipping_method($shipping_method_from_checkout_parts);
+        return self::SHIPPING_METHOD_WITH_SERVICE_PARTS_COUNT === count($shipping_method_from_checkout_parts) && $this->is_current_shipping_method($shipping_method_from_checkout_parts);
     }
     /**
      * Is current shipping method to collection point?
@@ -89,7 +89,7 @@ class Integration implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
      */
     private function is_current_shipping_method_to_collection_point(array $shipping_method_from_checkout_parts)
     {
-        return self::SHIPPING_METHOD_WITH_SERVICE_TO_COLLECTION_POINT_PARTS_COUNT === \count($shipping_method_from_checkout_parts) && $this->is_current_shipping_method($shipping_method_from_checkout_parts);
+        return self::SHIPPING_METHOD_WITH_SERVICE_TO_COLLECTION_POINT_PARTS_COUNT === count($shipping_method_from_checkout_parts) && $this->is_current_shipping_method($shipping_method_from_checkout_parts);
     }
     /**
      * Is current shipping method?

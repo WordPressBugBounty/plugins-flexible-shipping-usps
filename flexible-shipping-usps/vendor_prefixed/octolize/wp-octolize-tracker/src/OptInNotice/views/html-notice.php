@@ -34,7 +34,7 @@ echo \admin_url('admin-ajax.php');
 						type: 'POST',
 						data: {
 							security: '<?php 
-echo \wp_create_nonce(\FlexibleShippingUspsVendor\WPDesk_Tracker::WPDESK_TRACKER_NOTICE);
+echo \wp_create_nonce(WPDesk_Tracker::WPDESK_TRACKER_NOTICE);
 ?>',
 							action: 'wpdesk_tracker_notice_handler',
 							type: 'allow',

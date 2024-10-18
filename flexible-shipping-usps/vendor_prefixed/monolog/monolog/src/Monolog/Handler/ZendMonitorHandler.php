@@ -22,7 +22,7 @@ use FlexibleShippingUspsVendor\Monolog\Logger;
  *
  * @phpstan-import-type FormattedRecord from AbstractProcessingHandler
  */
-class ZendMonitorHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\AbstractProcessingHandler
+class ZendMonitorHandler extends AbstractProcessingHandler
 {
     /**
      * Monolog level / ZendMonitor Custom Event priority map
@@ -33,21 +33,21 @@ class ZendMonitorHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\Abs
     /**
      * @throws MissingExtensionException
      */
-    public function __construct($level = \FlexibleShippingUspsVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct($level = Logger::DEBUG, bool $bubble = \true)
     {
-        if (!\function_exists('FlexibleShippingUspsVendor\\zend_monitor_custom_event')) {
-            throw new \FlexibleShippingUspsVendor\Monolog\Handler\MissingExtensionException('You must have Zend Server installed with Zend Monitor enabled in order to use this handler');
+        if (!function_exists('FlexibleShippingUspsVendor\zend_monitor_custom_event')) {
+            throw new MissingExtensionException('You must have Zend Server installed with Zend Monitor enabled in order to use this handler');
         }
         //zend monitor constants are not defined if zend monitor is not enabled.
-        $this->levelMap = [\FlexibleShippingUspsVendor\Monolog\Logger::DEBUG => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FlexibleShippingUspsVendor\Monolog\Logger::INFO => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FlexibleShippingUspsVendor\Monolog\Logger::NOTICE => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FlexibleShippingUspsVendor\Monolog\Logger::WARNING => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_WARNING, \FlexibleShippingUspsVendor\Monolog\Logger::ERROR => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FlexibleShippingUspsVendor\Monolog\Logger::CRITICAL => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FlexibleShippingUspsVendor\Monolog\Logger::ALERT => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FlexibleShippingUspsVendor\Monolog\Logger::EMERGENCY => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR];
+        $this->levelMap = [Logger::DEBUG => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::INFO => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::NOTICE => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::WARNING => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_WARNING, Logger::ERROR => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::CRITICAL => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::ALERT => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::EMERGENCY => \FlexibleShippingUspsVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR];
         parent::__construct($level, $bubble);
     }
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
-        $this->writeZendMonitorCustomEvent(\FlexibleShippingUspsVendor\Monolog\Logger::getLevelName($record['level']), $record['message'], $record['formatted'], $this->levelMap[$record['level']]);
+        $this->writeZendMonitorCustomEvent(Logger::getLevelName($record['level']), $record['message'], $record['formatted'], $this->levelMap[$record['level']]);
     }
     /**
      * Write to Zend Monitor Events
@@ -58,21 +58,21 @@ class ZendMonitorHandler extends \FlexibleShippingUspsVendor\Monolog\Handler\Abs
      *
      * @phpstan-param FormattedRecord $formatted
      */
-    protected function writeZendMonitorCustomEvent(string $type, string $message, array $formatted, int $severity) : void
+    protected function writeZendMonitorCustomEvent(string $type, string $message, array $formatted, int $severity): void
     {
         zend_monitor_custom_event($type, $message, $formatted, $severity);
     }
     /**
      * {@inheritDoc}
      */
-    public function getDefaultFormatter() : \FlexibleShippingUspsVendor\Monolog\Formatter\FormatterInterface
+    public function getDefaultFormatter(): FormatterInterface
     {
-        return new \FlexibleShippingUspsVendor\Monolog\Formatter\NormalizerFormatter();
+        return new NormalizerFormatter();
     }
     /**
      * @return array<int, int>
      */
-    public function getLevelMap() : array
+    public function getLevelMap(): array
     {
         return $this->levelMap;
     }

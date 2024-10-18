@@ -8,6 +8,6 @@ namespace FlexibleShippingUspsVendor\Psr\Container;
 /**
  * No entry was found in the container.
  */
-interface NotFoundExceptionInterface extends \FlexibleShippingUspsVendor\Psr\Container\ContainerExceptionInterface
+interface NotFoundExceptionInterface extends ContainerExceptionInterface
 {
 }

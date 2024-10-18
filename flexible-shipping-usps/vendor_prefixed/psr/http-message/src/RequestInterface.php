@@ -22,7 +22,7 @@ namespace FlexibleShippingUspsVendor\Psr\Http\Message;
  * be implemented such that they retain the internal state of the current
  * message and return an instance that contains the changed state.
  */
-interface RequestInterface extends \FlexibleShippingUspsVendor\Psr\Http\Message\MessageInterface
+interface RequestInterface extends MessageInterface
 {
     /**
      * Retrieves the message's request target.
@@ -121,5 +121,5 @@ interface RequestInterface extends \FlexibleShippingUspsVendor\Psr\Http\Message\
      * @param bool $preserveHost Preserve the original state of the Host header.
      * @return static
      */
-    public function withUri(\FlexibleShippingUspsVendor\Psr\Http\Message\UriInterface $uri, bool $preserveHost = \false);
+    public function withUri(UriInterface $uri, bool $preserveHost = \false);
 }

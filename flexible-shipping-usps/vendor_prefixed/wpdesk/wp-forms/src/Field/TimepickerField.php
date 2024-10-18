@@ -4,21 +4,21 @@ namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Serializer;
 use FlexibleShippingUspsVendor\WPDesk\Forms\Serializer\JsonSerializer;
-class TimepickerField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\BasicField
+class TimepickerField extends BasicField
 {
-    public function get_type() : string
+    public function get_type(): string
     {
         return 'time';
     }
-    public function has_serializer() : bool
+    public function has_serializer(): bool
     {
         return \true;
     }
-    public function get_serializer() : \FlexibleShippingUspsVendor\WPDesk\Forms\Serializer
+    public function get_serializer(): Serializer
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\Forms\Serializer\JsonSerializer();
+        return new JsonSerializer();
     }
-    public function get_template_name() : string
+    public function get_template_name(): string
     {
         return 'timepicker';
     }

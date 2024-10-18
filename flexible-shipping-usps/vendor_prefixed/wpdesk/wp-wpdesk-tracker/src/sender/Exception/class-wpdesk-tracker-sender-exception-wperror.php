@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Sender_Exception_WpError')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Sender_Exception_WpError')) {
     class WPDesk_Tracker_Sender_Exception_WpError extends \RuntimeException
     {
         public function __construct($message, \WP_Error $wp_error)

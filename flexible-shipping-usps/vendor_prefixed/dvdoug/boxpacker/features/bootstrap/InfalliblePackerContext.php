@@ -14,16 +14,16 @@ use FlexibleShippingUspsVendor\PHPUnit\Framework\Assert;
 /**
  * Defines application features from the specific context.
  */
-class InfalliblePackerContext extends \FlexibleShippingUspsVendor\PackerContext
+class InfalliblePackerContext extends PackerContext
 {
-    protected string $packerClass = \FlexibleShippingUspsVendor\DVDoug\BoxPacker\InfalliblePacker::class;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList $unpackedItemList;
+    protected string $packerClass = InfalliblePacker::class;
+    protected ItemList $unpackedItemList;
     /**
      * @When I do an infallible packing
      */
-    public function iDoAnInfalliblePacking() : void
+    public function iDoAnInfalliblePacking(): void
     {
-        $packer = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\InfalliblePacker();
+        $packer = new InfalliblePacker();
         $packer->setBoxes($this->boxList);
         $packer->setItems($this->itemList);
         $this->packedBoxList = $packer->pack();
@@ -32,7 +32,7 @@ class InfalliblePackerContext extends \FlexibleShippingUspsVendor\PackerContext
     /**
      * @Then /^the unpacked item list should have (\d+) items of type "([^"]+)"$/
      */
-    public function theUnpackedItemListShouldHaveItems($qty, $itemType) : void
+    public function theUnpackedItemListShouldHaveItems($qty, $itemType): void
     {
         $foundItems = 0;
         foreach ($this->unpackedItemList as $unpackedItem) {
@@ -40,6 +40,6 @@ class InfalliblePackerContext extends \FlexibleShippingUspsVendor\PackerContext
                 ++$foundItems;
             }
         }
-        \FlexibleShippingUspsVendor\PHPUnit\Framework\Assert::assertEquals($qty, $foundItems);
+        Assert::assertEquals($qty, $foundItems);
     }
 }

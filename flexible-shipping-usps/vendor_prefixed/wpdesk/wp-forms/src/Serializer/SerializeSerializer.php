@@ -3,14 +3,14 @@
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Serializer;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Serializer;
-class SerializeSerializer implements \FlexibleShippingUspsVendor\WPDesk\Forms\Serializer
+class SerializeSerializer implements Serializer
 {
-    public function serialize($value) : string
+    public function serialize($value): string
     {
-        return \serialize($value);
+        return serialize($value);
     }
     public function unserialize(string $value)
     {
-        return \unserialize($value);
+        return unserialize($value);
     }
 }

@@ -6,7 +6,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can append reminder data to tracker.
  */
-class TrackerData implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class TrackerData implements Hookable
 {
     use TrackerOption;
     /**
@@ -24,7 +24,7 @@ class TrackerData implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
     }
     public function hooks()
     {
-        \add_filter('wpdesk_tracker_data', [$this, 'append_tracker_data']);
+        add_filter('wpdesk_tracker_data', [$this, 'append_tracker_data']);
     }
     /**
      * @param array $data
@@ -33,8 +33,8 @@ class TrackerData implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Pl
      */
     public function append_tracker_data($data)
     {
-        if (\is_array($data)) {
-            if (!isset($data[$this->tracker_name]) || !\is_array($data[$this->tracker_name])) {
+        if (is_array($data)) {
+            if (!isset($data[$this->tracker_name]) || !is_array($data[$this->tracker_name])) {
                 $data[$this->tracker_name] = [];
             }
             $data[$this->tracker_name][$this->get_tracker_option_name($this->method_id)] = $this->get_tracker_option_value($this->method_id);

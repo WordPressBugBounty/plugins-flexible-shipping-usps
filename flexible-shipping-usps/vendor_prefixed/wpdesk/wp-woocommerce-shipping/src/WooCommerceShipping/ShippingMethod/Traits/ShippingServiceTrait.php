@@ -28,7 +28,7 @@ trait ShippingServiceTrait
      *
      * @return ShippingService
      */
-    private function get_shipping_service(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod $shipping_method)
+    private function get_shipping_service(ShippingMethod $shipping_method)
     {
         return $shipping_method->get_plugin_shipping_decisions()->get_shipping_service();
     }
@@ -39,7 +39,7 @@ trait ShippingServiceTrait
      *
      * @return LoggerInterface
      */
-    private function inject_logger_into(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingService $service)
+    private function inject_logger_into(ShippingService $service)
     {
         $logger = $this->get_service_logger($service);
         $service->setLogger($logger);
@@ -50,13 +50,13 @@ trait ShippingServiceTrait
      *
      * @return LoggerInterface
      */
-    private function get_service_logger(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingService $service)
+    private function get_service_logger(ShippingService $service)
     {
         if (null === $this->service_logger) {
             if ($this->can_see_logs()) {
-                $this->service_logger = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\DisplayNoticeLogger($this->get_logger($this), $service->get_name(), $this->instance_id);
+                $this->service_logger = new DisplayNoticeLogger($this->get_logger($this), $service->get_name(), $this->instance_id);
             } else {
-                $this->service_logger = new \FlexibleShippingUspsVendor\Psr\Log\NullLogger();
+                $this->service_logger = new NullLogger();
             }
         }
         return $this->service_logger;

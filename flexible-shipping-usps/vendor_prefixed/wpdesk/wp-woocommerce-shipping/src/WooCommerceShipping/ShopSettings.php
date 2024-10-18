@@ -11,7 +11,7 @@ use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shop\ShopSettings as Shop
 /**
  * Define some helper functions.
  */
-class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shop\ShopSettings
+class ShopSettings implements ShopSettingsInterface
 {
     /**
      * Service ID.
@@ -36,10 +36,10 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_countries()
     {
-        if (isset(\WC()->countries)) {
-            return \WC()->countries->get_countries();
+        if (isset(WC()->countries)) {
+            return WC()->countries->get_countries();
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\WooCommerceNotInitializedException();
+        throw new WooCommerceNotInitializedException();
     }
     /**
      * Get EU countries.
@@ -49,10 +49,10 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_eu_countries()
     {
-        if (isset(\WC()->countries)) {
-            return \WC()->countries->get_european_union_countries();
+        if (isset(WC()->countries)) {
+            return WC()->countries->get_european_union_countries();
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\WooCommerceNotInitializedException();
+        throw new WooCommerceNotInitializedException();
     }
     /**
      * Get states.
@@ -64,10 +64,10 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_states($cc = null)
     {
-        if (isset(\WC()->countries)) {
-            return \WC()->countries->get_states($cc);
+        if (isset(WC()->countries)) {
+            return WC()->countries->get_states($cc);
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\WooCommerceNotInitializedException();
+        throw new WooCommerceNotInitializedException();
     }
     /**
      * Get WooCommerce country.
@@ -76,8 +76,8 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_origin_country()
     {
-        if (isset(\WC()->countries)) {
-            return \WC()->countries->get_base_country();
+        if (isset(WC()->countries)) {
+            return WC()->countries->get_base_country();
         }
         return '';
     }
@@ -88,7 +88,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_locale()
     {
-        return \get_locale();
+        return get_locale();
     }
     /**
      * Get weight unit.
@@ -97,7 +97,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_weight_unit()
     {
-        return \get_option('woocommerce_weight_unit', '');
+        return get_option('woocommerce_weight_unit', '');
     }
     /**
      * Get WooCommerce currency.
@@ -106,7 +106,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_currency()
     {
-        return \get_woocommerce_currency();
+        return get_woocommerce_currency();
     }
     /**
      * Get default shop currency.
@@ -115,7 +115,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_default_currency()
     {
-        return \get_option('woocommerce_currency', 'USD');
+        return get_option('woocommerce_currency', 'USD');
     }
     /**
      * Get price rounding precision.
@@ -124,7 +124,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function get_price_rounding_precision()
     {
-        return \intval(\get_option('woocommerce_price_num_decimals', '2'));
+        return intval(get_option('woocommerce_price_num_decimals', '2'));
     }
     /**
      * Is production?
@@ -133,7 +133,7 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function is_testing()
     {
-        return \apply_filters("{$this->service_id}_testing", \false);
+        return apply_filters("{$this->service_id}_testing", \false);
     }
     /**
      * Is tax enabled?
@@ -142,6 +142,6 @@ class ShopSettings implements \FlexibleShippingUspsVendor\WPDesk\AbstractShippin
      */
     public function is_tax_enabled()
     {
-        return \wc_tax_enabled();
+        return wc_tax_enabled();
     }
 }

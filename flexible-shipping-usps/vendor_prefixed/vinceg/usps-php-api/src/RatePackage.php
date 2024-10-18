@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\USPS;
  *
  * @author Vincent Gabriel
  */
-class RatePackage extends \FlexibleShippingUspsVendor\USPS\Rate
+class RatePackage extends Rate
 {
     /**
      * @var array - list of all packages added so far
@@ -167,7 +167,7 @@ class RatePackage extends \FlexibleShippingUspsVendor\USPS\Rate
      */
     public function setField($key, $value)
     {
-        $this->packageInfo[\ucwords($key)] = $value;
+        $this->packageInfo[ucwords($key)] = $value;
         return $this;
     }
     /**

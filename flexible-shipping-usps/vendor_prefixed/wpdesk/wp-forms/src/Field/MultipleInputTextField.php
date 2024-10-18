@@ -2,9 +2,9 @@
 
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
 
-class MultipleInputTextField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\InputTextField
+class MultipleInputTextField extends InputTextField
 {
-    public function get_template_name() : string
+    public function get_template_name(): string
     {
         return 'input-text-multiple';
     }

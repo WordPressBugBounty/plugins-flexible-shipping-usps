@@ -8,7 +8,7 @@ namespace FlexibleShippingUspsVendor\USPS;
  * @since 1.0
  * @author Vincent Gabriel
  */
-class CityStateLookup extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class CityStateLookup extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -47,11 +47,11 @@ class CityStateLookup extends \FlexibleShippingUspsVendor\USPS\USPSBase
      */
     public function addZipCode($zip5, $zip4 = '', $id = null)
     {
-        $packageId = $id !== null ? $id : \count($this->addresses) + 1;
+        $packageId = $id !== null ? $id : count($this->addresses) + 1;
         $zipCodes = ['Zip5' => $zip5];
         if ($zip4) {
             $zipCodes['Zip4'] = $zip4;
         }
-        $this->addresses['ZipCode'][] = \array_merge(['@attributes' => ['ID' => $packageId]], $zipCodes);
+        $this->addresses['ZipCode'][] = array_merge(['@attributes' => ['ID' => $packageId]], $zipCodes);
     }
 }

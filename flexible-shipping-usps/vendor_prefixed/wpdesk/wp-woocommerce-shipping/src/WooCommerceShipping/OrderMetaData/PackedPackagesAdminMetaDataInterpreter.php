@@ -14,7 +14,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMet
 /**
  * Can interpret packed packages meta data from WooCommerce order shipping on admin.
  */
-class PackedPackagesAdminMetaDataInterpreter implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\SingleAdminOrderMetaDataInterpreter
+class PackedPackagesAdminMetaDataInterpreter implements SingleAdminOrderMetaDataInterpreter
 {
     /**
      * Get meta key on admin order edit page.
@@ -27,7 +27,7 @@ class PackedPackagesAdminMetaDataInterpreter implements \FlexibleShippingUspsVen
      */
     public function get_display_key($display_key, $meta, $order_item)
     {
-        return \__('Packages', 'flexible-shipping-usps');
+        return __('Packages', 'flexible-shipping-usps');
     }
     /**
      * Returns items as string.
@@ -57,14 +57,14 @@ class PackedPackagesAdminMetaDataInterpreter implements \FlexibleShippingUspsVen
     {
         $data = $meta->get_data();
         $display_value = '';
-        $packages = \json_decode($data['value'], \true);
+        $packages = json_decode($data['value'], \true);
         foreach ($packages as $package) {
             if (!empty($display_value)) {
                 $display_value .= '<br/>';
             }
             $display_value .= ' <strong>' . $package['package'] . ':</strong> ';
             $display_value .= $this->get_items_as_string($package['items']);
-            $display_value = \trim(\trim($display_value), ',');
+            $display_value = trim(trim($display_value), ',');
         }
         return $display_value;
     }
@@ -77,6 +77,6 @@ class PackedPackagesAdminMetaDataInterpreter implements \FlexibleShippingUspsVen
      */
     public function is_supported_key_on_admin($display_key)
     {
-        return $display_key === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\PackedPackagesMetaDataBuilder::META_DATA_KEY;
+        return $display_key === PackedPackagesMetaDataBuilder::META_DATA_KEY;
     }
 }

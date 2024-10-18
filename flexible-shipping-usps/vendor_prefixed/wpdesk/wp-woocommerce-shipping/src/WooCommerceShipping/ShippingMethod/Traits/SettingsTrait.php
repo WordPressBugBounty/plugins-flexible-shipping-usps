@@ -42,12 +42,12 @@ trait SettingsTrait
      *
      * @return SettingsDefinition .
      */
-    protected function get_settings_definition_from_service(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\PluginShippingDecisions $plugin_shipping_decisions)
+    protected function get_settings_definition_from_service(PluginShippingDecisions $plugin_shipping_decisions)
     {
         $shipping_service = $plugin_shipping_decisions->get_shipping_service();
         $settings_definitions = $shipping_service->get_settings_definition();
-        if ($shipping_service instanceof \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanTestSettings) {
-            $settings_definitions = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ApiStatus\ApiStatusSettingsDefinitionDecorator($settings_definitions, $shipping_service->get_field_before_api_status_field(), $plugin_shipping_decisions->get_field_api_status_ajax(), $shipping_service->get_unique_id());
+        if ($shipping_service instanceof CanTestSettings) {
+            $settings_definitions = new ApiStatusSettingsDefinitionDecorator($settings_definitions, $shipping_service->get_field_before_api_status_field(), $plugin_shipping_decisions->get_field_api_status_ajax(), $shipping_service->get_unique_id());
         }
         return $settings_definitions;
     }
@@ -58,7 +58,7 @@ trait SettingsTrait
      *
      * @return array
      */
-    private function get_form_fields_from_shipping_service(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\PluginShippingDecisions $plugin_shipping_decisions)
+    private function get_form_fields_from_shipping_service(PluginShippingDecisions $plugin_shipping_decisions)
     {
         return $this->get_settings_definition_from_service($plugin_shipping_decisions)->get_form_fields();
     }
@@ -98,24 +98,24 @@ trait SettingsTrait
         foreach ($form_fields as $field_id => $values) {
             $type = $this->get_field_type($values);
             $options_generator = $values['options_generator'] ?? '';
-            if ($options_generator === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomOrigin\CustomOriginFields::OPTIONS_GENERATOR_COUNTRY_STATE) {
+            if ($options_generator === CustomOriginFields::OPTIONS_GENERATOR_COUNTRY_STATE) {
                 $values['options'] = $this->prepare_country_state_options();
             }
-            if ($options_generator === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomOrigin\InstanceCustomOriginFields::OPTIONS_GENERATOR_COUNTRY_STATE_FOR_ORIGIN) {
+            if ($options_generator === InstanceCustomOriginFields::OPTIONS_GENERATOR_COUNTRY_STATE_FOR_ORIGIN) {
                 $values['options'] = $this->prepare_country_state_options($this->get_origin_country_code());
                 $values['default'] = $this->get_origin_country_state();
             }
             if ($settings->has_value($field_id)) {
                 $values['value'] = $settings->get_value($field_id);
             }
-            if (\method_exists($this, 'generate_' . $type . '_html')) {
+            if (method_exists($this, 'generate_' . $type . '_html')) {
                 $html .= $this->{'generate_' . $type . '_html'}($field_id, $values);
             } elseif ($type === 'number') {
                 $html .= $this->generate_text_html($field_id, $values);
             } else {
                 try {
                     $custom_field = $this->create_fields_factory()->create_field($type, $values);
-                } catch (\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CouldNotFindService $e) {
+                } catch (CouldNotFindService $e) {
                     $custom_field = null;
                 }
                 if (null !== $custom_field) {
@@ -145,7 +145,7 @@ trait SettingsTrait
             if ($origin_country_code !== null && $origin_country_code !== $country_code) {
                 unset($country_state_options[$country_code]);
             } else {
-                $states = \WC()->countries->get_states($country_code);
+                $states = WC()->countries->get_states($country_code);
                 if ($states) {
                     unset($country_state_options[$country_code]);
                     foreach ($states as $state_code => $state_name) {
@@ -159,8 +159,8 @@ trait SettingsTrait
     }
     private function get_countries()
     {
-        if (\WC()->countries) {
-            $countries = \WC()->countries->get_countries();
+        if (WC()->countries) {
+            $countries = WC()->countries->get_countries();
             if (isset($countries)) {
                 return $countries;
             }
@@ -200,19 +200,19 @@ trait SettingsTrait
     private function prepare_custom_field_types($fields)
     {
         $fields = $this->replace_fallback_field_if_exists($fields);
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasHandlingFees) {
+        if ($this instanceof HasHandlingFees) {
             $fields = $this->replace_handling_fees_field_if_exists($fields);
         }
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasCustomOrigin) {
-            $custom_origin_fields = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomOrigin\CustomOriginFields($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasInstanceCustomOrigin);
+        if ($this instanceof HasCustomOrigin) {
+            $custom_origin_fields = new CustomOriginFields($this instanceof HasInstanceCustomOrigin);
             $fields = $custom_origin_fields->replace_fallback_field_if_exists($fields, $this);
         }
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasInstanceCustomOrigin) {
-            $instance_custom_origin_fields = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomOrigin\InstanceCustomOriginFields(\true);
+        if ($this instanceof HasInstanceCustomOrigin) {
+            $instance_custom_origin_fields = new InstanceCustomOriginFields(\true);
             $fields = $instance_custom_origin_fields->replace_fallback_field_if_exists($fields, $this);
         }
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasFreeShipping) {
-            $free_shipping_fields = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\FreeShipping\FreeShippingFields();
+        if ($this instanceof HasFreeShipping) {
+            $free_shipping_fields = new FreeShippingFields();
             $fields = $free_shipping_fields->replace_fields($fields);
         }
         $fields = $this->setup_sanitize_callback_on_services_field($fields);
@@ -226,7 +226,7 @@ trait SettingsTrait
     protected function create_fields_factory()
     {
         if ($this->fields_factory === null) {
-            $this->fields_factory = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\MethodFieldsFactory();
+            $this->fields_factory = new MethodFieldsFactory();
         }
         return $this->fields_factory;
     }
@@ -241,9 +241,9 @@ trait SettingsTrait
     {
         $new_settings = [];
         foreach ($settings as $key => $field) {
-            if ($field['type'] === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod::FIELD_TYPE_FALLBACK) {
-                $new_settings[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod::FIELD_ENABLE_FALLBACK] = ['title' => \__('Fallback', 'flexible-shipping-usps'), 'type' => 'checkbox', 'label' => \__('Enable fallback', 'flexible-shipping-usps'), 'description' => \__('Enable to offer flat rate cost for shipping so that the user can still checkout, if API for some reason returns no matching rates.', 'flexible-shipping-usps'), 'desc_tip' => \true, 'default' => 'no'];
-                $new_settings[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod::FIELD_FALLBACK_COST] = ['title' => \__('Fallback Cost', 'flexible-shipping-usps'), 'type' => 'price', 'required' => \true, 'description' => \__('Enter only a numeric value without the currency symbol.', 'flexible-shipping-usps'), 'desc_tip' => \true, 'default' => ''];
+            if ($field['type'] === FallbackRateMethod::FIELD_TYPE_FALLBACK) {
+                $new_settings[FallbackRateMethod::FIELD_ENABLE_FALLBACK] = ['title' => __('Fallback', 'flexible-shipping-usps'), 'type' => 'checkbox', 'label' => __('Enable fallback', 'flexible-shipping-usps'), 'description' => __('Enable to offer flat rate cost for shipping so that the user can still checkout, if API for some reason returns no matching rates.', 'flexible-shipping-usps'), 'desc_tip' => \true, 'default' => 'no'];
+                $new_settings[FallbackRateMethod::FIELD_FALLBACK_COST] = ['title' => __('Fallback Cost', 'flexible-shipping-usps'), 'type' => 'price', 'required' => \true, 'description' => __('Enter only a numeric value without the currency symbol.', 'flexible-shipping-usps'), 'desc_tip' => \true, 'default' => ''];
             } else {
                 $new_settings[$key] = $field;
             }
@@ -261,8 +261,8 @@ trait SettingsTrait
     {
         $new_settings = [];
         foreach ($settings as $key => $field) {
-            if ($field['type'] === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees::FIELD_TYPE) {
-                $field_handling_fees = new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees();
+            if ($field['type'] === FieldHandlingFees::FIELD_TYPE) {
+                $field_handling_fees = new FieldHandlingFees();
                 $new_settings = $field_handling_fees->add_to_settings($new_settings, $field);
             } else {
                 $new_settings[$key] = $field;
@@ -283,8 +283,8 @@ trait SettingsTrait
     private function setup_sanitize_callback_on_services_field($settings)
     {
         foreach ($settings as $key => $field) {
-            if (isset($field['type']) && \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServices::FIELD_TYPE === $field['type']) {
-                $settings[$key]['sanitize_callback'] = [\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServices::class, 'sanitize'];
+            if (isset($field['type']) && FieldServices::FIELD_TYPE === $field['type']) {
+                $settings[$key]['sanitize_callback'] = [FieldServices::class, 'sanitize'];
             }
         }
         return $settings;
@@ -303,7 +303,7 @@ trait SettingsTrait
     {
         $field_key = $this->get_field_key($key);
         $defaults = ['field_key' => $field_key, 'title' => '', 'disabled' => \false, 'class' => '', 'css' => '', 'placeholder' => '', 'type' => 'text', 'desc_tip' => \false, 'description' => '', 'custom_attributes' => [], 'value' => ''];
-        $data = \wp_parse_args($data, $defaults);
+        $data = wp_parse_args($data, $defaults);
         return $data;
     }
     /**
@@ -326,14 +326,14 @@ trait SettingsTrait
         include __DIR__ . '/view/shipping-method-java-script-fallback.php';
         include __DIR__ . '/view/shipping-method-java-script-custom-services.php';
         include __DIR__ . '/view/shipping-method-java-script-custom-origin.php';
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasFreeShipping) {
+        if ($this instanceof HasFreeShipping) {
             include __DIR__ . '/view/shipping-method-java-script-free-shipping.php';
         }
         /** @TODO: move to custom field & field footer. */
-        if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasHandlingFees) {
-            $price_adjustment_type_field = $settings_prefix . '_' . \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_TYPE;
-            $price_adjustment_value_field = $settings_prefix . '_' . \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_VALUE;
-            $price_adjustment_type_none = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentNone::ADJUSTMENT_TYPE;
+        if ($this instanceof HasHandlingFees) {
+            $price_adjustment_type_field = $settings_prefix . '_' . FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_TYPE;
+            $price_adjustment_value_field = $settings_prefix . '_' . FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_VALUE;
+            $price_adjustment_type_none = PriceAdjustmentNone::ADJUSTMENT_TYPE;
             include __DIR__ . '/view/shipping-method-java-script-handling-fees.php';
         }
     }
@@ -342,6 +342,6 @@ trait SettingsTrait
      */
     public function create_settings_values_as_array()
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValuesAsArray(\array_merge($this->settings, $this->instance_id ? $this->instance_settings : []));
+        return new SettingsValuesAsArray(array_merge($this->settings, $this->instance_id ? $this->instance_settings : []));
     }
 }

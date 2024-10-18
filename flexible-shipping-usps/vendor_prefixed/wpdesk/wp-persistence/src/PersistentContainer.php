@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\Psr\Container\ContainerInterface;
  *
  * @package WPDesk\Persistence
  */
-interface PersistentContainer extends \FlexibleShippingUspsVendor\Psr\Container\ContainerInterface
+interface PersistentContainer extends ContainerInterface
 {
     /**
      * Similar to ::get but throws no exception when element has not been found.
@@ -44,5 +44,5 @@ interface PersistentContainer extends \FlexibleShippingUspsVendor\Psr\Container\
     /**
      * @inheritDoc
      */
-    public function has($id) : bool;
+    public function has($id): bool;
 }

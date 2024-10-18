@@ -9,10 +9,10 @@ use FlexibleShippingUspsVendor\WPDesk\View\Resolver\Exception\CanNotResolve;
  *
  * @package WPDesk\View\Resolver
  */
-class NullResolver implements \FlexibleShippingUspsVendor\WPDesk\View\Resolver\Resolver
+class NullResolver implements Resolver
 {
-    public function resolve($name, \FlexibleShippingUspsVendor\WPDesk\View\Renderer\Renderer $renderer = null)
+    public function resolve($name, Renderer $renderer = null)
     {
-        throw new \FlexibleShippingUspsVendor\WPDesk\View\Resolver\Exception\CanNotResolve("Null Cannot resolve");
+        throw new CanNotResolve('Null Cannot resolve');
     }
 }

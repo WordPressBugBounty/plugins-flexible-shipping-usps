@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\USPS;
 /**
  * Class PriorityLabel.
  */
-class PriorityLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class PriorityLabel extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -28,11 +28,11 @@ class PriorityLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
         // Hack by the only way this will work properly
         // since usps wants the tags to be in
         // a certain order
-        \ksort($this->fields, \SORT_NUMERIC);
+        ksort($this->fields, \SORT_NUMERIC);
         // remove the \d. from the key
         foreach ($this->fields as $key => $value) {
-            $newKey = \str_replace('.', '', $key);
-            $newKey = \preg_replace('/\\d+\\:/', '', $newKey);
+            $newKey = str_replace('.', '', $key);
+            $newKey = preg_replace('/\d+\:/', '', $newKey);
             unset($this->fields[$key]);
             $this->fields[$newKey] = $value;
         }
@@ -191,7 +191,7 @@ class PriorityLabel extends \FlexibleShippingUspsVendor\USPS\USPSBase
     {
         $required = ['1:Option' => '', '1.1:Revision' => '2', '2:EMCAAccount' => '', '3:EMCAPassword' => '', '4:ImageParameters' => '', '26:FlatRate' => '', '27:SundayHolidayDelivery' => '', '28:StandardizeAddress' => '', '29:WaiverOfSignature' => '', '30:NoHoliday' => '', '31:NoWeekend' => '', '32:SeparateReceiptPage' => '', '33:POZipCode' => '', '34:FacilityType' => 'DDU', '35:ImageType' => 'PDF', '36:LabelDate' => '', '37:CustomerRefNo' => '', '38:SenderName' => '', '39:SenderEMail' => '', '40:RecipientName' => '', '41:RecipientEMail' => '', '42:HoldForManifest' => '', '43:CommercialPrice' => 'false', '44:InsuredAmount' => '', '45:Container' => 'FLAT RATE ENVELOPE', '46:Size' => 'REGULAR', '47:Width' => '', '48:Length' => '', '49:Height' => '', '50:Girth' => ''];
         foreach ($required as $item => $value) {
-            $explode = \explode(':', $item);
+            $explode = explode(':', $item);
             if (!isset($this->fields[$item])) {
                 $this->setField($explode[0], $explode[1], $value);
             }

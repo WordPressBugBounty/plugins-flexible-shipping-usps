@@ -12,7 +12,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints
  *
  * @package WPDesk\CustomFields
  */
-class CheckoutSelectField extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CollectionPoints\CheckoutField
+class CheckoutSelectField extends CheckoutField
 {
     protected $template_name = 'shipping-method-after-access-point-select';
 }

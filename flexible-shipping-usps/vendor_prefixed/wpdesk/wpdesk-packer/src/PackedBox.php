@@ -38,7 +38,7 @@ final class PackedBox
      * @param Box    $box
      * @param Item[] $items
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\Packer\Box $box, array $items)
+    public function __construct(Box $box, array $items)
     {
         $this->box = $box;
         $this->items_to_pack = $items;
@@ -101,7 +101,7 @@ final class PackedBox
      */
     private function try_to_pack()
     {
-        if (\sizeof($this->items_to_pack) === 0) {
+        if (sizeof($this->items_to_pack) === 0) {
             return;
         }
         $packed = [];
@@ -156,7 +156,7 @@ final class PackedBox
      *
      * @return bool
      */
-    private function can_be_packed(\FlexibleShippingUspsVendor\WPDesk\Packer\Item $item, $current_weight, $current_volume)
+    private function can_be_packed(Item $item, $current_weight, $current_volume)
     {
         // Check dimensions
         if (!$this->can_fit_to_empty_box($item)) {
@@ -196,7 +196,7 @@ final class PackedBox
         }
         if (null === $packed_weight_ratio && null === $packed_volume_ratio) {
             // Fallback to amount packed
-            $this->success_percent = \sizeof($this->packed_items) / (\sizeof($this->nofit_items) + \sizeof($this->packed_items)) * 100;
+            $this->success_percent = sizeof($this->packed_items) / (sizeof($this->nofit_items) + sizeof($this->packed_items)) * 100;
         } elseif (null === $packed_weight_ratio) {
             // Volume only
             $this->success_percent = $packed_volume_ratio * 100;

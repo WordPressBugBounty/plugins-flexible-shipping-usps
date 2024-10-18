@@ -14,7 +14,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Wordpress')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_Wordpress')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Wordpress
      */
@@ -27,7 +27,7 @@ if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Wor
          */
         public function get_data()
         {
-            $wp_data = array();
+            $wp_data = [];
             $memory = \wc_let_to_num(\WP_MEMORY_LIMIT);
             if (\function_exists('memory_get_usage')) {
                 $system_memory = \wc_let_to_num(@\ini_get('memory_limit'));

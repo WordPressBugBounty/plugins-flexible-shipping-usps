@@ -16,9 +16,9 @@ class CouldNotFindService extends \RuntimeException
      * @param $service
      * @param Throwable|null $previous
      */
-    public function __construct($service, \Throwable $previous = null)
+    public function __construct($service, Throwable $previous = null)
     {
-        $message = \esc_html(\sprintf(\__('Not found HTML view for custom field %1$s.', 'flexible-shipping-usps'), $service));
+        $message = esc_html(sprintf(__('Not found HTML view for custom field %1$s.', 'flexible-shipping-usps'), $service));
         parent::__construct($message, 0, $previous);
     }
 }

@@ -17,7 +17,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\SlimPlugin;
  * - initialize helper
  * - build with info about plugin active flag
  */
-class SimplePaidStrategy implements \FlexibleShippingUspsVendor\WPDesk\Plugin\Flow\Initialization\InitializationStrategy
+class SimplePaidStrategy implements InitializationStrategy
 {
     use TrackerInstanceAsFilterTrait;
     use BuilderTrait;
@@ -55,13 +55,17 @@ class SimplePaidStrategy implements \FlexibleShippingUspsVendor\WPDesk\Plugin\Fl
         }
         $this->prepare_tracker_action();
         $registrator = $this->register_plugin();
-        \add_action('plugins_loaded', function () use($registrator) {
-            $is_plugin_subscription_active = $registrator instanceof \FlexibleShippingUspsVendor\WPDesk\License\PluginRegistrator && $registrator->is_active();
-            if ($this->plugin instanceof \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\ActivationAware && $is_plugin_subscription_active) {
+        add_action('plugins_loaded', function () use ($registrator) {
+            $is_plugin_subscription_active = $registrator instanceof PluginRegistrator && $registrator->is_active();
+            if ($this->plugin instanceof ActivationAware && $is_plugin_subscription_active) {
                 $this->plugin->set_active();
             }
             $this->store_plugin($this->plugin);
             $this->init_plugin($this->plugin);
+            // Flush usage tracker late, to remain backward compatible with plugins which could instantiate
+            // the tracker on their own through `wpdesk_tracker_instance` filter.
+            $this->get_tracker_instance();
+            $this->register_tracker_ui_extensions();
         }, $priority_before_flow_2_5_after_2_6 = -45);
         return $this->plugin;
     }
@@ -73,8 +77,8 @@ class SimplePaidStrategy implements \FlexibleShippingUspsVendor\WPDesk\Plugin\Fl
      */
     private function register_plugin()
     {
-        if (\apply_filters('wpdesk_can_register_plugin', \true, $this->plugin_info)) {
-            $registrator = new \FlexibleShippingUspsVendor\WPDesk\License\PluginRegistrator($this->plugin_info);
+        if (apply_filters('wpdesk_can_register_plugin', \true, $this->plugin_info)) {
+            $registrator = new PluginRegistrator($this->plugin_info);
             $registrator->initialize_license_manager();
             return $registrator;
         }

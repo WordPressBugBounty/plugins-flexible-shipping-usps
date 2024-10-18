@@ -16,7 +16,7 @@ trait MetaDataTrait
      *
      * @param WooCommerceShippingMetaDataBuilder $metadata_builder .
      */
-    public function set_meta_data_builder(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder $metadata_builder)
+    public function set_meta_data_builder(WooCommerceShippingMetaDataBuilder $metadata_builder)
     {
         $this->metadata_builder = $metadata_builder;
     }

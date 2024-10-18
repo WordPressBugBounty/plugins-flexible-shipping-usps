@@ -24,7 +24,7 @@ echo \esc_attr($shipping_method_id);
 	<td colspan="2">
 		<h4><?php 
 echo \esc_html($label);
-// wpcs: XSS ok.
+// wpcs: XSS ok. 
 ?></h4>
 		<span class="description"><?php 
 echo \esc_html($description);

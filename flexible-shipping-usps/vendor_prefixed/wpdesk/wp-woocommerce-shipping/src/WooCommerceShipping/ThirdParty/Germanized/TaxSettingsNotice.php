@@ -4,7 +4,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ThirdParty\Germa
 
 use FlexibleShippingUspsVendor\WPDesk\Notice\Notice;
 use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
-class TaxSettingsNotice implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class TaxSettingsNotice implements Hookable
 {
     private string $plugin_name = '';
     private string $link_url = '';
@@ -15,21 +15,21 @@ class TaxSettingsNotice implements \FlexibleShippingUspsVendor\WPDesk\PluginBuil
     }
     public function hooks()
     {
-        \add_action('admin_notices', [$this, 'show_notice_when_needed']);
+        add_action('admin_notices', [$this, 'show_notice_when_needed']);
     }
     public function show_notice_when_needed()
     {
         $function_name = 'wc_gzd_get_additional_costs_tax_calculation_mode';
-        if (\function_exists($function_name) && wc_gzd_get_additional_costs_tax_calculation_mode() !== 'none') {
+        if (function_exists($function_name) && wc_gzd_get_additional_costs_tax_calculation_mode() !== 'none') {
             $this->show_notice();
         }
     }
     private function show_notice()
     {
-        (new \FlexibleShippingUspsVendor\WPDesk\Notice\Notice($this->get_notice_content(), \FlexibleShippingUspsVendor\WPDesk\Notice\Notice::NOTICE_TYPE_WARNING))->showNotice();
+        (new Notice($this->get_notice_content(), Notice::NOTICE_TYPE_WARNING))->showNotice();
     }
-    private function get_notice_content() : string
+    private function get_notice_content(): string
     {
-        return \sprintf(\__('We noticed that you are using the Germanized plugin along with %1$s. In order to display the accurate rates, please select the WooCommerce default option in the Germanized Taxes > Additional Costs > Tax calculation mode settings. %2$sNeed assistance? Get in touch →%3$s', 'flexible-shipping-usps'), $this->plugin_name, '<a href="' . $this->link_url . '" target="_blank">', '</a>');
+        return sprintf(__('We noticed that you are using the Germanized plugin along with %1$s. In order to display the accurate rates, please select the WooCommerce default option in the Germanized Taxes > Additional Costs > Tax calculation mode settings. %2$sNeed assistance? Get in touch →%3$s', 'flexible-shipping-usps'), $this->plugin_name, '<a href="' . $this->link_url . '" target="_blank">', '</a>');
     }
 }

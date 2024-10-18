@@ -14,7 +14,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Theme')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_Theme')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Theme
      */
@@ -29,7 +29,7 @@ if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_The
         {
             $theme_data = \wp_get_theme();
             $theme_child_theme = \is_child_theme() ? 'Yes' : 'No';
-            return ['theme' => array('name' => $theme_data->Name, 'version' => $theme_data->Version, 'child_theme' => $theme_child_theme)];
+            return ['theme' => ['name' => $theme_data->Name, 'version' => $theme_data->Version, 'child_theme' => $theme_child_theme]];
         }
     }
 }

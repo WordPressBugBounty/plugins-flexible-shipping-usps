@@ -11,10 +11,10 @@ namespace FlexibleShippingUspsVendor\DVDoug\BoxPacker;
 /**
  * A "box" (or envelope?) to pack items into with limited supply.
  */
-interface LimitedSupplyBox extends \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box
+interface LimitedSupplyBox extends Box
 {
     /**
      * Quantity of boxes available.
      */
-    public function getQuantityAvailable() : int;
+    public function getQuantityAvailable(): int;
 }

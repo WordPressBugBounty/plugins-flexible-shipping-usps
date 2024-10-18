@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees;
 /**
  * Can apply fixed value to price.
  */
-class PriceAdjustmentFixed implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustment
+class PriceAdjustmentFixed implements PriceAdjustment
 {
     const ADJUSTMENT_TYPE = 'fixed';
     /**
@@ -43,6 +43,6 @@ class PriceAdjustmentFixed implements \FlexibleShippingUspsVendor\WPDesk\WooComm
      */
     public function apply_on_price($price)
     {
-        return \round($price + $this->adjustment_value, $this->rounding);
+        return round($price + $this->adjustment_value, $this->rounding);
     }
 }

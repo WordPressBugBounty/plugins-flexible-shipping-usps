@@ -12,7 +12,7 @@ class CollectionPointFormatter
      *
      * @return string
      */
-    public function get_collection_point_as_label(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPoints\CollectionPoint $collection_point)
+    public function get_collection_point_as_label(CollectionPoint $collection_point)
     {
         $label = $collection_point->collection_point_name;
         $label .= ', ' . $collection_point->collection_point_address->address_line1;

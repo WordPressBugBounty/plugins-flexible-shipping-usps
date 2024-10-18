@@ -14,7 +14,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_User_Agent')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_User_Agent')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_User_Agent
      */
@@ -27,7 +27,7 @@ if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Use
          */
         public function get_data()
         {
-            return ['admin_user_agents' => \array_filter((array) \get_option('woocommerce_tracker_ua', array()))];
+            return ['admin_user_agents' => \array_filter((array) \get_option('woocommerce_tracker_ua', []))];
         }
     }
 }

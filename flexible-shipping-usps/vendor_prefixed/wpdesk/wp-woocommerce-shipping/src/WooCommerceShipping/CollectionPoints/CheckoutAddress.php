@@ -43,7 +43,7 @@ class CheckoutAddress
      */
     public function prepare_address()
     {
-        $address = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address();
+        $address = new Address();
         $address->country_code = $this->get_country_code();
         $address->postal_code = $this->get_post_code();
         $address->city = $this->get_city();
@@ -66,9 +66,9 @@ class CheckoutAddress
             return $this->destination[$destination_key];
         }
         if (empty($this->request[$request_key])) {
-            $value = \WC()->customer->{$customer_method}();
+            $value = WC()->customer->{$customer_method}();
         } else {
-            $value = \sanitize_text_field($this->request[$request_key]);
+            $value = sanitize_text_field($this->request[$request_key]);
         }
         return $value;
     }
@@ -81,7 +81,7 @@ class CheckoutAddress
     {
         $value = $this->get_address_value('s_country', 'country', 'get_shipping_country');
         if (empty($value)) {
-            $value = \WC()->countries->get_base_country();
+            $value = WC()->countries->get_base_country();
         }
         return $value;
     }
@@ -94,7 +94,7 @@ class CheckoutAddress
     {
         $value = $this->get_address_value('s_postcode', 'postcode', 'get_shipping_postcode');
         if (empty($value)) {
-            $value = \get_option('woocommerce_store_postcode', '');
+            $value = get_option('woocommerce_store_postcode', '');
         }
         return $value;
     }

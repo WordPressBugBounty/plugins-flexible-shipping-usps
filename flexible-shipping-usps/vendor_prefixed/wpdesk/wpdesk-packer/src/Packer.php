@@ -23,14 +23,14 @@ class Packer
     /**
      * @param Item $item
      */
-    public function add_item(\FlexibleShippingUspsVendor\WPDesk\Packer\Item $item)
+    public function add_item(Item $item)
     {
         $this->items[] = $item;
     }
     /**
      * @param Box $box
      */
-    public function add_box(\FlexibleShippingUspsVendor\WPDesk\Packer\Box $box)
+    public function add_box(Box $box)
     {
         $this->boxes[] = $box;
     }
@@ -55,8 +55,8 @@ class Packer
      */
     public function pack()
     {
-        if (\sizeof($this->items) === 0) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\Packer\Exception\NoItemsException('No items to pack!');
+        if (sizeof($this->items) === 0) {
+            throw new NoItemsException('No items to pack!');
         }
         $this->packages = [];
         $this->boxes = $this->order_boxes_by_volume($this->boxes);
@@ -65,7 +65,7 @@ class Packer
             $this->items = [];
         }
         // Keep looping until packed
-        while (\sizeof($this->items) > 0) {
+        while (sizeof($this->items) > 0) {
             $this->items = $this->order_items($this->items);
             $best_package = $this->find_best_packed_box();
             if ($best_package->get_success_percent() === 0.0) {
@@ -86,7 +86,7 @@ class Packer
     {
         $packages = [];
         foreach ($this->boxes as $box) {
-            $packages[] = new \FlexibleShippingUspsVendor\WPDesk\Packer\PackedBox($box, $this->items);
+            $packages[] = new PackedBox($box, $this->items);
         }
         // Find the best success rate
         $best_percent = 0;
@@ -110,7 +110,7 @@ class Packer
     private function order_boxes_by_volume($sort)
     {
         if (!empty($sort)) {
-            \uasort($sort, static function (\FlexibleShippingUspsVendor\WPDesk\Packer\Box $a, \FlexibleShippingUspsVendor\WPDesk\Packer\Box $b) {
+            uasort($sort, static function (Box $a, Box $b) {
                 if ($a->get_volume() === $b->get_volume()) {
                     if ($a->get_max_weight() === $b->get_max_weight()) {
                         return 0;
@@ -132,7 +132,7 @@ class Packer
     private function order_items($sort)
     {
         if (!empty($sort)) {
-            \uasort($sort, static function (\FlexibleShippingUspsVendor\WPDesk\Packer\Item $a, \FlexibleShippingUspsVendor\WPDesk\Packer\Item $b) {
+            uasort($sort, static function (Item $a, Item $b) {
                 if ($a->get_volume() === $b->get_volume()) {
                     if ($a->get_weight() === $b->get_weight()) {
                         return 0;

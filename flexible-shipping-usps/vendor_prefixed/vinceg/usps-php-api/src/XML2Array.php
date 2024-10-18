@@ -35,7 +35,7 @@ class XML2Array
      */
     public static function init($version = '1.0', $encoding = 'UTF-8', $format_output = \true)
     {
-        self::$xml = new \DOMDocument($version, $encoding);
+        self::$xml = new DOMDocument($version, $encoding);
         self::$xml->formatOutput = $format_output;
         self::$encoding = $encoding;
     }
@@ -51,14 +51,14 @@ class XML2Array
     public static function &createArray($input_xml)
     {
         $xml = self::getXMLRoot();
-        if (\is_string($input_xml)) {
+        if (is_string($input_xml)) {
             $parsed = $xml->loadXML($input_xml);
             if (!$parsed) {
-                throw new \Exception('[XML2Array] Error parsing the XML string.');
+                throw new Exception('[XML2Array] Error parsing the XML string.');
             }
         } else {
-            if (!$input_xml instanceof \DOMDocument) {
-                throw new \Exception('[XML2Array] The input XML object should be of type: DOMDocument.');
+            if (!$input_xml instanceof DOMDocument) {
+                throw new Exception('[XML2Array] The input XML object should be of type: DOMDocument.');
             }
             $xml = self::$xml = $input_xml;
         }
@@ -79,10 +79,10 @@ class XML2Array
         $output = [];
         switch ($node->nodeType) {
             case \XML_CDATA_SECTION_NODE:
-                $output['@cdata'] = \trim($node->textContent);
+                $output['@cdata'] = trim($node->textContent);
                 break;
             case \XML_TEXT_NODE:
-                $output = \trim($node->textContent);
+                $output = trim($node->textContent);
                 break;
             case \XML_ELEMENT_NODE:
                 // for each child node, call the covert function recursively
@@ -96,17 +96,14 @@ class XML2Array
                             $output[$t] = [];
                         }
                         $output[$t][] = $v;
-                    } else {
-                        //check if it is not an empty text node
-                        if ($v !== '') {
-                            $output = $v;
-                        }
+                    } else if ($v !== '') {
+                        $output = $v;
                     }
                 }
-                if (\is_array($output)) {
+                if (is_array($output)) {
                     // if only one node of its kind, assign it directly instead if array($value);
                     foreach ($output as $t => $v) {
-                        if (\is_array($v) && \count($v) == 1) {
+                        if (is_array($v) && count($v) == 1) {
                             $output[$t] = $v[0];
                         }
                     }
@@ -122,7 +119,7 @@ class XML2Array
                         $a[$attrName] = (string) $attrNode->value;
                     }
                     // if its an leaf node, store the value in @value instead of directly storing it.
-                    if (!\is_array($output)) {
+                    if (!is_array($output)) {
                         $output = ['@value' => $output];
                     }
                     $output['@attributes'] = $a;

@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod;
  *
  * @package WpDesk\WooCommerce\ShippingMethod
  */
-class SettingsBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\AbstractBox implements \JsonSerializable
+class SettingsBox extends AbstractBox implements \JsonSerializable
 {
     const BOX_WEIGHT = 'box_weight';
     const PADDING = 'padding';
@@ -29,7 +29,7 @@ class SettingsBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\Shippin
      */
     public static function create_from_array(array $box_array)
     {
-        $box = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\SettingsBox();
+        $box = new SettingsBox();
         if (isset($box_array[self::CODE])) {
             $box->set_code($box_array[self::CODE]);
         }
@@ -37,22 +37,22 @@ class SettingsBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\Shippin
             $box->set_name($box_array[self::NAME]);
         }
         if (isset($box_array[self::LENGTH])) {
-            $box->set_length(\wc_format_decimal($box_array[self::LENGTH]));
+            $box->set_length(wc_format_decimal($box_array[self::LENGTH]));
         }
         if (isset($box_array[self::WIDTH])) {
-            $box->set_width(\wc_format_decimal($box_array[self::WIDTH]));
+            $box->set_width(wc_format_decimal($box_array[self::WIDTH]));
         }
         if (isset($box_array[self::HEIGHT])) {
-            $box->set_height(\wc_format_decimal($box_array[self::HEIGHT]));
+            $box->set_height(wc_format_decimal($box_array[self::HEIGHT]));
         }
         if (isset($box_array[self::MAX_WEIGHT])) {
-            $box->set_max_weight(\wc_format_decimal($box_array[self::MAX_WEIGHT]));
+            $box->set_max_weight(wc_format_decimal($box_array[self::MAX_WEIGHT]));
         }
         if (isset($box_array[self::BOX_WEIGHT])) {
-            $box->set_box_weight(\wc_format_decimal($box_array[self::BOX_WEIGHT]));
+            $box->set_box_weight(wc_format_decimal($box_array[self::BOX_WEIGHT]));
         }
         if (isset($box_array[self::PADDING])) {
-            $box->set_padding(\wc_format_decimal($box_array[self::PADDING]));
+            $box->set_padding(wc_format_decimal($box_array[self::PADDING]));
         }
         return $box;
     }
@@ -89,7 +89,7 @@ class SettingsBox extends \FlexibleShippingUspsVendor\WpDesk\WooCommerce\Shippin
      *
      * @return array
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         $serialized = parent::jsonSerialize();
         $serialized[self::BOX_WEIGHT] = $this->get_box_weight();

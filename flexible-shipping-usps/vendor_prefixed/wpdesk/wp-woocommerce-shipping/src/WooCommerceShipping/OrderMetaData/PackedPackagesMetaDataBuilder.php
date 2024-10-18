@@ -25,7 +25,7 @@ class PackedPackagesMetaDataBuilder
      *
      * @param Shipment $shipment .
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    public function __construct(Shipment $shipment)
     {
         $this->shipment = $shipment;
     }
@@ -46,8 +46,8 @@ class PackedPackagesMetaDataBuilder
                     $items[$item->name]++;
                 }
             }
-            $packed_packages[] = ['package' => isset($package->description) ? $package->description : \__('Custom', 'flexible-shipping-usps'), 'items' => $items];
+            $packed_packages[] = ['package' => isset($package->description) ? $package->description : __('Custom', 'flexible-shipping-usps'), 'items' => $items];
         }
-        return \json_encode($packed_packages);
+        return json_encode($packed_packages);
     }
 }

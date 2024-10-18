@@ -15,24 +15,24 @@ use function usort;
 /**
  * List of boxes available to put items into, ordered by volume.
  */
-class BoxList implements \IteratorAggregate
+class BoxList implements IteratorAggregate
 {
     /**
      * @var Box[]
      */
     private array $list = [];
     private bool $isSorted = \false;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\BoxSorter $sorter;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\BoxSorter $sorter = null)
+    private BoxSorter $sorter;
+    public function __construct(BoxSorter $sorter = null)
     {
-        $this->sorter = $sorter ?: new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\DefaultBoxSorter();
+        $this->sorter = $sorter ?: new DefaultBoxSorter();
     }
     /**
      * Do a bulk create.
      *
      * @param Box[] $boxes
      */
-    public static function fromArray(array $boxes, bool $preSorted = \false) : self
+    public static function fromArray(array $boxes, bool $preSorted = \false): self
     {
         $list = new self();
         $list->list = $boxes;
@@ -42,15 +42,15 @@ class BoxList implements \IteratorAggregate
     /**
      * @return Traversable<Box>
      */
-    public function getIterator() : \Traversable
+    public function getIterator(): Traversable
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
+            usort($this->list, [$this->sorter, 'compare']);
             $this->isSorted = \true;
         }
-        return new \ArrayIterator($this->list);
+        return new ArrayIterator($this->list);
     }
-    public function insert(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $item) : void
+    public function insert(Box $item): void
     {
         $this->list[] = $item;
     }

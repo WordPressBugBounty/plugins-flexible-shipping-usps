@@ -7,7 +7,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
  *
  * @package WPDesk\Forms
  */
-abstract class NoValueField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\BasicField
+abstract class NoValueField extends BasicField
 {
     public function __construct()
     {

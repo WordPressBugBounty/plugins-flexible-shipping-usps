@@ -14,7 +14,7 @@ use FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer;
  * Cached Collections Point.
  * Decorates CollectionPointProvider.
  */
-class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPointCapability\CollectionPointsProvider
+class CachedCollectionPointsProvider implements CollectionPointsProvider
 {
     /**
      * @var CollectionPointsProvider
@@ -35,7 +35,7 @@ class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDe
      * @param PersistentContainer      $persistent_container .
      * @param string                   $salt .
      */
-    public function __construct(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPointCapability\CollectionPointsProvider $collection_points_provider, \FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer $persistent_container, $salt)
+    public function __construct(CollectionPointsProvider $collection_points_provider, PersistentContainer $persistent_container, $salt)
     {
         $this->collections_point_provider = $collection_points_provider;
         $this->persistent_container = $persistent_container;
@@ -46,7 +46,7 @@ class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDe
      *
      * @return CollectionPoint[]
      */
-    public function get_nearest_collection_points(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address $address)
+    public function get_nearest_collection_points(Address $address)
     {
         $item_id = $this->prepare_item_id('nearest', $this->get_address_as_string($address));
         try {
@@ -62,7 +62,7 @@ class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDe
      *
      * @return CollectionPoint
      */
-    public function get_single_nearest_collection_point(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address $address)
+    public function get_single_nearest_collection_point(Address $address)
     {
         $item_id = $this->prepare_item_id('single_nearest', $this->get_address_as_string($address));
         try {
@@ -95,7 +95,7 @@ class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDe
      *
      * @return string
      */
-    private function get_address_as_string(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Address $address)
+    private function get_address_as_string(Address $address)
     {
         $address_as_string = $address->country_code . $address->address_line1 . $address->address_line2 . $address->city . $address->postal_code . $address->state_code;
         foreach ($address->street_lines as $street_line) {
@@ -111,6 +111,6 @@ class CachedCollectionPointsProvider implements \FlexibleShippingUspsVendor\WPDe
      */
     private function prepare_item_id($set, $element_id)
     {
-        return \md5($set . $element_id . $this->salt);
+        return md5($set . $element_id . $this->salt);
     }
 }

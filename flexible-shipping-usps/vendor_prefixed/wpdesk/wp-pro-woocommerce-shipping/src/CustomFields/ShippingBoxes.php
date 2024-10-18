@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettin
  *
  * @package WPDesk\WooCommerceShippingPro\CustomFields
  */
-class ShippingBoxes implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CustomField
+class ShippingBoxes implements CustomField
 {
     // TODO: not sure what is that field.
     const OPTION_PACKAGING_BOXES = 'packaging_boxes';
@@ -21,7 +21,7 @@ class ShippingBoxes implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
     private $method;
     /** @var BoxesWithUnit */
     private $boxes;
-    public function __construct(\WC_Shipping_Method $method, \FlexibleShippingUspsVendor\WPDesk\Packer\BoxFactory\BoxesWithUnit $boxes)
+    public function __construct(\WC_Shipping_Method $method, BoxesWithUnit $boxes)
     {
         $this->method = $method;
         $this->boxes = $boxes;
@@ -42,10 +42,10 @@ class ShippingBoxes implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
      */
     public static function enqueue_scripts($plugin_assets_url)
     {
-        $current_screen = \get_current_screen();
+        $current_screen = get_current_screen();
         if ($current_screen instanceof \WP_Screen && 'woocommerce_page_wc-settings' === $current_screen->id) {
-            $suffix = \defined('SCRIPT_DEBUG') && \SCRIPT_DEBUG ? '' : '.min';
-            $shipping_boxes_assets = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\Assets();
+            $suffix = defined('SCRIPT_DEBUG') && \SCRIPT_DEBUG ? '' : '.min';
+            $shipping_boxes_assets = new Assets();
             $shipping_boxes_assets->enqueue($plugin_assets_url . '/../../vendor_prefixed/wpdesk/wp-settings-field-boxes', $suffix, 6);
         }
     }
@@ -58,7 +58,7 @@ class ShippingBoxes implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
      */
     public function sanitize(array $data = null)
     {
-        $shipping_boxes_field = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\SettingsField('whatever');
+        $shipping_boxes_field = new SettingsField('whatever');
         return $shipping_boxes_field->get_field_posted_value_as_json($data);
     }
     /**
@@ -78,39 +78,39 @@ class ShippingBoxes implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShi
             $weight_unit = '[lbs]';
             $dimensions_unit = '[in]';
         }
-        $labels = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\Labels();
+        $labels = new Labels();
         $labels->set_labels(
-            \__('Type', 'flexible-shipping-usps'),
+            __('Type', 'flexible-shipping-usps'),
             // Translators: units.
-            \sprintf(\__('Length %1$s', 'flexible-shipping-usps'), $dimensions_unit),
+            sprintf(__('Length %1$s', 'flexible-shipping-usps'), $dimensions_unit),
             // Translators: units.
-            \sprintf(\__('Width %1$s', 'flexible-shipping-usps'), $dimensions_unit),
+            sprintf(__('Width %1$s', 'flexible-shipping-usps'), $dimensions_unit),
             // Translators: units.
-            \sprintf(\__('Height %1$s', 'flexible-shipping-usps'), $dimensions_unit),
+            sprintf(__('Height %1$s', 'flexible-shipping-usps'), $dimensions_unit),
             // Translators: units.
-            \sprintf(\__('Max Weight %1$s', 'flexible-shipping-usps'), $weight_unit),
+            sprintf(__('Max Weight %1$s', 'flexible-shipping-usps'), $weight_unit),
             // Translators: units.
-            \sprintf(\__('Padding %1$s', 'flexible-shipping-usps'), $dimensions_unit),
+            sprintf(__('Padding %1$s', 'flexible-shipping-usps'), $dimensions_unit),
             // Translators: units.
-            \sprintf(\__('Box Weight %1$s', 'flexible-shipping-usps'), $weight_unit),
-            \__('Delete', 'flexible-shipping-usps'),
-            \__('Add', 'flexible-shipping-usps')
+            sprintf(__('Box Weight %1$s', 'flexible-shipping-usps'), $weight_unit),
+            __('Delete', 'flexible-shipping-usps'),
+            __('Add', 'flexible-shipping-usps')
         );
-        $shipping_boxes_field = new \FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\SettingsField($params['field_key']);
-        \ob_start();
+        $shipping_boxes_field = new SettingsField($params['field_key']);
+        ob_start();
         $shipping_boxes_field->render($params['title'], $this->method->get_tooltip_html($params), $params['value'], $this->boxes->get_boxes(), $labels, !empty($params['description']) ? $params['description'] : '');
-        return \ob_get_clean();
+        return ob_get_clean();
     }
     public function render_footer($key)
     {
-        \ob_start();
+        ob_start();
         $prefix = "woocommerce_{$this->method->id}_";
-        $packaging_method_field = $prefix . \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::OPTION_PACKAGING_METHOD;
+        $packaging_method_field = $prefix . PackerSettings::OPTION_PACKAGING_METHOD;
         $packaging_boxes_field = $prefix . self::OPTION_PACKAGING_BOXES;
-        $shipping_boxes_field = $prefix . \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::OPTION_SHIPPING_BOXES;
-        $packaging_method_box = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::PACKING_METHOD_BOX;
-        $packaging_method_box_3d = \FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\Packer\PackerSettings::PACKING_METHOD_BOX_3D;
+        $shipping_boxes_field = $prefix . PackerSettings::OPTION_SHIPPING_BOXES;
+        $packaging_method_box = PackerSettings::PACKING_METHOD_BOX;
+        $packaging_method_box_3d = PackerSettings::PACKING_METHOD_BOX_3D;
         include __DIR__ . '/views/settings-script.php';
-        return \ob_get_clean();
+        return ob_get_clean();
     }
 }

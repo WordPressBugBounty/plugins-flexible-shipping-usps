@@ -69,63 +69,63 @@ class OnboardingStep implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_id() : string
+    public function get_id(): string
     {
         return $this->id;
     }
     /**
      * @return int
      */
-    public function get_step() : int
+    public function get_step(): int
     {
         return $this->step;
     }
     /**
      * @return bool
      */
-    public function is_logo() : bool
+    public function is_logo(): bool
     {
         return $this->logo;
     }
     /**
      * @return string
      */
-    public function get_title() : string
+    public function get_title(): string
     {
         return $this->title;
     }
     /**
      * @return bool
      */
-    public function is_show() : bool
+    public function is_show(): bool
     {
         return $this->show;
     }
     /**
      * @return string
      */
-    public function get_image() : string
+    public function get_image(): string
     {
         return $this->image;
     }
     /**
      * @return string
      */
-    public function get_heading() : string
+    public function get_heading(): string
     {
         return $this->heading;
     }
     /**
      * @return string
      */
-    public function get_sub_heading() : string
+    public function get_sub_heading(): string
     {
         return $this->sub_heading;
     }
     /**
      * @return OnboardingButton[]
      */
-    public function get_buttons() : array
+    public function get_buttons(): array
     {
         return $this->buttons;
     }
@@ -133,7 +133,7 @@ class OnboardingStep implements \JsonSerializable
      * @param string $id
      * @return OnboardingStep
      */
-    public function set_id(string $id) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_id(string $id): OnboardingStep
     {
         $this->id = $id;
         return $this;
@@ -142,7 +142,7 @@ class OnboardingStep implements \JsonSerializable
      * @param int $step
      * @return OnboardingStep
      */
-    public function set_step(int $step) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_step(int $step): OnboardingStep
     {
         $this->step = $step;
         return $this;
@@ -151,7 +151,7 @@ class OnboardingStep implements \JsonSerializable
      * @param bool $logo
      * @return OnboardingStep
      */
-    public function set_logo(bool $logo) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_logo(bool $logo): OnboardingStep
     {
         $this->logo = $logo;
         return $this;
@@ -160,7 +160,7 @@ class OnboardingStep implements \JsonSerializable
      * @param string $title
      * @return OnboardingStep
      */
-    public function set_title(string $title) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_title(string $title): OnboardingStep
     {
         $this->title = $title;
         return $this;
@@ -169,7 +169,7 @@ class OnboardingStep implements \JsonSerializable
      * @param bool $show
      * @return OnboardingStep
      */
-    public function set_show(bool $show) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_show(bool $show): OnboardingStep
     {
         $this->show = $show;
         return $this;
@@ -178,7 +178,7 @@ class OnboardingStep implements \JsonSerializable
      * @param string $image
      * @return OnboardingStep
      */
-    public function set_image(string $image) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_image(string $image): OnboardingStep
     {
         $this->image = $image;
         return $this;
@@ -187,7 +187,7 @@ class OnboardingStep implements \JsonSerializable
      * @param string $heading
      * @return OnboardingStep
      */
-    public function set_heading(string $heading) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_heading(string $heading): OnboardingStep
     {
         $this->heading = $heading;
         return $this;
@@ -196,7 +196,7 @@ class OnboardingStep implements \JsonSerializable
      * @param string $sub_heading
      * @return OnboardingStep
      */
-    public function set_sub_heading(string $sub_heading) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_sub_heading(string $sub_heading): OnboardingStep
     {
         $this->sub_heading = $sub_heading;
         return $this;
@@ -205,7 +205,7 @@ class OnboardingStep implements \JsonSerializable
      * @param OnboardingButton[] $buttons
      * @return OnboardingStep
      */
-    public function set_buttons(array $buttons) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_buttons(array $buttons): OnboardingStep
     {
         $this->buttons = $buttons;
         return $this;
@@ -213,7 +213,7 @@ class OnboardingStep implements \JsonSerializable
     /**
      * @return Field[]
      */
-    public function get_content() : array
+    public function get_content(): array
     {
         return $this->content;
     }
@@ -221,7 +221,7 @@ class OnboardingStep implements \JsonSerializable
      * @param Field[] $content
      * @return OnboardingStep
      */
-    public function set_content(array $content) : \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingStep
+    public function set_content(array $content): OnboardingStep
     {
         $this->content = $content;
         return $this;
@@ -229,16 +229,16 @@ class OnboardingStep implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return ['id' => $this->get_id(), 'logo' => $this->is_logo(), 'title' => $this->get_title(), 'step' => $this->get_step(), 'show' => $this->is_show(), 'image' => $this->get_image(), 'heading' => $this->get_heading(), 'sub_heading' => $this->get_sub_heading(), 'content' => $this->serializeContent(), 'buttons' => $this->get_buttons()];
     }
-    private function serializeContent() : array
+    private function serializeContent(): array
     {
         $serialized = [];
         foreach ($this->content as $field) {
             $serialized_field = ['type' => $field->get_type(), 'name' => $field->get_name(), 'id' => $field->get_id(), 'class' => $field->get_classes(), 'value' => $field->get_default_value(), 'label' => $field->get_label(), 'autocomplete' => $field->is_attribute_set('autocomplete') ? $field->get_attribute('autocomplete', '') : ''];
-            if ($field instanceof \FlexibleShippingUspsVendor\WPDesk\Forms\Field\CheckboxField) {
+            if ($field instanceof Field\CheckboxField) {
                 $serialized_field['sublabel'] = $field->get_sublabel();
             }
             $serialized[] = $serialized_field;

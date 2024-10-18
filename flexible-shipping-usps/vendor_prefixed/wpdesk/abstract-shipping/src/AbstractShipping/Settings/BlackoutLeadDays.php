@@ -58,7 +58,7 @@ class BlackoutLeadDays
     private function increase_date_while_in_blackout_days(\DateTime $calculated_date, \DateInterval $one_day_date_interval)
     {
         $calculated_date_week_day = $calculated_date->format('N');
-        while (\in_array($calculated_date_week_day, $this->blackout_days, \true)) {
+        while (in_array($calculated_date_week_day, $this->blackout_days, \true)) {
             $calculated_date->add($one_day_date_interval);
             $calculated_date->setTime(0, 0);
             $calculated_date_week_day = $calculated_date->format('N');

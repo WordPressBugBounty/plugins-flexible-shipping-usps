@@ -16,5 +16,5 @@ interface BoxSorter
     /**
      * Return -1 if $boxA is "best", 1 if $boxB is "best" or 0 if neither is "best".
      */
-    public function compare(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $boxA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box $boxB) : int;
+    public function compare(Box $boxA, Box $boxB): int;
 }

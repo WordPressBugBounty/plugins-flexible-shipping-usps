@@ -2,9 +2,9 @@
 
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Field;
 
-class ImageInputField extends \FlexibleShippingUspsVendor\WPDesk\Forms\Field\BasicField
+class ImageInputField extends BasicField
 {
-    public function get_template_name() : string
+    public function get_template_name(): string
     {
         return 'input-image';
     }

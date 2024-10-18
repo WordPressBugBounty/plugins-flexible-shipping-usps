@@ -21,37 +21,37 @@ use function usort;
 /**
  * List of packed boxes.
  */
-class PackedBoxList implements \IteratorAggregate, \Countable, \JsonSerializable
+class PackedBoxList implements IteratorAggregate, Countable, JsonSerializable
 {
     /**
      * @var PackedBox[]
      */
     private array $list = [];
     private bool $isSorted = \false;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBoxSorter $sorter;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBoxSorter $sorter = null)
+    private PackedBoxSorter $sorter;
+    public function __construct(PackedBoxSorter $sorter = null)
     {
-        $this->sorter = $sorter ?: new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\DefaultPackedBoxSorter();
+        $this->sorter = $sorter ?: new DefaultPackedBoxSorter();
     }
     /**
      * @return Traversable<PackedBox>
      */
-    public function getIterator() : \Traversable
+    public function getIterator(): Traversable
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
+            usort($this->list, [$this->sorter, 'compare']);
             $this->isSorted = \true;
         }
-        return new \ArrayIterator($this->list);
+        return new ArrayIterator($this->list);
     }
     /**
      * Number of items in list.
      */
-    public function count() : int
+    public function count(): int
     {
-        return \count($this->list);
+        return count($this->list);
     }
-    public function insert(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBox $item) : void
+    public function insert(PackedBox $item): void
     {
         $this->list[] = $item;
         $this->isSorted = \false;
@@ -63,7 +63,7 @@ class PackedBoxList implements \IteratorAggregate, \Countable, \JsonSerializable
      *
      * @param PackedBox[] $boxes
      */
-    public function insertFromArray(array $boxes) : void
+    public function insertFromArray(array $boxes): void
     {
         foreach ($boxes as $box) {
             $this->insert($box);
@@ -72,52 +72,52 @@ class PackedBoxList implements \IteratorAggregate, \Countable, \JsonSerializable
     /**
      * @internal
      */
-    public function top() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedBox
+    public function top(): PackedBox
     {
         if (!$this->isSorted) {
-            \usort($this->list, [$this->sorter, 'compare']);
+            usort($this->list, [$this->sorter, 'compare']);
             $this->isSorted = \true;
         }
-        return \reset($this->list);
+        return reset($this->list);
     }
     /**
      * Calculate the average (mean) weight of the boxes.
      */
-    public function getMeanWeight() : float
+    public function getMeanWeight(): float
     {
         $meanWeight = 0;
         foreach ($this->list as $box) {
             $meanWeight += $box->getWeight();
         }
-        return $meanWeight / \count($this->list);
+        return $meanWeight / count($this->list);
     }
     /**
      * Calculate the average (mean) weight of the boxes.
      */
-    public function getMeanItemWeight() : float
+    public function getMeanItemWeight(): float
     {
         $meanWeight = 0;
         foreach ($this->list as $box) {
             $meanWeight += $box->getItemWeight();
         }
-        return $meanWeight / \count($this->list);
+        return $meanWeight / count($this->list);
     }
     /**
      * Calculate the variance in weight between these boxes.
      */
-    public function getWeightVariance() : float
+    public function getWeightVariance(): float
     {
         $mean = $this->getMeanWeight();
         $weightVariance = 0;
         foreach ($this->list as $box) {
             $weightVariance += ($box->getWeight() - $mean) ** 2;
         }
-        return \round($weightVariance / \count($this->list), 1);
+        return round($weightVariance / count($this->list), 1);
     }
     /**
      * Get volume utilisation of the set of packed boxes.
      */
-    public function getVolumeUtilisation() : float
+    public function getVolumeUtilisation(): float
     {
         $itemVolume = 0;
         $boxVolume = 0;
@@ -127,7 +127,7 @@ class PackedBoxList implements \IteratorAggregate, \Countable, \JsonSerializable
                 $itemVolume += $item->getItem()->getWidth() * $item->getItem()->getLength() * $item->getItem()->getDepth();
             }
         }
-        return \round($itemVolume / $boxVolume * 100, 1);
+        return round($itemVolume / $boxVolume * 100, 1);
     }
     #[ReturnTypeWillChange]
     public function jsonSerialize()

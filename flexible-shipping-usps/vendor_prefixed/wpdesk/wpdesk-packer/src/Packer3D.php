@@ -13,7 +13,7 @@ use FlexibleShippingUspsVendor\WPDesk\Packer\Item\ItemImplementation;
  *
  * @package WPDesk\Packer
  */
-class Packer3D extends \FlexibleShippingUspsVendor\WPDesk\Packer\Packer
+class Packer3D extends Packer
 {
     /**
      * Pack items to boxes creating packages.
@@ -22,8 +22,8 @@ class Packer3D extends \FlexibleShippingUspsVendor\WPDesk\Packer\Packer
      */
     public function pack()
     {
-        if (0 === \count($this->items)) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\Packer\Exception\NoItemsException('No items to pack!');
+        if (0 === count($this->items)) {
+            throw new NoItemsException('No items to pack!');
         }
         $this->packages = [];
         $packer = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Packer();
@@ -40,7 +40,7 @@ class Packer3D extends \FlexibleShippingUspsVendor\WPDesk\Packer\Packer
             foreach ($packed_package->getItems() as $item) {
                 $items[] = $item->getItem();
             }
-            $packed_box = new \FlexibleShippingUspsVendor\WPDesk\Packer\PackedBox($this->get_box($packed_package->getBox()->get_name()), $items);
+            $packed_box = new PackedBox($this->get_box($packed_package->getBox()->get_name()), $items);
             $packed_box->get_packed_items();
             $this->packages[] = $packed_box;
         }

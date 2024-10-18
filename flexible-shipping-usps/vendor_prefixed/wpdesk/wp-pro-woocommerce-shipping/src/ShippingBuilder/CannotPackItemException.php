@@ -21,7 +21,7 @@ class CannotPackItemException extends \RuntimeException
     public function __construct($item, $reason)
     {
         // Translators: product names.
-        $message = \sprintf(\__('Cannot pack item: %1$s. %2$s', 'flexible-shipping-usps'), $item->get_name(), $reason);
+        $message = sprintf(__('Cannot pack item: %1$s. %2$s', 'flexible-shipping-usps'), $item->get_name(), $reason);
         parent::__construct($message);
     }
 }

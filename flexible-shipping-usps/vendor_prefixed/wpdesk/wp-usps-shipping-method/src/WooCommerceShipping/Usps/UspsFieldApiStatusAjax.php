@@ -12,7 +12,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus
 /**
  * Can handle api status ajax request.
  */
-class UspsFieldApiStatusAjax extends \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatusAjax
+class UspsFieldApiStatusAjax extends FieldApiStatusAjax
 {
     /**
      * Check connection error.
@@ -35,7 +35,7 @@ class UspsFieldApiStatusAjax extends \FlexibleShippingUspsVendor\WPDesk\WooComme
      */
     private function ping()
     {
-        $connection_checker = new \FlexibleShippingUspsVendor\WPDesk\UspsShippingService\Api\ConnectionChecker($this->get_settings(), $this->get_logger());
+        $connection_checker = new ConnectionChecker($this->get_settings(), $this->get_logger());
         $connection_checker->check_connection();
     }
 }

@@ -9,7 +9,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * When and if show Onboarding.
  */
-class OnboardingShouldShowGetParametersStrategy implements \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingShouldShowStrategy
+class OnboardingShouldShowGetParametersStrategy implements OnboardingShouldShowStrategy
 {
     /**
      * Whether to show onboarding on the page or not. Array of arrays with condition for _GET.
@@ -29,13 +29,13 @@ class OnboardingShouldShowGetParametersStrategy implements \FlexibleShippingUsps
      *
      * @return bool
      */
-    public function should_display() : bool
+    public function should_display(): bool
     {
         return $this->should_display_from_get_parameters();
     }
-    private function should_display_from_get_parameters() : bool
+    private function should_display_from_get_parameters(): bool
     {
-        $current_screen = \get_current_screen();
+        $current_screen = get_current_screen();
         $page = $current_screen ? $current_screen->base : '';
         foreach ($this->conditions as $or_conditions) {
             if ($this->should_display_on_current_page($page === ($or_conditions['page'] ?? ''), $or_conditions['parameters'] ?? [])) {
@@ -44,7 +44,7 @@ class OnboardingShouldShowGetParametersStrategy implements \FlexibleShippingUsps
         }
         return \false;
     }
-    private function should_display_on_current_page(bool $display, array $parameters) : bool
+    private function should_display_on_current_page(bool $display, array $parameters): bool
     {
         foreach ($parameters as $parameter => $value) {
             if (!isset($_GET[$parameter]) && !empty($value) || isset($_GET[$parameter]) && $_GET[$parameter] !== $value) {

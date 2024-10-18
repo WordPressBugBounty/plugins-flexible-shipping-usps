@@ -38,12 +38,12 @@ trait HandlingFeesTrait
      */
     private function create_price_adjustment_handler($price_adjustment_type, $price_adjustment_value)
     {
-        if ($price_adjustment_type === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentNone::ADJUSTMENT_TYPE) {
-            return new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentNone();
-        } elseif ($price_adjustment_type === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentFixed::ADJUSTMENT_TYPE) {
-            return new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentFixed($price_adjustment_value, \wc_get_rounding_precision());
-        } elseif ($price_adjustment_type === \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentPercentage::ADJUSTMENT_TYPE) {
-            return new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentPercentage($price_adjustment_value, \wc_get_rounding_precision());
+        if ($price_adjustment_type === PriceAdjustmentNone::ADJUSTMENT_TYPE) {
+            return new PriceAdjustmentNone();
+        } elseif ($price_adjustment_type === PriceAdjustmentFixed::ADJUSTMENT_TYPE) {
+            return new PriceAdjustmentFixed($price_adjustment_value, wc_get_rounding_precision());
+        } elseif ($price_adjustment_type === PriceAdjustmentPercentage::ADJUSTMENT_TYPE) {
+            return new PriceAdjustmentPercentage($price_adjustment_value, wc_get_rounding_precision());
         }
         throw new \RuntimeException('Unknown price adjustment type: ' . $price_adjustment_type);
     }
@@ -57,7 +57,7 @@ trait HandlingFeesTrait
     public function apply_handling_fees_if_enabled($price)
     {
         if ($this->should_apply_handling_fees()) {
-            $price_adjustment_handler = $this->create_price_adjustment_handler($this->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_TYPE, \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\HandlingFees\PriceAdjustmentNone::ADJUSTMENT_TYPE), \floatval($this->get_option(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_VALUE, '0')));
+            $price_adjustment_handler = $this->create_price_adjustment_handler($this->get_option(FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_TYPE, PriceAdjustmentNone::ADJUSTMENT_TYPE), floatval($this->get_option(FieldHandlingFees::OPTION_PRICE_ADJUSTMENT_VALUE, '0')));
             return $price_adjustment_handler->apply_on_price($price);
         }
         return $price;

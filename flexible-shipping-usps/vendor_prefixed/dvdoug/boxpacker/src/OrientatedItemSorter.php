@@ -23,7 +23,7 @@ class OrientatedItemSorter
      * @var array<string, int>
      */
     protected static array $lookaheadCache = [];
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItemFactory $orientatedItemFactory;
+    private OrientatedItemFactory $orientatedItemFactory;
     private bool $singlePassMode;
     private int $widthLeft;
     private int $lengthLeft;
@@ -32,10 +32,10 @@ class OrientatedItemSorter
     private int $x;
     private int $y;
     private int $z;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList $nextItems;
-    private \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $prevPackedItemList;
-    private \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItemFactory $factory, bool $singlePassMode, int $widthLeft, int $lengthLeft, int $depthLeft, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\ItemList $nextItems, int $rowLength, int $x, int $y, int $z, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItemList $prevPackedItemList, \FlexibleShippingUspsVendor\Psr\Log\LoggerInterface $logger)
+    private ItemList $nextItems;
+    private PackedItemList $prevPackedItemList;
+    private LoggerInterface $logger;
+    public function __construct(OrientatedItemFactory $factory, bool $singlePassMode, int $widthLeft, int $lengthLeft, int $depthLeft, ItemList $nextItems, int $rowLength, int $x, int $y, int $z, PackedItemList $prevPackedItemList, LoggerInterface $logger)
     {
         $this->orientatedItemFactory = $factory;
         $this->singlePassMode = $singlePassMode;
@@ -50,7 +50,7 @@ class OrientatedItemSorter
         $this->prevPackedItemList = $prevPackedItemList;
         $this->logger = $logger;
     }
-    public function __invoke(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $a, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $b) : int
+    public function __invoke(OrientatedItem $a, OrientatedItem $b): int
     {
         // Prefer exact fits in width/length/depth order
         $orientationAWidthLeft = $this->widthLeft - $a->getWidth();
@@ -77,11 +77,11 @@ class OrientatedItemSorter
             return $followingItemDecider;
         }
         // otherwise prefer leaving minimum possible gap, or the greatest footprint
-        $orientationAMinGap = \min($orientationAWidthLeft, $orientationALengthLeft);
-        $orientationBMinGap = \min($orientationBWidthLeft, $orientationBLengthLeft);
+        $orientationAMinGap = min($orientationAWidthLeft, $orientationALengthLeft);
+        $orientationBMinGap = min($orientationBWidthLeft, $orientationBLengthLeft);
         return $orientationAMinGap <=> $orientationBMinGap ?: $a->getSurfaceFootprint() <=> $b->getSurfaceFootprint();
     }
-    private function lookAheadDecider(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $a, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $b, int $orientationAWidthLeft, int $orientationBWidthLeft) : int
+    private function lookAheadDecider(OrientatedItem $a, OrientatedItem $b, int $orientationAWidthLeft, int $orientationBWidthLeft): int
     {
         if ($this->nextItems->count() === 0) {
             return 0;
@@ -105,12 +105,12 @@ class OrientatedItemSorter
      * Not an actual packing, that has additional logic regarding constraints and stackability, this focuses
      * purely on fit.
      */
-    protected function calculateAdditionalItemsPackedWithThisOrientation(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $prevItem) : int
+    protected function calculateAdditionalItemsPackedWithThisOrientation(OrientatedItem $prevItem): int
     {
         if ($this->singlePassMode) {
             return 0;
         }
-        $currentRowLength = \max($prevItem->getLength(), $this->rowLength);
+        $currentRowLength = max($prevItem->getLength(), $this->rowLength);
         $itemsToPack = $this->nextItems->topN(8);
         // cap lookahead as this gets recursive and slow
         $cacheKey = $this->widthLeft . '|' . $this->lengthLeft . '|' . $prevItem->getWidth() . '|' . $prevItem->getLength() . '|' . $currentRowLength . '|' . $this->depthLeft;
@@ -118,13 +118,13 @@ class OrientatedItemSorter
             $cacheKey .= '|' . $itemToPack->getWidth() . '|' . $itemToPack->getLength() . '|' . $itemToPack->getDepth() . '|' . $itemToPack->getWeight() . '|' . ($itemToPack->getKeepFlat() ? '1' : '0');
         }
         if (!isset(static::$lookaheadCache[$cacheKey])) {
-            $tempBox = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\WorkingVolume($this->widthLeft - $prevItem->getWidth(), $currentRowLength, $this->depthLeft, \PHP_INT_MAX);
-            $tempPacker = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\VolumePacker($tempBox, $itemsToPack);
+            $tempBox = new WorkingVolume($this->widthLeft - $prevItem->getWidth(), $currentRowLength, $this->depthLeft, PHP_INT_MAX);
+            $tempPacker = new VolumePacker($tempBox, $itemsToPack);
             $tempPacker->setSinglePassMode(\true);
             $remainingRowPacked = $tempPacker->pack();
             $itemsToPack->removePackedItems($remainingRowPacked->getItems());
-            $tempBox = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\WorkingVolume($this->widthLeft, $this->lengthLeft - $currentRowLength, $this->depthLeft, \PHP_INT_MAX);
-            $tempPacker = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\VolumePacker($tempBox, $itemsToPack);
+            $tempBox = new WorkingVolume($this->widthLeft, $this->lengthLeft - $currentRowLength, $this->depthLeft, PHP_INT_MAX);
+            $tempPacker = new VolumePacker($tempBox, $itemsToPack);
             $tempPacker->setSinglePassMode(\true);
             $nextRowsPacked = $tempPacker->pack();
             $itemsToPack->removePackedItems($nextRowsPacked->getItems());
@@ -134,7 +134,7 @@ class OrientatedItemSorter
         }
         return static::$lookaheadCache[$cacheKey];
     }
-    private function exactFitDecider(int $dimensionALeft, int $dimensionBLeft) : int
+    private function exactFitDecider(int $dimensionALeft, int $dimensionBLeft): int
     {
         if ($dimensionALeft === 0 && $dimensionBLeft > 0) {
             return -1;

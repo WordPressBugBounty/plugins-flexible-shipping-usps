@@ -13,7 +13,7 @@ use ReturnTypeWillChange;
 /**
  * @internal
  */
-class WorkingVolume implements \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box, \JsonSerializable
+class WorkingVolume implements Box, JsonSerializable
 {
     private int $width;
     private int $length;
@@ -26,39 +26,39 @@ class WorkingVolume implements \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box,
         $this->depth = $depth;
         $this->maxWeight = $maxWeight;
     }
-    public function getReference() : string
+    public function getReference(): string
     {
         return "Working Volume {$this->width}x{$this->length}x{$this->depth}";
     }
-    public function getOuterWidth() : int
+    public function getOuterWidth(): int
     {
         return $this->width;
     }
-    public function getOuterLength() : int
+    public function getOuterLength(): int
     {
         return $this->length;
     }
-    public function getOuterDepth() : int
+    public function getOuterDepth(): int
     {
         return $this->depth;
     }
-    public function getEmptyWeight() : int
+    public function getEmptyWeight(): int
     {
         return 0;
     }
-    public function getInnerWidth() : int
+    public function getInnerWidth(): int
     {
         return $this->width;
     }
-    public function getInnerLength() : int
+    public function getInnerLength(): int
     {
         return $this->length;
     }
-    public function getInnerDepth() : int
+    public function getInnerDepth(): int
     {
         return $this->depth;
     }
-    public function getMaxWeight() : int
+    public function getMaxWeight(): int
     {
         return $this->maxWeight;
     }

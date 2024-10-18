@@ -3,7 +3,7 @@
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Validator;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Validator;
-class ChainValidator implements \FlexibleShippingUspsVendor\WPDesk\Forms\Validator
+class ChainValidator implements Validator
 {
     /** @var Validator[] */
     private $validators;
@@ -19,12 +19,12 @@ class ChainValidator implements \FlexibleShippingUspsVendor\WPDesk\Forms\Validat
      *
      * @return $this
      */
-    public function attach(\FlexibleShippingUspsVendor\WPDesk\Forms\Validator $validator) : self
+    public function attach(Validator $validator): self
     {
         $this->validators[] = $validator;
         return $this;
     }
-    public function is_valid($value) : bool
+    public function is_valid($value): bool
     {
         $result = \true;
         $messages = [[]];
@@ -34,10 +34,10 @@ class ChainValidator implements \FlexibleShippingUspsVendor\WPDesk\Forms\Validat
                 $messages[] = $validator->get_messages();
             }
         }
-        $this->messages = \array_merge(...$messages);
+        $this->messages = array_merge(...$messages);
         return $result;
     }
-    public function get_messages() : array
+    public function get_messages(): array
     {
         return $this->messages;
     }

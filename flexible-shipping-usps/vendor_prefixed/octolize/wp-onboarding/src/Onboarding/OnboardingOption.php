@@ -38,7 +38,7 @@ class OnboardingOption
     /**
      * @return string
      */
-    public function get_option_name_suffix() : string
+    public function get_option_name_suffix(): string
     {
         return $this->option_name_suffix;
     }
@@ -63,9 +63,9 @@ class OnboardingOption
      *
      * @return bool Option status.
      */
-    public function is_option_set() : bool
+    public function is_option_set(): bool
     {
-        return \false !== \get_option($this->prepare_option_name(), \false);
+        return \false !== get_option($this->prepare_option_name(), \false);
     }
     /**
      * @param string $option_key   .
@@ -73,35 +73,35 @@ class OnboardingOption
      *
      * @return bool
      */
-    public function update_option(string $option_key, $option_value) : bool
+    public function update_option(string $option_key, $option_value): bool
     {
         $options = $this->get_options();
         $options[$option_key] = $option_value;
-        return \update_option($this->prepare_option_name(), $options);
+        return update_option($this->prepare_option_name(), $options);
     }
-    public function get_raw_option_data() : array
+    public function get_raw_option_data(): array
     {
         return $this->get_options();
     }
     /**
      * @return array
      */
-    private function get_options() : array
+    private function get_options(): array
     {
-        $options = \get_option($this->prepare_option_name(), []);
-        if (!\is_array($options)) {
+        $options = get_option($this->prepare_option_name(), []);
+        if (!is_array($options)) {
             $options = [];
         }
-        return \wp_parse_args($options, $this->get_default_option_values());
+        return wp_parse_args($options, $this->get_default_option_values());
     }
     /**
      * @return array
      */
-    private function get_default_option_values() : array
+    private function get_default_option_values(): array
     {
         return [self::AUTO_SHOW_POPUP => 0, self::VIEWS => 0, self::STEP => 'step_0', self::EVENT => '', self::PAGE => '', self::EVENT_TIME => 0, self::SAVE_FIELDS => ''];
     }
-    private function prepare_option_name() : string
+    private function prepare_option_name(): string
     {
         return $this->option_name_prefix . $this->option_name_suffix;
     }

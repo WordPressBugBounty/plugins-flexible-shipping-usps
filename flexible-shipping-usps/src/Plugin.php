@@ -12,6 +12,7 @@ use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeOn
 use FlexibleShippingUspsVendor\Octolize\ShippingExtensions\ShippingExtensions;
 use FlexibleShippingUspsVendor\Octolize\Tracker\DeactivationTracker\OctolizeReasonsFactory;
 use FlexibleShippingUspsVendor\Octolize\Tracker\TrackerInitializer;
+use FlexibleShippingUspsVendor\Octolize\Usps\RestApiFactory;
 use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValuesAsArray;
 use FlexibleShippingUspsVendor\WPDesk\Logger\Processor\SensitiveDataProcessor;
 use FlexibleShippingUspsVendor\WPDesk\Logger\SimpleLoggerFactory;
@@ -35,11 +36,16 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCom
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShopSettings;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Ups\MetaDataInterpreters\FallbackAdminMetaDataInterpreter;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Ups\MetaDataInterpreters\PackedPackagesAdminMetaDataInterpreter;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\Api\Rest\OauthApiCached;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\ShippingMethodsChecker;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\Tracker;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\UspsShippingMethod;
 use FlexibleShippingUspsVendor\WPDesk_Plugin_Info;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInterface;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareTrait;
 use FlexibleShippingUspsVendor\Psr\Log\NullLogger;
+use Octolize\Brand\UpsellingBox\SettingsSidebar;
+use WPDesk\FlexibleShippingUsps\AdvertMetabox\ProPluginMetaBox;
 
 /**
  * Main plugin class. The most important flow decisions are made here.
@@ -111,11 +117,31 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		$origin_country = $this->get_origin_country_code( $global_usps_settings );
 
+		//
+		$customer_id     = $global_usps_settings->get_value( UspsSettingsDefinition::REST_API_KEY, '' );
+		$customer_secret = $global_usps_settings->get_value( UspsSettingsDefinition::REST_API_SECRET_KEY, '' );
+		$rest_api        = ( new RestApiFactory() )->create(
+			$customer_id,
+			$customer_secret,
+			$this->logger,
+			OauthApiCached::class
+		);
+
 		// @phpstan-ignore-next-line.
-		$usps_service = apply_filters( 'flexible_shipping_usps_shipping_service', new UspsShippingService( $this->logger, new ShopSettings( UspsShippingService::UNIQUE_ID ), $origin_country ) );
+		$usps_service = apply_filters(
+			'flexible_shipping_usps_shipping_service',
+			new UspsShippingService(
+				$this->logger,
+				new ShopSettings( UspsShippingService::UNIQUE_ID ),
+				$origin_country,
+				$rest_api
+			)
+		);
 
 		$this->add_hookable(
-			new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Assets( $this->get_plugin_url() . 'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps' )
+			new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Assets(
+				$this->get_plugin_url().'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps'
+			)
 		);
 		$this->init_repository_rating();
 
@@ -127,7 +153,9 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 			)
 		);
 		$admin_meta_data_interpreter->add_interpreter( new FallbackAdminMetaDataInterpreter() );
-		$admin_meta_data_interpreter->add_hidden_order_item_meta_key( WooCommerceShippingMetaDataBuilder::COLLECTION_POINT );
+		$admin_meta_data_interpreter->add_hidden_order_item_meta_key(
+			WooCommerceShippingMetaDataBuilder::COLLECTION_POINT
+		);
 		$admin_meta_data_interpreter->add_interpreter( new PackedPackagesAdminMetaDataInterpreter() );
 		$this->add_hookable( $admin_meta_data_interpreter );
 
@@ -142,6 +170,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		// @phpstan-ignore-next-line.
 		$api_ajax_status_handler = new FieldApiStatusAjax( $usps_service, $global_usps_settings, $this->logger );
 		$this->add_hookable( $api_ajax_status_handler );
+
+		$this->add_hookable( new PluginLinks( $this->plugin_info->get_plugin_file_name() ) );
 
 		// @phpstan-ignore-next-line.
 		$plugin_shipping_decisions = new PluginShippingDecisions( $usps_service, $this->logger );
@@ -177,7 +207,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	/**
 	 * @return void
 	 */
-	private function init_tracker() {
+	private function init_tracker(): void {
 		$this->add_hookable(
 			TrackerInitializer::create_from_plugin_info_for_shipping_method(
 				$this->plugin_info,
@@ -190,6 +220,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 				)
 			)
 		);
+
+		$this->add_hookable( new Tracker() );
 	}
 
 	/**
@@ -235,9 +267,11 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		add_filter( 'woocommerce_shipping_methods', [ $this, 'woocommerce_shipping_methods_filter' ], 20, 1 );
 
-		$this->add_hookable( new SettingsSidebar() );
+		$this->add_hookable( new ProPluginMetaBox( $this->get_plugin_assets_url() . '../vendor_prefixed/octolize/wp-octolize-brand-assets/assets/' ) );
 
 		$this->add_hookable( new ShippingExtensions( $this->plugin_info ) );
+
+		$this->add_hookable( new ShippingMethodsChecker() );
 
 		$this->hooks_on_hookable_objects();
 	}
@@ -263,16 +297,10 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	 * @return string[]
 	 */
 	public function links_filter( $links ) {
-		$docs_link    = 'https://octol.io/usps-docs';
-		$support_link = 'https://octol.io/usps-support';
 		$settings_url = \admin_url( 'admin.php?page=wc-settings&tab=shipping&section=flexible_shipping_usps' );
-
-		$external_attributes = ' target="_blank" ';
 
 		$plugin_links = [
 			'<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'flexible-shipping-usps' ) . '</a>',
-			'<a href="' . esc_url( $docs_link ) . '"' . $external_attributes . '>' . __( 'Docs', 'flexible-shipping-usps' ) . '</a>',
-			'<a href="' . esc_url( $support_link ) . '"' . $external_attributes . '>' . __( 'Support', 'flexible-shipping-usps' ) . '</a>',
 		];
 
 		if ( ! defined( 'FLEXIBLE_SHIPPING_USPS_PRO_VERSION' ) ) {

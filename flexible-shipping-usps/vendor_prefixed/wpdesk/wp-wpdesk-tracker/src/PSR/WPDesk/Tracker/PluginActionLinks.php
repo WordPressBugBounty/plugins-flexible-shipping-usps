@@ -6,7 +6,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can add Plugin actions links: opt-in/opt-out to tracker.
  */
-class PluginActionLinks implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class PluginActionLinks implements Hookable
 {
     /**
      * @var string
@@ -17,15 +17,15 @@ class PluginActionLinks implements \FlexibleShippingUspsVendor\WPDesk\PluginBuil
      */
     private $plugin_slug;
     /**
-     * @var string
+     * @var string|null
      */
     private $shop_url;
     /**
      * @param string $plugin_file
      * @param string $plugin_slug
-     * @param string $shop_url
+     * @param string|null $shop_url
      */
-    public function __construct($plugin_file, $plugin_slug, $shop_url)
+    public function __construct($plugin_file, $plugin_slug, $shop_url = null)
     {
         $this->plugin_file = $plugin_file;
         $this->plugin_slug = $plugin_slug;
@@ -33,26 +33,48 @@ class PluginActionLinks implements \FlexibleShippingUspsVendor\WPDesk\PluginBuil
     }
     public function hooks()
     {
-        \add_filter('plugin_action_links_' . $this->plugin_file, array($this, 'append_plugin_action_links'));
+        add_filter('plugin_row_meta', [$this, 'append_plugin_action_links_to_row_meta'], 10, 2);
     }
     /**
-     * @param array $links .
+     * @param array $plugin_meta
+     * @param string $plugin_file
+     *
+     * @return array
      */
-    public function append_plugin_action_links($links)
+    public function append_plugin_action_links_to_row_meta($plugin_meta, $plugin_file)
     {
-        if (!$this->tracker_enabled() || \apply_filters('wpdesk_tracker_do_not_ask', \false) || !\is_array($links)) {
+        if ($plugin_file === $this->plugin_file) {
+            return $this->append_opt_link($plugin_meta);
+        }
+        return $plugin_meta;
+    }
+    /**
+     * @param array $links
+     *
+     * @return array
+     */
+    private function append_opt_link($links)
+    {
+        if (!$this->tracker_enabled() || apply_filters('wpdesk_tracker_do_not_ask', \false) || !is_array($links)) {
             return $links;
         }
         $tracker_consent = new \FlexibleShippingUspsVendor\WPDesk_Tracker_Persistence_Consent();
-        $plugin_links = array();
+        $plugin_links = [];
         if (!$tracker_consent->is_active()) {
-            $opt_in_link = \admin_url('admin.php?page=wpdesk_tracker_' . $this->plugin_slug . '&shop_url=' . $this->shop_url);
-            $plugin_links[] = '<a href="' . \esc_url($opt_in_link) . '">' . \esc_html__('Opt-in', 'flexible-shipping-usps') . '</a>';
+            $opt_in_link = admin_url('admin.php?page=wpdesk_tracker_' . $this->plugin_slug);
+            if (is_string($this->shop_url) && strlen($this->shop_url) > 0) {
+                $opt_in_link = add_query_arg('shop_url', $this->shop_url, $opt_in_link);
+            }
+            $opt_in_link = add_query_arg('plugin', $this->plugin_slug, $opt_in_link);
+            $opt_in_link = add_query_arg('ctx', 'links', $opt_in_link);
+            $plugin_links[] = '<a href="' . esc_url($opt_in_link) . '">' . esc_html__('Enable usage tracking', 'flexible-shipping-usps') . '</a>';
         } else {
-            $opt_in_link = \admin_url('plugins.php?wpdesk_tracker_opt_out_' . $this->plugin_slug . '=1&security=' . \wp_create_nonce($this->plugin_slug));
-            $plugin_links[] = '<a href="' . \esc_url($opt_in_link) . '">' . \esc_html__('Opt-out', 'flexible-shipping-usps') . '</a>';
+            $opt_in_link = admin_url('plugins.php?wpdesk_tracker_opt_out_' . $this->plugin_slug . '=1&security=' . wp_create_nonce($this->plugin_slug));
+            $opt_in_link = add_query_arg('plugin', $this->plugin_slug, $opt_in_link);
+            $opt_in_link = add_query_arg('ctx', 'links', $opt_in_link);
+            $plugin_links[] = '<a href="' . esc_url($opt_in_link) . '">' . esc_html__('Disable usage tracking', 'flexible-shipping-usps') . '</a>';
         }
-        return \array_merge($plugin_links, $links);
+        return array_merge($links, $plugin_links);
     }
     /**
      * @return bool
@@ -63,7 +85,7 @@ class PluginActionLinks implements \FlexibleShippingUspsVendor\WPDesk\PluginBuil
         if (!empty($_SERVER['SERVER_ADDR']) && $this->is_localhost($_SERVER['SERVER_ADDR'])) {
             $tracker_enabled = \false;
         }
-        return (bool) \apply_filters('wpdesk_tracker_enabled', $tracker_enabled);
+        return (bool) apply_filters('wpdesk_tracker_enabled', $tracker_enabled);
     }
     /**
      * @param string $address
@@ -72,6 +94,6 @@ class PluginActionLinks implements \FlexibleShippingUspsVendor\WPDesk\PluginBuil
      */
     private function is_localhost($address)
     {
-        return \in_array($address, ['127.0.0.1', '::1'], \true);
+        return in_array($address, ['127.0.0.1', '::1'], \true);
     }
 }

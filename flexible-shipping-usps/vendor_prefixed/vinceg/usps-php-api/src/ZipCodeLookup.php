@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\USPS;
  *
  * @author Vincent Gabriel
  */
-class ZipCodeLookup extends \FlexibleShippingUspsVendor\USPS\USPSBase
+class ZipCodeLookup extends USPSBase
 {
     /**
      * @var string - the api version used for this type of call
@@ -44,9 +44,9 @@ class ZipCodeLookup extends \FlexibleShippingUspsVendor\USPS\USPSBase
      * @param Address $data
      * @param string  $id   the address unique id
      */
-    public function addAddress(\FlexibleShippingUspsVendor\USPS\Address $data, $id = null)
+    public function addAddress(Address $data, $id = null)
     {
-        $packageId = $id !== null ? $id : \count($this->addresses) + 1;
-        $this->addresses['Address'][] = \array_merge(['@attributes' => ['ID' => $packageId]], $data->getAddressInfo());
+        $packageId = $id !== null ? $id : count($this->addresses) + 1;
+        $this->addresses['Address'][] = array_merge(['@attributes' => ['ID' => $packageId]], $data->getAddressInfo());
     }
 }

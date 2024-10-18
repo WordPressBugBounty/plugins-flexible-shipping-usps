@@ -40,7 +40,7 @@ class CachedRating
      * @param string $shop_settings_md5_hash
      * @param PersistentContainer $container
      */
-    public function __construct($shop_settings_md5_hash, \FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer $container)
+    public function __construct($shop_settings_md5_hash, PersistentContainer $container)
     {
         $this->shop_settings_md5_hash = $shop_settings_md5_hash;
         $this->container = $container;
@@ -52,7 +52,7 @@ class CachedRating
      *
      * @return ShipmentRating
      */
-    public function rate_shipment(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValuesAsArray $settings, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRate $service)
+    public function rate_shipment(SettingsValuesAsArray $settings, Shipment $shipment, CanRate $service)
     {
         $rates_key = $this->prepare_rates_key($settings, $shipment);
         $shipment_rating = $this->get_shipment_rating_from_cache($rates_key);
@@ -70,7 +70,7 @@ class CachedRating
      *
      * @return ShipmentRating
      */
-    public function rate_shipment_to_collection_point(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValuesAsArray $settings, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\CollectionPoints\CollectionPoint $collection_point, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRateToCollectionPoint $service)
+    public function rate_shipment_to_collection_point(SettingsValuesAsArray $settings, Shipment $shipment, CollectionPoint $collection_point, CanRateToCollectionPoint $service)
     {
         $rates_key = $this->prepare_rates_key($settings, $shipment, $collection_point->collection_point_id);
         $shipment_rating = $this->get_shipment_rating_from_cache($rates_key);
@@ -86,30 +86,30 @@ class CachedRating
      * @param string $collection_point
      * @return string
      */
-    private function prepare_rates_key(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsValuesAsArray $settings, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment, string $collection_point = '')
+    private function prepare_rates_key(SettingsValuesAsArray $settings, Shipment $shipment, string $collection_point = '')
     {
-        return \md5($settings->get_settings_md5_hash() . $this->prepare_shipment_md5_hash($shipment) . $this->shop_settings_md5_hash . $collection_point);
+        return md5($settings->get_settings_md5_hash() . $this->prepare_shipment_md5_hash($shipment) . $this->shop_settings_md5_hash . $collection_point);
     }
     /**
      * @param Shipment $shipment
      * @return string
      */
-    private function prepare_shipment_md5_hash(\FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Shipment\Shipment $shipment)
+    private function prepare_shipment_md5_hash(Shipment $shipment)
     {
-        return \md5(\json_encode($shipment));
+        return md5(json_encode($shipment));
     }
     /**
      * @param string $rates_key
      * @param ShipmentRating $shipment_rating
      * @return void
      */
-    private function store_shipment_rating_in_cache($rates_key, \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\ShipmentRating $shipment_rating)
+    private function store_shipment_rating_in_cache($rates_key, ShipmentRating $shipment_rating)
     {
         $rates = [];
         foreach ($shipment_rating->get_ratings() as $single_rate) {
             $rates[] = [self::SERVICE_NAME => $single_rate->service_name, self::SERVICE_TYPE => $single_rate->service_type, self::AMOUNT => $single_rate->total_charge->amount, self::CURRENCY => $single_rate->total_charge->currency, self::BUSINESS_DAYS_IN_TRANSIT => $single_rate->business_days_in_transit, self::IS_COLLECTION_POINT_RATE => $single_rate->is_collection_point_rate, self::DELIVERY_DATE => $single_rate->delivery_date ? $single_rate->delivery_date->format('Y-m-d H:i:s') : null];
         }
-        $rates_data = [self::EXPIRES => \time() + self::EXPIRATION_TIME_IN_SECONDS, self::RATES => $rates];
+        $rates_data = [self::EXPIRES => time() + self::EXPIRATION_TIME_IN_SECONDS, self::RATES => $rates];
         $this->add_rates_to_cache($rates_key, $rates_data);
     }
     /**
@@ -131,16 +131,16 @@ class CachedRating
      */
     private function prepare_shipment_rating_from_cached_data($data)
     {
-        if (\is_array($data)) {
-            if (isset($data[self::EXPIRES]) && (int) $data[self::EXPIRES] > \time()) {
+        if (is_array($data)) {
+            if (isset($data[self::EXPIRES]) && (int) $data[self::EXPIRES] > time()) {
                 $rates = [];
-                if (isset($data[self::RATES]) && \is_array($data[self::RATES])) {
+                if (isset($data[self::RATES]) && is_array($data[self::RATES])) {
                     foreach ($data[self::RATES] as $rate) {
-                        if (\is_array($rate)) {
-                            $single_rate = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\SingleRate();
+                        if (is_array($rate)) {
+                            $single_rate = new SingleRate();
                             $single_rate->service_name = $rate[self::SERVICE_NAME] ?? null;
                             $single_rate->service_type = $rate[self::SERVICE_TYPE] ?? null;
-                            $total_charge = new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\Money();
+                            $total_charge = new Money();
                             $total_charge->amount = $rate[self::AMOUNT] ?? null;
                             $total_charge->currency = $rate[self::CURRENCY] ?? null;
                             $single_rate->total_charge = $total_charge;
@@ -151,7 +151,7 @@ class CachedRating
                         }
                     }
                 }
-                return new \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Rate\ShipmentRatingImplementation($rates);
+                return new ShipmentRatingImplementation($rates);
             }
             return \false;
         }
@@ -170,7 +170,7 @@ class CachedRating
     {
         if ($this->container->has(self::CACHE_KEY)) {
             $flexible_shipping_rates = $this->container->get(self::CACHE_KEY);
-            return $this->clear_expired(\is_array($flexible_shipping_rates) ? $flexible_shipping_rates : []);
+            return $this->clear_expired(is_array($flexible_shipping_rates) ? $flexible_shipping_rates : []);
         }
         return [];
     }
@@ -181,7 +181,7 @@ class CachedRating
     private function clear_expired(array $cached_rates)
     {
         foreach ($cached_rates as $key => $cached_rate) {
-            if (\is_array($cached_rate) && isset($cached_rate[self::EXPIRES]) && (int) $cached_rate[self::EXPIRES] < \time()) {
+            if (is_array($cached_rate) && isset($cached_rate[self::EXPIRES]) && (int) $cached_rate[self::EXPIRES] < time()) {
                 unset($cached_rates[$key]);
             }
         }

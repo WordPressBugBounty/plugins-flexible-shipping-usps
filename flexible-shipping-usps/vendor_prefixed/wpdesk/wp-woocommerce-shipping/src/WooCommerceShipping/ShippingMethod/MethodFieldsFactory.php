@@ -17,7 +17,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\
  *
  * @package WPDesk\WooCommerceShipping\ShippingMethod
  */
-class MethodFieldsFactory implements \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\FieldsFactory
+class MethodFieldsFactory implements FieldsFactory
 {
     /** @var CustomField[] */
     private $created_fields = [];
@@ -35,15 +35,15 @@ class MethodFieldsFactory implements \FlexibleShippingUspsVendor\WPDesk\WooComme
     {
         $key = isset($data['field_key']) ? $data['field_key'] : $type;
         switch ($type) {
-            case \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServices::get_type_name():
+            case FieldServices::get_type_name():
                 $available_services = isset($data['options']) ? $data['options'] : array();
-                return $this->remember_creation(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServices($available_services), $key);
-            case \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::get_type_name():
-                $shipping_service_id = isset($data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::SHIPPING_SERVICE_ID]) ? $data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::SHIPPING_SERVICE_ID] : array();
-                $security_nonce = isset($data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::SECURITY_NONCE]) ? $data[\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::SECURITY_NONCE] : array();
-                return $this->remember_creation(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus($shipping_service_id, $security_nonce), $key);
+                return $this->remember_creation(new FieldServices($available_services), $key);
+            case FieldApiStatus::get_type_name():
+                $shipping_service_id = isset($data[FieldApiStatus::SHIPPING_SERVICE_ID]) ? $data[FieldApiStatus::SHIPPING_SERVICE_ID] : array();
+                $security_nonce = isset($data[FieldApiStatus::SECURITY_NONCE]) ? $data[FieldApiStatus::SECURITY_NONCE] : array();
+                return $this->remember_creation(new FieldApiStatus($shipping_service_id, $security_nonce), $key);
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CouldNotFindService($type);
+        throw new CouldNotFindService($type);
     }
     /**
      * @param CustomField $field
@@ -51,7 +51,7 @@ class MethodFieldsFactory implements \FlexibleShippingUspsVendor\WPDesk\WooComme
      *
      * @return CustomField
      */
-    protected function remember_creation(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CustomField $field, $key)
+    protected function remember_creation(CustomField $field, $key)
     {
         $this->created_fields[$key] = $field;
         return $field;
@@ -65,7 +65,7 @@ class MethodFieldsFactory implements \FlexibleShippingUspsVendor\WPDesk\WooComme
      */
     public function is_field_supported($type)
     {
-        return \in_array($type, [\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\Services\FieldServices::get_type_name(), \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatus::get_type_name()], \true);
+        return in_array($type, [FieldServices::get_type_name(), FieldApiStatus::get_type_name()], \true);
     }
     /**
      * Factory should remember all created fields so it can render all used fields footers.

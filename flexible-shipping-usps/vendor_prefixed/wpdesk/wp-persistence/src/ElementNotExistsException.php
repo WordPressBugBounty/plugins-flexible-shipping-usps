@@ -6,6 +6,6 @@ use FlexibleShippingUspsVendor\Psr\Container\NotFoundExceptionInterface;
 /**
  * @package WPDesk\Persistence
  */
-class ElementNotExistsException extends \RuntimeException implements \FlexibleShippingUspsVendor\Psr\Container\NotFoundExceptionInterface
+class ElementNotExistsException extends \RuntimeException implements NotFoundExceptionInterface
 {
 }

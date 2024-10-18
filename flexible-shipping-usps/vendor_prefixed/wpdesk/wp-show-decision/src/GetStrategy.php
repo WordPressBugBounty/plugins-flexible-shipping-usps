@@ -5,7 +5,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\ShowDecision;
 /**
  * Show when some conditions with $_GET are meet.
  */
-class GetStrategy implements \FlexibleShippingUspsVendor\WPDesk\ShowDecision\ShouldShowStrategy
+class GetStrategy implements ShouldShowStrategy
 {
     /**
      * @var array

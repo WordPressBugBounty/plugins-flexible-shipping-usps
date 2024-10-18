@@ -15,16 +15,16 @@ use function is_array;
 /**
  * A packed item.
  */
-class PackedItem implements \JsonSerializable
+class PackedItem implements JsonSerializable
 {
     protected int $x;
     protected int $y;
     protected int $z;
-    protected \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item;
+    protected Item $item;
     protected int $width;
     protected int $length;
     protected int $depth;
-    public function __construct(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $item, int $x, int $y, int $z, int $width, int $length, int $depth)
+    public function __construct(Item $item, int $x, int $y, int $z, int $width, int $length, int $depth)
     {
         $this->item = $item;
         $this->x = $x;
@@ -34,61 +34,61 @@ class PackedItem implements \JsonSerializable
         $this->length = $length;
         $this->depth = $depth;
     }
-    public function getX() : int
+    public function getX(): int
     {
         return $this->x;
     }
-    public function getY() : int
+    public function getY(): int
     {
         return $this->y;
     }
-    public function getZ() : int
+    public function getZ(): int
     {
         return $this->z;
     }
-    public function getItem() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item
+    public function getItem(): Item
     {
         return $this->item;
     }
-    public function getWidth() : int
+    public function getWidth(): int
     {
         return $this->width;
     }
-    public function getLength() : int
+    public function getLength(): int
     {
         return $this->length;
     }
-    public function getDepth() : int
+    public function getDepth(): int
     {
         return $this->depth;
     }
-    public function getVolume() : int
+    public function getVolume(): int
     {
         return $this->width * $this->length * $this->depth;
     }
-    public static function fromOrientatedItem(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem $orientatedItem, int $x, int $y, int $z) : self
+    public static function fromOrientatedItem(OrientatedItem $orientatedItem, int $x, int $y, int $z): self
     {
         return new self($orientatedItem->getItem(), $x, $y, $z, $orientatedItem->getWidth(), $orientatedItem->getLength(), $orientatedItem->getDepth());
     }
     /**
      * @deprecated
      */
-    public function toOrientatedItem() : \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem
+    public function toOrientatedItem(): OrientatedItem
     {
-        return new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\OrientatedItem($this->item, $this->width, $this->length, $this->depth);
+        return new OrientatedItem($this->item, $this->width, $this->length, $this->depth);
     }
     #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         $userValues = [];
-        if ($this->item instanceof \JsonSerializable) {
+        if ($this->item instanceof JsonSerializable) {
             $userSerialisation = $this->item->jsonSerialize();
-            if (\is_array($userSerialisation)) {
+            if (is_array($userSerialisation)) {
                 $userValues = $userSerialisation;
             } else {
                 $userValues = ['extra' => $userSerialisation];
             }
         }
-        return ['x' => $this->x, 'y' => $this->y, 'z' => $this->z, 'width' => $this->width, 'length' => $this->length, 'depth' => $this->depth, 'item' => \array_merge($userValues, ['description' => $this->item->getDescription(), 'width' => $this->item->getWidth(), 'length' => $this->item->getLength(), 'depth' => $this->item->getDepth(), 'keepFlat' => $this->item->getKeepFlat()])];
+        return ['x' => $this->x, 'y' => $this->y, 'z' => $this->z, 'width' => $this->width, 'length' => $this->length, 'depth' => $this->depth, 'item' => array_merge($userValues, ['description' => $this->item->getDescription(), 'width' => $this->item->getWidth(), 'length' => $this->item->getLength(), 'depth' => $this->item->getDepth(), 'keepFlat' => $this->item->getKeepFlat()])];
     }
 }

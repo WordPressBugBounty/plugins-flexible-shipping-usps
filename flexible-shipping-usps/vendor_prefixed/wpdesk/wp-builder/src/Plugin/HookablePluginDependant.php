@@ -2,7 +2,7 @@
 
 namespace FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin;
 
-interface HookablePluginDependant extends \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+interface HookablePluginDependant extends Hookable
 {
     /**
      * Set Plugin.
@@ -11,7 +11,7 @@ interface HookablePluginDependant extends \FlexibleShippingUspsVendor\WPDesk\Plu
      *
      * @return null
      */
-    public function set_plugin(\FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\AbstractPlugin $plugin);
+    public function set_plugin(AbstractPlugin $plugin);
     /**
      * Get plugin.
      *

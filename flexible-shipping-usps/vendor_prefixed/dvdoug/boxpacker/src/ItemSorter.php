@@ -16,5 +16,5 @@ interface ItemSorter
     /**
      * Return -1 if $itemA is preferred, 1 if $itemB is preferred or 0 if neither is preferred.
      */
-    public function compare(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Item $itemB) : int;
+    public function compare(Item $itemA, Item $itemB): int;
 }

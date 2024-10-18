@@ -21,19 +21,19 @@ class LayerStabiliser
      *
      * @return PackedLayer[]
      */
-    public function stabilise(array $packedLayers) : array
+    public function stabilise(array $packedLayers): array
     {
         // first re-order according to footprint
         $stabilisedLayers = [];
-        \usort($packedLayers, [$this, 'compare']);
+        usort($packedLayers, [$this, 'compare']);
         // then for each item in the layer, re-calculate each item's z position
         $currentZ = 0;
         foreach ($packedLayers as $oldZLayer) {
             $oldZStart = $oldZLayer->getStartZ();
-            $newZLayer = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedLayer();
+            $newZLayer = new PackedLayer();
             foreach ($oldZLayer->getItems() as $oldZItem) {
                 $newZ = $oldZItem->getZ() - $oldZStart + $currentZ;
-                $newZItem = new \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedItem($oldZItem->getItem(), $oldZItem->getX(), $oldZItem->getY(), $newZ, $oldZItem->getWidth(), $oldZItem->getLength(), $oldZItem->getDepth());
+                $newZItem = new PackedItem($oldZItem->getItem(), $oldZItem->getX(), $oldZItem->getY(), $newZ, $oldZItem->getWidth(), $oldZItem->getLength(), $oldZItem->getDepth());
                 $newZLayer->insert($newZItem);
             }
             $stabilisedLayers[] = $newZLayer;
@@ -41,7 +41,7 @@ class LayerStabiliser
         }
         return $stabilisedLayers;
     }
-    private function compare(\FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedLayer $layerA, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\PackedLayer $layerB) : int
+    private function compare(PackedLayer $layerA, PackedLayer $layerB): int
     {
         return $layerB->getFootprint() <=> $layerA->getFootprint() ?: $layerB->getDepth() <=> $layerA->getDepth();
     }

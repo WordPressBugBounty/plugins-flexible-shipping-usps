@@ -10,7 +10,7 @@ use FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence
  */
-class ArrayContainer implements \FlexibleShippingUspsVendor\WPDesk\Persistence\PersistentContainer
+class ArrayContainer implements PersistentContainer
 {
     use FallbackFromGetTrait;
     /** @var array */
@@ -31,14 +31,14 @@ class ArrayContainer implements \FlexibleShippingUspsVendor\WPDesk\Persistence\P
     {
         unset($this->array[$id]);
     }
-    public function has($id) : bool
+    public function has($id): bool
     {
-        return \key_exists($id, $this->array);
+        return key_exists($id, $this->array);
     }
     public function get($id)
     {
         if (!$this->has($id)) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $this->array[$id];
     }

@@ -66,7 +66,7 @@ class ShippingMethod extends \WC_Shipping_Method
      *
      * @param PluginShippingDecisions $plugin_shipping_decisions .
      */
-    public static function set_plugin_shipping_decisions(\FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\PluginShippingDecisions $plugin_shipping_decisions)
+    public static function set_plugin_shipping_decisions(PluginShippingDecisions $plugin_shipping_decisions)
     {
         self::$plugin_shipping_decisions = $plugin_shipping_decisions;
     }
@@ -90,7 +90,7 @@ class ShippingMethod extends \WC_Shipping_Method
         }
         $this->enable_shipping_method_if_not_exists($this->settings);
         $this->is_method_enabled = 'yes' === $this->get_option('enable_shipping_method', 'yes');
-        \add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
+        add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
     }
     /**
      * Create meta data builder.
@@ -99,7 +99,7 @@ class ShippingMethod extends \WC_Shipping_Method
      */
     protected function create_metadata_builder()
     {
-        return new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder($this);
+        return new WooCommerceShippingMetaDataBuilder($this);
     }
     /**
      * Init form fields.
@@ -127,18 +127,18 @@ class ShippingMethod extends \WC_Shipping_Method
     public function calculate_shipping($package = [])
     {
         if ($this->should_calculate_shipping()) {
-            if ($this instanceof \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasCollectionPointFlatRate && $this->is_flat_rate_enabled($this)) {
-                $this->add_rate_method(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\FlatRateRateMethod\CollectionPointFlatRateRateMethod($this->get_flat_rate_cost($this), $this->get_flat_rate_shipping_rate_suffix($this)));
+            if ($this instanceof HasCollectionPointFlatRate && $this->is_flat_rate_enabled($this)) {
+                $this->add_rate_method(new CollectionPointFlatRateRateMethod($this->get_flat_rate_cost($this), $this->get_flat_rate_shipping_rate_suffix($this)));
             } else {
                 $service = $this->get_shipping_service($this);
                 $sender_address = $this->create_sender_address();
-                if ($service instanceof \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRate) {
-                    $this->add_rate_method(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Standard\StandardServiceRateMethod($service));
+                if ($service instanceof CanRate) {
+                    $this->add_rate_method(new StandardServiceRateMethod($service));
                 }
-                if ($service instanceof \FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRateToCollectionPoint) {
-                    $this->add_rate_method(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\CollectionPoint\CollectionPointRateMethod($service));
+                if ($service instanceof CanRateToCollectionPoint) {
+                    $this->add_rate_method(new CollectionPointRateMethod($service));
                 }
-                $this->add_rate_method(new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod('yes' === $this->get_option('debug_mode', 'no')));
+                $this->add_rate_method(new FallbackRateMethod('yes' === $this->get_option('debug_mode', 'no')));
             }
             $logger = $this->inject_logger_into($this->get_shipping_service($this));
             $this->handle_rating_using_methods($logger, $this->get_shipping_service($this), $package, $this->metadata_builder);
@@ -161,6 +161,6 @@ class ShippingMethod extends \WC_Shipping_Method
     }
     private function remove_links_from_description($description)
     {
-        return \preg_replace("/(<a .*>.*?<\\/a>)/is", '', $description);
+        return preg_replace("/(<a .*>.*?<\\/a>)/is", '', $description);
     }
 }

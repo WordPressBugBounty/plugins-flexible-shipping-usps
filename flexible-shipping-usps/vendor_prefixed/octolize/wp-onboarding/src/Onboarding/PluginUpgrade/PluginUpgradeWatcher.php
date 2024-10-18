@@ -7,7 +7,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can store plugin old version on upgrading process.
  */
-class PluginUpgradeWatcher implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class PluginUpgradeWatcher implements Hookable
 {
     /**
      * @var string
@@ -21,14 +21,14 @@ class PluginUpgradeWatcher implements \FlexibleShippingUspsVendor\WPDesk\PluginB
      * @param string $plugin_file_name
      * @param OnboardingOption $onboarding_option
      */
-    public function __construct(string $plugin_file_name, \FlexibleShippingUspsVendor\Octolize\Onboarding\OnboardingOption $onboarding_option)
+    public function __construct(string $plugin_file_name, OnboardingOption $onboarding_option)
     {
         $this->plugin_file_name = $plugin_file_name;
         $this->onboarding_option = $onboarding_option;
     }
     public function hooks()
     {
-        \add_action('upgrader_process_complete', [$this, 'save_plugin_version_from_upgrader'], 10, 2);
+        add_action('upgrader_process_complete', [$this, 'save_plugin_version_from_upgrader'], 10, 2);
     }
     /**
      * @param \WP_Upgrader $upgrader

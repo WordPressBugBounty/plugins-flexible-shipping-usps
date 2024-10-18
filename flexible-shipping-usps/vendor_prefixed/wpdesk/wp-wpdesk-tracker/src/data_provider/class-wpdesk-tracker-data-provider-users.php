@@ -14,7 +14,7 @@ namespace FlexibleShippingUspsVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Users')) {
+if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_Users')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Users
      */
@@ -27,10 +27,10 @@ if (!\class_exists('FlexibleShippingUspsVendor\\WPDesk_Tracker_Data_Provider_Use
          */
         public function get_data()
         {
-            $user_count = array();
+            $user_count = [];
             $user_count_data = \count_users();
             $user_count['total'] = $user_count_data['total_users'];
-            // Get user count based on user role
+            // Get user count based on user role.
             foreach ($user_count_data['avail_roles'] as $role => $count) {
                 $user_count[$role] = $count;
             }

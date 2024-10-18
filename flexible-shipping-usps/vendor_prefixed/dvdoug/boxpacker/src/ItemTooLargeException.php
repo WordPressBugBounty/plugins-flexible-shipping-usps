@@ -12,6 +12,6 @@ namespace FlexibleShippingUspsVendor\DVDoug\BoxPacker;
  * Exception used when an item is too large to pack into any box.
  * @deprecated now unused, just catch NoBoxesAvailableException
  */
-class ItemTooLargeException extends \FlexibleShippingUspsVendor\DVDoug\BoxPacker\NoBoxesAvailableException
+class ItemTooLargeException extends NoBoxesAvailableException
 {
 }

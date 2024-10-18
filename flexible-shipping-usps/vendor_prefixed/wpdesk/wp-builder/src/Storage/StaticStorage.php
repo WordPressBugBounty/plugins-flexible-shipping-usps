@@ -8,7 +8,7 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\AbstractPlugin;
  *
  * @package WPDesk\PluginBuilder\Storage
  */
-class StaticStorage implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Storage\PluginStorage
+class StaticStorage implements PluginStorage
 {
     protected static $instances = [];
     /**
@@ -18,7 +18,7 @@ class StaticStorage implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\
     public function add_to_storage($class, $object)
     {
         if (isset(self::$instances[$class])) {
-            throw new \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Storage\Exception\ClassAlreadyExists("Class {$class} already exists");
+            throw new Exception\ClassAlreadyExists("Class {$class} already exists");
         }
         self::$instances[$class] = $object;
     }
@@ -32,6 +32,6 @@ class StaticStorage implements \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\
         if (isset(self::$instances[$class])) {
             return self::$instances[$class];
         }
-        throw new \FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Storage\Exception\ClassNotExists("Class {$class} not exists in storage");
+        throw new Exception\ClassNotExists("Class {$class} not exists in storage");
     }
 }

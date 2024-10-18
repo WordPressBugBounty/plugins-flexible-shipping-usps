@@ -4,7 +4,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\Packer\Box;
 
 use FlexibleShippingUspsVendor\WPDesk\Packer\Box;
 use FlexibleShippingUspsVendor\WPDesk\Packer\Item\ItemImplementation;
-class BoxImplementation extends \FlexibleShippingUspsVendor\WPDesk\Packer\Item\ItemImplementation implements \FlexibleShippingUspsVendor\WPDesk\Packer\Box, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box
+class BoxImplementation extends ItemImplementation implements Box, \FlexibleShippingUspsVendor\DVDoug\BoxPacker\Box
 {
     const FACTOR = 1000;
     /** @var float|null */
@@ -56,40 +56,40 @@ class BoxImplementation extends \FlexibleShippingUspsVendor\WPDesk\Packer\Item\I
     /**
      * @return string
      */
-    public function getReference() : string
+    public function getReference(): string
     {
         return $this->get_unique_id();
     }
-    public function getOuterWidth() : int
+    public function getOuterWidth(): int
     {
-        return \round($this->get_width() * self::FACTOR);
+        return round($this->get_width() * self::FACTOR);
     }
-    public function getOuterLength() : int
+    public function getOuterLength(): int
     {
-        return \round($this->get_length() * self::FACTOR);
+        return round($this->get_length() * self::FACTOR);
     }
-    public function getOuterDepth() : int
+    public function getOuterDepth(): int
     {
-        return \round($this->get_height() * self::FACTOR);
+        return round($this->get_height() * self::FACTOR);
     }
-    public function getEmptyWeight() : int
+    public function getEmptyWeight(): int
     {
-        return \round($this->get_weight() * self::FACTOR);
+        return round($this->get_weight() * self::FACTOR);
     }
-    public function getInnerWidth() : int
+    public function getInnerWidth(): int
     {
-        return \round($this->get_width() * self::FACTOR);
+        return round($this->get_width() * self::FACTOR);
     }
-    public function getInnerLength() : int
+    public function getInnerLength(): int
     {
-        return \round($this->get_length() * self::FACTOR);
+        return round($this->get_length() * self::FACTOR);
     }
-    public function getInnerDepth() : int
+    public function getInnerDepth(): int
     {
-        return \round($this->get_height() * self::FACTOR);
+        return round($this->get_height() * self::FACTOR);
     }
-    public function getMaxWeight() : int
+    public function getMaxWeight(): int
     {
-        return \round($this->get_max_weight() * self::FACTOR);
+        return round($this->get_max_weight() * self::FACTOR);
     }
 }
