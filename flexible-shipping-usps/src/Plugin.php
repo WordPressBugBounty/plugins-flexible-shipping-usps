@@ -7,6 +7,7 @@
 
 namespace WPDesk\FlexibleShippingUsps;
 
+use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\MessageFactory\LiveRatesFsRulesTable;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeMessage;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeOnboardingFactory;
 use FlexibleShippingUspsVendor\Octolize\ShippingExtensions\ShippingExtensions;
@@ -33,6 +34,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\FrontOrd
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\OrderMetaData\SingleAdminOrderMetaDataInterpreterImplementation;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\PluginShippingDecisions;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RulesTableAdv;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShopSettings;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Ups\MetaDataInterpreters\FallbackAdminMetaDataInterpreter;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Ups\MetaDataInterpreters\PackedPackagesAdminMetaDataInterpreter;
@@ -201,6 +203,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 				''
 			)
 		);
+		$upgrade_onboarding->add_upgrade_message( ( new LiveRatesFsRulesTable() )->create_message( '2.0.0', $this->plugin_info->get_plugin_url() ) );
 		$upgrade_onboarding->create_onboarding();
 	}
 

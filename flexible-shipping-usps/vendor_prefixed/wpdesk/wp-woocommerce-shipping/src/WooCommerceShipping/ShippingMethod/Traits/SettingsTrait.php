@@ -22,6 +22,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasFree
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\HasHandlingFees;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\MethodFieldsFactory;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RulesTableAdv;
 /**
  * Job of this trait is to render/save/load settings fields using WC_Shipping_Method methods or FieldsFactory.
  *
@@ -69,6 +70,10 @@ trait SettingsTrait
      */
     public function get_form_fields()
     {
+        $allowed_shipping_methods_global_settings = apply_filters('flexible-shipping/integration/allowed-shipping-methods-global-settings', []);
+        if (in_array($this->id, $allowed_shipping_methods_global_settings, \true)) {
+            return $this->prepare_custom_field_types($this->append_advert_fields(parent::get_form_fields()));
+        }
         return $this->prepare_custom_field_types(parent::get_form_fields());
     }
     /**
@@ -76,7 +81,22 @@ trait SettingsTrait
      */
     public function get_instance_form_fields()
     {
-        return $this->prepare_custom_field_types(parent::get_instance_form_fields());
+        return $this->prepare_custom_field_types($this->append_advert_fields(parent::get_instance_form_fields()));
+    }
+    /**
+     * Append advert fields.
+     *
+     * @param array $fields Fields.
+     *
+     * @return array
+     */
+    private function append_advert_fields(array $fields): array
+    {
+        return $this->rules_table_adv->add_fields($fields);
+    }
+    private function append_flexible_shipping_rules_table_description(array $fields): array
+    {
+        return $this->rules_table_adv->append_flexible_shipping_rules_table_description($fields, $this->id);
     }
     /**
      * Generate Settings HTML.
@@ -112,6 +132,8 @@ trait SettingsTrait
                 $html .= $this->{'generate_' . $type . '_html'}($field_id, $values);
             } elseif ($type === 'number') {
                 $html .= $this->generate_text_html($field_id, $values);
+            } elseif (has_filter('woocommerce_generate_' . $type . '_html')) {
+                $html .= apply_filters('woocommerce_generate_' . $type . '_html', '', $field_id, $values, $this);
             } else {
                 try {
                     $custom_field = $this->create_fields_factory()->create_field($type, $values);
@@ -314,9 +336,9 @@ trait SettingsTrait
     public function admin_options()
     {
         if ($this->instance_id) {
-            $settings_html = $this->generate_settings_html($this->get_instance_form_fields(), \false);
+            $settings_html = $this->generate_settings_html($this->append_flexible_shipping_rules_table_description($this->get_instance_form_fields()), \false);
         } else {
-            $settings_html = $this->generate_settings_html($this->get_form_fields(), \false);
+            $settings_html = $this->generate_settings_html($this->append_flexible_shipping_rules_table_description($this->get_form_fields()), \false);
         }
         $service_id = $this->id;
         include __DIR__ . '/view/shipping-method-settings-html.php';
@@ -326,6 +348,7 @@ trait SettingsTrait
         include __DIR__ . '/view/shipping-method-java-script-fallback.php';
         include __DIR__ . '/view/shipping-method-java-script-custom-services.php';
         include __DIR__ . '/view/shipping-method-java-script-custom-origin.php';
+        include __DIR__ . '/view/shipping-method-java-script-fs-table-rate-adv.php';
         if ($this instanceof HasFreeShipping) {
             include __DIR__ . '/view/shipping-method-java-script-free-shipping.php';
         }

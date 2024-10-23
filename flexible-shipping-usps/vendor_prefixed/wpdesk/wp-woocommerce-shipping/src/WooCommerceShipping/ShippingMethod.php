@@ -16,6 +16,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMet
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Fallback\FallbackRateMethod;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\FlatRateRateMethod\CollectionPointFlatRateRateMethod;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RateMethod\Standard\StandardServiceRateMethod;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\RulesTableAdv;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\Traits\DeliveryDatesTrait;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\Traits\MetaDataTrait;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\Traits\RateWithRateMethodsTrait;
@@ -41,6 +42,7 @@ class ShippingMethod extends \WC_Shipping_Method
      * @var bool
      */
     private $is_method_enabled = \false;
+    private RulesTableAdv $rules_table_adv;
     /**
      * ShipmentMethod constructor.
      *
@@ -82,6 +84,7 @@ class ShippingMethod extends \WC_Shipping_Method
      */
     protected function init()
     {
+        $this->rules_table_adv = $this->create_rules_table_adv();
         $this->metadata_builder = $this->create_metadata_builder();
         $this->build_form_fields();
         $this->init_settings();
@@ -91,6 +94,10 @@ class ShippingMethod extends \WC_Shipping_Method
         $this->enable_shipping_method_if_not_exists($this->settings);
         $this->is_method_enabled = 'yes' === $this->get_option('enable_shipping_method', 'yes');
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
+    }
+    protected function create_rules_table_adv(): RulesTableAdv
+    {
+        return new RulesTableAdv();
     }
     /**
      * Create meta data builder.

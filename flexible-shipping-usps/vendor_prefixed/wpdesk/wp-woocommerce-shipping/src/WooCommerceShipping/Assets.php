@@ -7,6 +7,7 @@
  */
 namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping;
 
+use FlexibleShippingUspsVendor\Octolize\Brand\Assets\AdminAssets;
 use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 use FlexibleShippingUspsVendor\WPDesk\ShowDecision\ShouldShowStrategy;
 /**
@@ -56,7 +57,13 @@ class Assets implements Hookable
     public function hooks()
     {
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_brand_assets']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+    }
+    public function enqueue_brand_assets()
+    {
+        $brand_assets_url = trailingslashit($this->assets_url) . '../../../octolize/wp-octolize-brand-assets/assets/';
+        (new AdminAssets($brand_assets_url, $this->assets_suffix, null))->enqueue_style();
     }
     /**
      * Enqueue admin scripts.
