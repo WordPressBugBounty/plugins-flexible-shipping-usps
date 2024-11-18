@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the USPS Live Rates plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: USPS Live Rates 2.0.0\n"
+"Project-Id-Version: USPS Live Rates 2.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping-usps\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-23T12:36:43+00:00\n"
+"POT-Creation-Date: 2024-11-18T00:12:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: flexible-shipping-usps\n"
@@ -944,22 +944,18 @@ msgstr ""
 msgid "API Settings"
 msgstr ""
 
-#. Translators: link.
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
 msgid "USPS Web Tools API USERID*"
 msgstr ""
 
-#. Translators: link.
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
 msgid "Enter your USPS USERID you acquired during the USPS Web Tools API registration process."
 msgstr ""
 
-#. Translators: link.
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
 msgid "USPS Web Tools API PASSWORD*"
 msgstr ""
 
-#. Translators: link.
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
 msgid "Enter your USPS PASSWORD you acquired during the USPS Web Tools API registration process."
 msgstr ""
@@ -1441,7 +1437,6 @@ msgstr ""
 msgid "Box Weight %1$s"
 msgstr ""
 
-#. Translators: units.
 #: vendor_prefixed/wpdesk/wp-pro-woocommerce-shipping/src/CustomFields/ShippingBoxes.php:96
 msgid "Delete"
 msgstr ""
