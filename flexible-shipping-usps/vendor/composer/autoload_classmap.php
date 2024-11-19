@@ -542,6 +542,7 @@ return array(
     'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsServices' => $baseDir . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php',
     'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsSettingsDefinition' => $baseDir . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php',
     'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsShippingService' => $baseDir . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsShippingService.php',
+    'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsSkuComponents' => $baseDir . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php',
     'FlexibleShippingUspsVendor\\WPDesk\\View\\PluginViewBuilder' => $baseDir . '/vendor_prefixed/wpdesk/wp-view/src/PluginViewBuilder.php',
     'FlexibleShippingUspsVendor\\WPDesk\\View\\Renderer\\LoadTemplatePlugin' => $baseDir . '/vendor_prefixed/wpdesk/wp-view/src/Renderer/LoadTemplatePlugin.php',
     'FlexibleShippingUspsVendor\\WPDesk\\View\\Renderer\\Renderer' => $baseDir . '/vendor_prefixed/wpdesk/wp-view/src/Renderer/Renderer.php',

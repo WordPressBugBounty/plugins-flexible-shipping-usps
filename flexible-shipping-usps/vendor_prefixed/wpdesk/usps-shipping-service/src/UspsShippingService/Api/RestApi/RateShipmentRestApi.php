@@ -75,9 +75,9 @@ class RateShipmentRestApi implements LoggerAwareInterface
         foreach ($shipment->packages as $package_id => $package) {
             $search_parameters = new DomesticPricesSearchParameters($shipment->ship_from->address->postal_code, $shipment->ship_to->address->postal_code);
             $package_value = $this->calculate_package_value($package);
-            $special_services = $this->prepare_special_services($package_value, $insurance);
-            $this->set_package_data($search_parameters, $package, $package_value, $settings, $special_services, $insurance);
-            $api_rates_per_package[$package_id] = ['rates' => $domestic_prices_api->get_rates($search_parameters), 'special_services' => $special_services];
+            $extra_services = $this->prepare_extra_services($package_value, $insurance);
+            $this->set_package_data($search_parameters, $package, $package_value, $settings, $extra_services, $insurance);
+            $api_rates_per_package[$package_id] = ['rates' => $domestic_prices_api->get_rates($search_parameters), 'extra_services' => $extra_services];
         }
         return $this->merge_package_rates($api_rates_per_package);
     }
@@ -89,32 +89,32 @@ class RateShipmentRestApi implements LoggerAwareInterface
         foreach ($shipment->packages as $package_id => $package) {
             $search_parameters = new InternationalSearchParameters($shipment->ship_from->address->postal_code, $shipment->ship_to->address->postal_code, $shipment->ship_to->address->country_code);
             $package_value = $this->calculate_package_value($package);
-            $special_services = $this->prepare_special_services($package_value, $insurance);
-            $this->set_package_data($search_parameters, $package, $package_value, $settings, $special_services, $insurance);
-            $api_rates_per_package[$package_id] = ['rates' => $international_prices_api->get_rates($search_parameters), 'special_services' => $special_services];
+            $extra_services = $this->prepare_extra_services($package_value, $insurance);
+            $this->set_package_data($search_parameters, $package, $package_value, $settings, $extra_services, $insurance);
+            $api_rates_per_package[$package_id] = ['rates' => $international_prices_api->get_rates($search_parameters), 'extra_services' => $extra_services];
         }
         return $this->merge_package_rates($api_rates_per_package);
     }
-    private function prepare_special_services(float $package_value, bool $insurance): array
+    private function prepare_extra_services(float $package_value, bool $insurance): array
     {
-        $special_services = [];
+        $extra_services = [];
         if ($insurance) {
             if ($package_value <= 500) {
-                $special_services[] = self::INSURANCE_TO_500;
+                $extra_services[] = self::INSURANCE_TO_500;
             } else {
-                $special_services[] = self::INSURANCE_OVER_500;
+                $extra_services[] = self::INSURANCE_OVER_500;
             }
         }
-        return $special_services;
+        return $extra_services;
     }
-    private function set_package_data(CommonSearchParameters $search_parameters, Package $package, float $package_value, SettingsValues $settings, array $special_services = [], $insurance = \false): void
+    private function set_package_data(CommonSearchParameters $search_parameters, Package $package, float $package_value, SettingsValues $settings, array $extra_services = [], $insurance = \false): void
     {
         $commercial_rates = 'yes' === $settings->get_value(UspsSettingsDefinition::COMMERCIAL_RATES, 'no');
         $weight = $package->weight->weight ? (new UniversalWeight($package->weight->weight, $package->weight->weight_unit, self::WEIGHT_ROUNDING_PRECISION))->as_unit_rounded(Weight::WEIGHT_UNIT_LB, self::WEIGHT_ROUNDING_PRECISION) : $this->get_default_weight($settings);
         $width = $package->dimensions ? (new UniversalDimension($package->dimensions->width, $package->dimensions->dimensions_unit))->as_unit_rounded(Dimensions::DIMENSION_UNIT_IN) : $this->get_default_width($settings);
         $height = $package->dimensions ? (new UniversalDimension($package->dimensions->height, $package->dimensions->dimensions_unit))->as_unit_rounded(Dimensions::DIMENSION_UNIT_IN) : $this->get_default_height($settings);
         $length = $package->dimensions ? (new UniversalDimension($package->dimensions->length, $package->dimensions->dimensions_unit))->as_unit_rounded(Dimensions::DIMENSION_UNIT_IN) : $this->get_default_length($settings);
-        $search_parameters->set_mail_class('ALL')->set_price_type($commercial_rates ? 'COMMERCIAL' : 'RETAIL')->set_weight($weight)->set_length($length)->set_width($width)->set_height($height)->set_special_services($special_services);
+        $search_parameters->set_mail_class('ALL')->set_price_type($commercial_rates ? 'COMMERCIAL' : 'RETAIL')->set_weight($weight)->set_length($length)->set_width($width)->set_height($height)->set_extra_services($extra_services);
         if ($insurance) {
             $search_parameters->set_item_value($package_value);
         }
@@ -160,15 +160,15 @@ class RateShipmentRestApi implements LoggerAwareInterface
         $merged_rates = [];
         foreach ($api_rates_per_package as $api_rates_for_package) {
             $api_rates = $api_rates_for_package['rates'];
-            $include_special_services = $api_rates_for_package['special_services'];
+            $include_extra_services = $api_rates_for_package['extra_services'];
             foreach ($api_rates['rateOptions'] as $api_rate) {
                 $sku = $api_rate['rates'][0]['SKU'];
-                $price = $api_rate['rates'][0]['price'] + $this->get_extra_services_price($api_rate['extraServices'], $include_special_services);
+                $price = (float) $api_rate['rates'][0]['price'] + $this->get_extra_services_price($api_rate['extraServices'], $include_extra_services);
                 $description = $api_rate['rates'][0]['description'];
                 $service_id = $sku . '-' . $description;
                 if (!isset($merged_rates[$service_id])) {
                     $rate = new SingleRate();
-                    $rate->service_name = $description;
+                    $rate->service_name = $api_rate['rates'][0]['productName'] === '' ? $api_rate['rates'][0]['description'] : $api_rate['rates'][0]['productName'];
                     $rate->service_type = $this->service_type_from_sku($sku);
                     $rate->total_charge = new Money();
                     $rate->total_charge->amount = $price;
@@ -182,11 +182,11 @@ class RateShipmentRestApi implements LoggerAwareInterface
         }
         return $this->get_complete_rates($merged_rates, count($api_rates_per_package));
     }
-    private function get_extra_services_price(array $extra_services, array $include_special_services): float
+    private function get_extra_services_price(array $extra_services, array $include_extra_services): float
     {
         $price = 0.0;
         foreach ($extra_services as $extra_service) {
-            if (in_array($extra_service['extraService'], $include_special_services)) {
+            if (in_array($extra_service['extraService'], $include_extra_services)) {
                 $price += $extra_service['price'];
             }
         }

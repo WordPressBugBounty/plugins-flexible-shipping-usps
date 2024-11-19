@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable WordPress.PHP.DiscouragedPHPFunctions
 namespace FlexibleShippingUspsVendor\WPDesk\Forms\Serializer;
 
 use FlexibleShippingUspsVendor\WPDesk\Forms\Serializer;

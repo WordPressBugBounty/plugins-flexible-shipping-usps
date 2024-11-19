@@ -27,6 +27,6 @@ trait LoggerTrait
      */
     private function can_see_logs()
     {
-        return 'yes' === $this->get_option('debug_mode', 'no') && current_user_can('manage_woocommerce') && (is_ajax() || is_cart());
+        return 'yes' === $this->get_option('debug_mode', 'no') && current_user_can('manage_woocommerce');
     }
 }

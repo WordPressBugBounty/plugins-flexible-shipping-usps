@@ -14,12 +14,12 @@ class SelectField extends BasicField
         return 'select';
     }
     /** @param string[] $options */
-    public function set_options(array $options): Field
+    public function set_options(array $options): self
     {
         $this->meta['possible_values'] = $options;
         return $this;
     }
-    public function set_multiple(): Field
+    public function set_multiple(): self
     {
         $this->attributes['multiple'] = 'multiple';
         return $this;

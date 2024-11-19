@@ -15,7 +15,7 @@ class AbstractSearchParameters implements CommonSearchParameters, \JsonSerializa
     protected string $account_type = '';
     protected string $account_number = '';
     protected float $item_value = 0.0;
-    protected array $special_services = [];
+    protected array $extra_services = [];
     public function set_origin_zip_code(string $origin_zip_code): self
     {
         $this->origin_zip_code = $origin_zip_code;
@@ -71,14 +71,17 @@ class AbstractSearchParameters implements CommonSearchParameters, \JsonSerializa
         $this->item_value = $item_value;
         return $this;
     }
-    public function set_special_services(array $special_services): self
+    public function set_extra_services(array $extra_services): self
     {
-        $this->special_services = $special_services;
+        $this->extra_services = $extra_services;
         return $this;
     }
     public function jsonSerialize(): array
     {
-        $data = ['originZIPCode' => $this->origin_zip_code, 'specialServices' => $this->special_services];
+        $data = ['originZIPCode' => $this->origin_zip_code];
+        if (!empty($this->extra_services)) {
+            $data['extraServices'] = $this->extra_services;
+        }
         if ($this->weight) {
             $data['weight'] = $this->weight;
         }

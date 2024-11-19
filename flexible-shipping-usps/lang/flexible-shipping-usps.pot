@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the USPS Live Rates plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: USPS Live Rates 2.0.1\n"
+"Project-Id-Version: USPS Live Rates 3.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping-usps\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-18T00:12:57+00:00\n"
+"POT-Creation-Date: 2024-11-19T13:27:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: flexible-shipping-usps\n"
@@ -82,7 +82,7 @@ msgid "Live rates for USPS and WooCommerce"
 msgstr ""
 
 #: src/Plugin.php:306
-#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:198
+#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:188
 msgid "Settings"
 msgstr ""
 
@@ -91,12 +91,12 @@ msgid "Buy PRO"
 msgstr ""
 
 #: src/PluginLinks.php:37
-#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:194
+#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:184
 msgid "Docs"
 msgstr ""
 
 #: src/PluginLinks.php:38
-#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:191
+#: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:181
 msgid "Support"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgid "First-Class Package Service - Retail"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php:20
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
 msgid "Priority Mail"
 msgstr ""
 
@@ -563,7 +563,7 @@ msgid "Priority Mail Express; Hold For Pickup"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php:20
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
 msgid "Priority Mail Express"
 msgstr ""
 
@@ -923,412 +923,211 @@ msgstr ""
 msgid "Priority Mail International; Small Flat Rate Envelope**"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:118
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:119
 msgid "%1$sREST API%2$s: enter your REST API Application Consumer Key and Consumer Secret to establish the USPS REST API connection for the live rates to be calculated. Please mind that it usually consists of random numbers and characters and it is different than your standard USPS user account login you use to sign in at usps.com. If you do not have a REST API Application yet, %3$sregister for USPS Developers now%4$s or follow the instructions from our guide on %5$show to create the USPS REST API application &rarr;%6$s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:119
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:120
 msgid "%1$sWeb Tools API%2$s: enter your USPS Web Tools API USERID and PASSWORD to establish the USPS API connection for the live rates to be calculated. Please mind that it usually consists of random numbers and characters and it is different than your standard USPS user account login you use to sign in at usps.com. If you do not have a USERID yet, %3$sregister for USPS Web Tools now%4$s or follow the instructions from our guide on %5$show to obtain the USPS Web Tools API access &rarr;%6$s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:120
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:121
 msgid "USPS"
 msgstr ""
 
 #. Translators: docs link.
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:122
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:123
 msgid "These are the USPS Live Rates plugin general settings. In order to learn more about its configuration please refer to its %1$sdedicated documentation →%2$s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:126
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:127
 msgid "API Settings"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:131
 msgid "USPS Web Tools API USERID*"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:131
 msgid "Enter your USPS USERID you acquired during the USPS Web Tools API registration process."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:131
 msgid "USPS Web Tools API PASSWORD*"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:130
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:131
 msgid "Enter your USPS PASSWORD you acquired during the USPS Web Tools API registration process."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:138
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
 msgid "Advanced Options"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:138
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
 msgid "Debug Mode"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:138
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
 msgid "Enable debug mode"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:138
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
 msgid "Enable debug mode to display the additional tech information, incl. the data sent to USPS API, visible only for Admins and Shop Managers in the cart and checkout."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Method Settings"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Manage the way how the USPS services are displayed in the cart and checkout."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Method Title"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Define the USPS shipping method title which should be used in the cart/checkout when the Fallback option was triggered."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "USPS Live rates"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 #: vendor_prefixed/wpdesk/wp-woocommerce-shipping/src/WooCommerceShipping/ShippingMethod/Traits/SettingsTrait.php:267
 msgid "Enable to offer flat rate cost for shipping so that the user can still checkout, if API for some reason returns no matching rates."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 #: vendor_prefixed/wpdesk/wp-woocommerce-shipping/src/WooCommerceShipping/FreeShipping/FreeShippingFields.php:27
 msgid "Free Shipping"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Services"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enable the services' custom settings"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Decide which services should be displayed and which not, change their names and order. Please mind that enabling a service does not guarantee it will be visible in the cart/checkout. It has to be available for the provided package weight, origin and destination in order to be displayed."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Domestic Services Table"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "International Services Table"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 #: vendor_prefixed/wpdesk/wp-pro-woocommerce-shipping/src/CustomFields/ShippingBoxes.php:83
 msgid "Type"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Media"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "First-Class Mail"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "USPS Ground Advantage*"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Library"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Sub type"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-#: vendor_prefixed/wpdesk/wp-woocommerce-shipping/src/WooCommerceShipping/CustomFields/FieldHandlingFees.php:33
-msgid "None"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Automation"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Nonautomation"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Carrier Route"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Carrier Route Nonautomation"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Pending Periodicals"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Flat Rate"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "USPS Connect Local"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "USPS Connect Regional"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Irregular"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Share Mail"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Metered"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Machinable"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Nonmachinable"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "USPS Connect Flat Rate"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Presorted"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Automation Disc"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Regional Rate"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Simple Samples"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Permit Reply Mail"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Cubic"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Nonpresorted"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Nonautomation Disc"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Customized"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Shape"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Bag"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Box"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Postcards"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Envelope"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Flats or Large Envelope"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Half Tray"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Full Tray"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "EMM Tray"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Tub"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Letters"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "M-Bag"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Balloon"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Oversize"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Parcel or Package"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Keys and IDs"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Dimensional Weight"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Pallet"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Half Pallet Box"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Full Pallet Box"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Delivery type"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Hold for Pickup"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Sunday/Holiday"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
-msgid "Return"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Package Settings"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Define the package details including its dimensions and weight which will be used as default for this shipping method."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Length [in] *"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enter only a numeric value without the metric symbol."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Width [in] *"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Height [in] *"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Default weight [lbs] *"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enter the package weight value which will be used as default if none of the products' in the cart individual weight has been filled in or if the cart total weight equals 0 kg."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Rates Adjustments"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Adjust these settings to get more accurate rates. Read %swhat affects the USPS rates in USPS WooCommerce plugin →%s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "https://octol.io/usps-free-rates"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Commercial Rates"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Use the USPS Commercial Pricing if available"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Tick this checkbox if you want to use and display the Commercial Pricing shipping rates to your customers instead of the standard ones."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Overwrite Value of contents"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enable"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "By default, the combined value of ordered products is sent within the \"ValueOfContents\" field in API requests. If you check this option, you can override this value with a custom one. Please note that for letter-shaped mail, the USPS requires this value to be set to 0."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Value of contents"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Insurance"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Request insurance to be included in the USPS rates"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enabling this option will increase time needed to return rates and may limit the number of available services."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:139
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php:140
 msgid "Enable if you want to include insurance in the USPS rates if possible."
 msgstr ""
 
@@ -1339,6 +1138,209 @@ msgstr ""
 
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsShippingService.php:307
 msgid "USPS integration"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+msgid "Media"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+msgid "First-Class Mail"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+msgid "USPS Ground Advantage*"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+msgid "Library"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+#: vendor_prefixed/wpdesk/wp-woocommerce-shipping/src/WooCommerceShipping/CustomFields/FieldHandlingFees.php:33
+msgid "None"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Automation"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Nonautomation"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Carrier Route"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Carrier Route Nonautomation"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Pending Periodicals"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Flat Rate"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "USPS Connect Local"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "USPS Connect Regional"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Irregular"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Share Mail"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Metered"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Machinable"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Nonmachinable"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "USPS Connect Flat Rate"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Presorted"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Automation Disc"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Regional Rate"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Simple Samples"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Permit Reply Mail"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Cubic"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Nonpresorted"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Nonautomation Disc"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+msgid "Customized"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Bag"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Box"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Postcards"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Envelope"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Flats or Large Envelope"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Half Tray"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Full Tray"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "EMM Tray"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Tub"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Letters"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "M-Bag"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Balloon"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Oversize"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Parcel or Package"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Keys and IDs"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Dimensional Weight"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Pallet"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Half Pallet Box"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+msgid "Full Pallet Box"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+msgid "Hold for Pickup"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+msgid "Sunday/Holiday"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+msgid "Return"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-forms/templates/input-image.php:46

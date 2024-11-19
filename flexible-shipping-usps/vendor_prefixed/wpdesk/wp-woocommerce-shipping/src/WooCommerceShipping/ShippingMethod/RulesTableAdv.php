@@ -10,9 +10,9 @@ class RulesTableAdv
     public function add_fields(array $fields): array
     {
         if (empty($fields[self::FS_METHOD_RULES_TITLE])) {
-            $fields[self::FS_METHOD_RULES_TITLE] = ['type' => 'title', 'title' => __('Additional costs by Flexible Shipping Table Rate', 'flexible-shipping-usps')];
+            $fields[self::FS_METHOD_RULES_TITLE] = ['type' => 'title', 'title' => __('Additional costs by Flexible Shipping Table Rate', 'flexible-shipping-usps'), 'default' => ''];
             $fields[self::FS_CALCULATION_ENABLED] = ['title' => __('Additional costs', 'flexible-shipping-usps'), 'type' => 'checkbox', 'label' => __('Enable Flexible Shipping Rules Table', 'flexible-shipping-usps'), 'desc_tip' => __('Enabling this option will allow you to adjust the calculated shipping cost, with additional charges applied according to the shipping cost calculation rules.', 'flexible-shipping-usps'), 'default' => 'no', 'class' => 'fs-costs-calculation-enabled-adv'];
-            $fields[self::FS_METHOD_RULES] = ['title' => __('Shipping Cost Calculation Rules', 'flexible-shipping-usps'), 'type' => 'text', 'class' => 'hidden fs-method-rules', 'description' => ''];
+            $fields[self::FS_METHOD_RULES] = ['title' => __('Shipping Cost Calculation Rules', 'flexible-shipping-usps'), 'type' => 'text', 'class' => 'hidden fs-method-rules', 'description' => '', 'default' => ''];
         }
         return $fields;
     }

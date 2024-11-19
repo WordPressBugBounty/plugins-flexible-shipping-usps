@@ -3,7 +3,7 @@
  * Plugin Name: USPS Live Rates
  * Plugin URI: https://wordpress.org/plugins/flexible-shipping-usps/
  * Description: USPS WooCommerce shipping methods with real-time calculated shipping rates based on the established USPS API connection.
- * Version: 2.0.1
+ * Version: 3.0.0
  * Author: Octolize
  * Author URI: https://octol.io/usps-author
  * Text Domain: flexible-shipping-usps
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly
 
 /* THIS VARIABLE CAN BE CHANGED AUTOMATICALLY */
-$plugin_version = '2.0.1';
+$plugin_version = '3.0.0';
 
 $plugin_name        = 'Live rates for USPS and WooCommerce by Flexible Shipping';
 $plugin_class_name  = '\WPDesk\FlexibleShippingUsps\Plugin';

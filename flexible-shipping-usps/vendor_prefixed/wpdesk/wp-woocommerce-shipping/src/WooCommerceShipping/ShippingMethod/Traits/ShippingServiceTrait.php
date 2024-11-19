@@ -56,7 +56,7 @@ trait ShippingServiceTrait
             if ($this->can_see_logs()) {
                 $this->service_logger = new DisplayNoticeLogger($this->get_logger($this), $service->get_name(), $this->instance_id);
             } else {
-                $this->service_logger = new NullLogger();
+                $this->service_logger = $this->get_logger($this);
             }
         }
         return $this->service_logger;

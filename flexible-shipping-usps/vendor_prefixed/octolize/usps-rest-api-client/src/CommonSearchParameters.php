@@ -15,5 +15,5 @@ interface CommonSearchParameters
     public function set_account_type(string $account_type): self;
     public function set_account_number(string $account_number): self;
     public function set_item_value(float $item_value): self;
-    public function set_special_services(array $special_services): self;
+    public function set_extra_services(array $extra_services): self;
 }

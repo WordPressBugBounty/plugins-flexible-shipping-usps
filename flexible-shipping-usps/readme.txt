@@ -4,7 +4,7 @@ Contributors: octolize,grola,sebastianpisula
 Tags: usps rates, usps, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
 Tested up to: 6.7
-Stable tag: 2.0.1
+Stable tag: 3.0.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -127,6 +127,9 @@ To determine which USPS services should be available for the customers to choose
 
 == Changelog ==
 
+= 3.0.0 - 2024-11-19 =
+* Added support for USPS REST API
+
 = 2.0.1 - 2024-11-18 =
 * Added support for WooCommerce 9.5
 
@@ -136,7 +139,6 @@ To determine which USPS services should be available for the customers to choose
 = 1.11.0 - 2024-10-18 =
 * Added support for WordPress 6.7
 * Added support for WooCommerce 9.4
-* Added support for USPS REST API
 * Fixed MailType in WebTools API
 * Added content value
 

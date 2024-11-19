@@ -28,7 +28,7 @@ abstract class BasicField implements Field
     {
         return $this->meta['type'];
     }
-    public function set_type(string $type): Field
+    public function set_type(string $type): self
     {
         $this->meta['type'] = $type;
         return $this;
@@ -61,7 +61,7 @@ abstract class BasicField implements Field
     {
         return $this->meta['label'] ?? '';
     }
-    final public function set_label(string $value): Field
+    final public function set_label(string $value): self
     {
         $this->meta['label'] = $value;
         return $this;
@@ -86,17 +86,17 @@ abstract class BasicField implements Field
     {
         return !empty($this->meta['description']);
     }
-    final public function set_description(string $value): Field
+    final public function set_description(string $value): self
     {
         $this->meta['description'] = $value;
         return $this;
     }
-    final public function set_description_tip(string $value): Field
+    final public function set_description_tip(string $value): self
     {
         $this->meta['description_tip'] = $value;
         return $this;
     }
-    final public function set_placeholder(string $value): Field
+    final public function set_placeholder(string $value): self
     {
         $this->attributes['placeholder'] = $value;
         return $this;
@@ -109,7 +109,7 @@ abstract class BasicField implements Field
     {
         return $this->attributes['placeholder'] ?? '';
     }
-    final public function set_name(string $name): Field
+    final public function set_name(string $name): self
     {
         $this->attributes['name'] = $name;
         return $this;
@@ -146,7 +146,7 @@ abstract class BasicField implements Field
     {
         return isset($this->attributes['multiple']);
     }
-    final public function set_disabled(): Field
+    final public function set_disabled(): self
     {
         $this->attributes['disabled'] = 'disabled';
         return $this;
@@ -155,7 +155,7 @@ abstract class BasicField implements Field
     {
         return $this->attributes['disabled'] ?? \false;
     }
-    final public function set_readonly(): Field
+    final public function set_readonly(): self
     {
         $this->attributes['readonly'] = 'readonly';
         return $this;
@@ -164,17 +164,17 @@ abstract class BasicField implements Field
     {
         return $this->attributes['readonly'] ?? \false;
     }
-    final public function set_required(): Field
+    final public function set_required(): self
     {
         $this->attributes['required'] = 'required';
         return $this;
     }
-    final public function add_class(string $class_name): Field
+    final public function add_class(string $class_name): self
     {
         $this->attributes['class'][$class_name] = $class_name;
         return $this;
     }
-    final public function unset_class(string $class_name): Field
+    final public function unset_class(string $class_name): self
     {
         unset($this->attributes['class'][$class_name]);
         return $this;
@@ -204,7 +204,7 @@ abstract class BasicField implements Field
     {
         return $this->meta['default_value'] ?? '';
     }
-    final public function set_default_value(string $value): Field
+    final public function set_default_value(string $value): self
     {
         $this->meta['default_value'] = $value;
         return $this;
@@ -222,7 +222,7 @@ abstract class BasicField implements Field
      *
      * @see FormWithFields::get_fields()
      */
-    final public function set_priority(int $priority): Field
+    final public function set_priority(int $priority): self
     {
         $this->meta['priority'] = $priority;
         return $this;

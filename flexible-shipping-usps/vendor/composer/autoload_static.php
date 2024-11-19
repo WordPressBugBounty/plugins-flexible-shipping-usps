@@ -557,6 +557,7 @@ class ComposerStaticInitFsUsps
         'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsServices' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php',
         'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsSettingsDefinition' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSettingsDefinition.php',
         'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsShippingService' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsShippingService.php',
+        'FlexibleShippingUspsVendor\\WPDesk\\UspsShippingService\\UspsSkuComponents' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php',
         'FlexibleShippingUspsVendor\\WPDesk\\View\\PluginViewBuilder' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-view/src/PluginViewBuilder.php',
         'FlexibleShippingUspsVendor\\WPDesk\\View\\Renderer\\LoadTemplatePlugin' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-view/src/Renderer/LoadTemplatePlugin.php',
         'FlexibleShippingUspsVendor\\WPDesk\\View\\Renderer\\Renderer' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-view/src/Renderer/Renderer.php',

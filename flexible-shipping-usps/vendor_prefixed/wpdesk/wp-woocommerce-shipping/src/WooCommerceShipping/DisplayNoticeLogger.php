@@ -42,11 +42,11 @@ class DisplayNoticeLogger implements LoggerInterface
      * @param string $service_name .
      * @param int $instance_id .
      */
-    public function __construct(LoggerInterface $logger, $service_name, $instance_id)
+    public function __construct(LoggerInterface $logger, string $service_name, $instance_id)
     {
         $this->logger = $logger;
         $this->service_name = $service_name;
-        $this->instance_id = $instance_id;
+        $this->instance_id = (int) $instance_id;
     }
     /**
      * Logs with an arbitrary level.
@@ -67,6 +67,56 @@ class DisplayNoticeLogger implements LoggerInterface
         }
     }
     /**
+     * Format message.
+     *
+     * @param string $message Message.
+     *
+     * @return string
+     */
+    private function format_value($message): string
+    {
+        if (!is_string($message)) {
+            $message = print_r($message, \true);
+        } else if ($this->is_json($message)) {
+            $message = json_encode(json_decode($message), \JSON_PRETTY_PRINT);
+        } else if ($this->is_xml($message)) {
+            $message = $this->format_xml($message);
+        }
+        return trim($message);
+    }
+    private function format_xml(string $xml): string
+    {
+        $dom = new \DOMDocument();
+        $dom->preserveWhiteSpace = \false;
+        $dom->formatOutput = \true;
+        $dom->loadXML($xml);
+        return $dom->saveXML();
+    }
+    /**
+     * Check if string is XML.
+     *
+     * @param string $string String.
+     *
+     * @return bool
+     */
+    private function is_xml(string $string): bool
+    {
+        $doc = @simplexml_load_string($string);
+        return $doc !== \false;
+    }
+    /**
+     * Check if string is JSON.
+     *
+     * @param string $string String.
+     *
+     * @return bool
+     */
+    private function is_json(string $string): bool
+    {
+        json_decode($string);
+        return json_last_error() === \JSON_ERROR_NONE;
+    }
+    /**
      * Show notices
      *
      * @param string $message Message.
@@ -80,15 +130,14 @@ class DisplayNoticeLogger implements LoggerInterface
         $message = sprintf('%1$s: %2$s', $this->service_name, $message);
         $dump = '';
         foreach ($context as $label => $value) {
-            if (!is_string($value)) {
-                $value = print_r($value, \true);
-            }
+            $value = $this->format_value($value);
             ob_start();
             include __DIR__ . '/view/display-notice-context-single-value.php';
-            $dump .= ob_get_clean();
+            $dump .= trim(ob_get_clean());
         }
-        if (!wc_has_notice($message . $dump, $type)) {
-            wc_add_notice($message . $dump, $type, [self::SERVICE_NAME => $this->service_name, self::INSTANCE_ID => $this->instance_id]);
+        $message = trim($message . $dump);
+        if (!wc_has_notice($message, $type)) {
+            wc_add_notice($message, $type, [self::SERVICE_NAME => $this->service_name, self::INSTANCE_ID => $this->instance_id]);
         }
     }
 }

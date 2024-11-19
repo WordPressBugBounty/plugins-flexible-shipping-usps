@@ -105,7 +105,7 @@ class PackerSettings
         if (!empty($this->description)) {
             $description .= '<br/>' . $this->description;
         }
-        $definition = new SettingsDefinitionModifierAfter($definition, $add_after, self::OPTION_SHIPPING_BOXES, ['title' => __('Shipping boxes', 'flexible-shipping-usps'), 'type' => ShippingBoxes::get_type_name(), 'class' => 'no-flat-rate', 'description' => $description, 'desc_tip' => \false]);
+        $definition = new SettingsDefinitionModifierAfter($definition, $add_after, self::OPTION_SHIPPING_BOXES, ['title' => __('Shipping boxes', 'flexible-shipping-usps'), 'type' => ShippingBoxes::get_type_name(), 'class' => 'no-flat-rate', 'description' => $description, 'desc_tip' => \false, 'default' => '']);
         $packing_options = array(self::PACKING_METHOD_WEIGHT => __('Pack into one box by weight', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX => __('Pack into custom boxes', 'flexible-shipping-usps'), self::PACKING_METHOD_SEPARATELY => __('Pack items separately', 'flexible-shipping-usps'));
         if ($this->is_3d_algorithm_available()) {
             unset($packing_options[self::PACKING_METHOD_SEPARATELY]);

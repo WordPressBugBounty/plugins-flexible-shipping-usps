@@ -18,7 +18,7 @@ class Header extends NoValueField
     {
         return \true;
     }
-    public function set_header_size(int $value): Field
+    public function set_header_size(int $value): self
     {
         $this->meta['header_size'] = $value;
         return $this;
