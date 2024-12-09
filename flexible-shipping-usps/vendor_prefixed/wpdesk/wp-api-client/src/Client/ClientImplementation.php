@@ -4,6 +4,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\ApiClient\Client;
 
 use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInterface;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerInterface;
+use FlexibleShippingUspsVendor\Psr\Log\NullLogger;
 use FlexibleShippingUspsVendor\WPDesk\HttpClient\HttpClient;
 use FlexibleShippingUspsVendor\WPDesk\HttpClient\HttpClientResponse;
 use FlexibleShippingUspsVendor\WPDesk\ApiClient\Request\Request;
@@ -27,6 +28,8 @@ class ClientImplementation implements Client, LoggerAwareInterface
     private $defaultRequestHeaders;
     /** @var int */
     private $timeout;
+    /** @var bool */
+    private $is_logger_available = \false;
     /**
      * Client constructor.
      * @param HttpClient $client
@@ -44,6 +47,7 @@ class ClientImplementation implements Client, LoggerAwareInterface
         $this->apiUrl = $apiUri;
         $this->defaultRequestHeaders = $defaultRequestHeaders;
         $this->timeout = $timeout;
+        $this->is_logger_available = !$logger instanceof NullLogger;
     }
     /**
      * Send given request trough HttpClient
@@ -54,10 +58,14 @@ class ClientImplementation implements Client, LoggerAwareInterface
      */
     public function sendRequest(Request $request)
     {
-        $this->logger->debug("Sends request with METHOD: {$request->getMethod()}; to ENDPOINT {$request->getEndpoint()}", $this->getLoggerContext());
+        if ($this->is_logger_available) {
+            $this->logger->debug("Sends request with METHOD: {$request->getMethod()}; to ENDPOINT {$request->getEndpoint()}", $this->getLoggerContext());
+        }
         try {
             $httpResponse = $this->client->send($fullUrl = $this->prepareFullUrl($request), $method = $request->getMethod(), $body = $this->prepareRequestBody($request), $headers = $this->prepareRequestHeaders($request), $this->timeout);
-            $this->logger->debug("Sent request with: URL: {$fullUrl};\n METHOD: {$method};\n BODY: {$body};\n" . "HEADERS: " . json_encode($headers) . "\n\n and got response as CODE: {$httpResponse->getResponseCode()};\n" . "with RESPONSE BODY {$httpResponse->getBody()}", $this->getLoggerContext());
+            if ($this->is_logger_available) {
+                $this->logger->debug("Sent request with: URL: {$fullUrl};\n METHOD: {$method};\n BODY: {$body};\n" . "HEADERS: " . json_encode($headers) . "\n\n and got response as CODE: {$httpResponse->getResponseCode()};\n" . "with RESPONSE BODY {$httpResponse->getBody()}", $this->getLoggerContext());
+            }
             return $this->mapHttpResponseToApiResponse($httpResponse);
         } catch (HttpClientRequestException $e) {
             $this->logger->error("Exception {$e->getMessage()}; {$e->getCode()} occurred while sending request");

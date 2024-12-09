@@ -26,23 +26,29 @@ class ProPluginMetaBox implements Hookable, HookableCollection {
 		$should_show_strategy = new OrStrategy( new ShippingMethodStrategy( UspsShippingService::UNIQUE_ID ) );
 		$should_show_strategy->addCondition( new ShippingMethodInstanceShouldShowStrategy( new \WC_Shipping_Zones(), UspsShippingService::UNIQUE_ID ) );
 		$this->add_hookable( new AdminAssets( $this->assets_url, 'ups', $should_show_strategy ) );
-		$settings_sidebar = new SettingsSidebar(
-			'flexible_shipping_usps_settings_sidebar',
-			$should_show_strategy,
-			__( 'Get USPS WooCommerce Live Rates PRO!', 'flexible-shipping-usps' ),
-			[
-				__( 'Handling Fees', 'flexible-shipping-usps' ),
-				__( 'Automatic Box Packing', 'flexible-shipping-usps' ),
-				__( 'Premium Support', 'flexible-shipping-usps' ),
-				__( 'Multicurrency Support', 'flexible-shipping-usps' ),
-			],
-			'https://octol.io/usps-up-box',
-			__( 'Upgrade Now', 'flexible-shipping-usps' ),
-			1320,
-			20,
-			'#mainform h2:first,#mainform h3:first'
+
+		add_action(
+			'admin_init',
+			function () use ( $should_show_strategy ) {
+				$settings_sidebar = new SettingsSidebar(
+					'flexible_shipping_usps_settings_sidebar',
+					$should_show_strategy,
+					__( 'Get USPS WooCommerce Live Rates PRO!', 'flexible-shipping-usps' ),
+					[
+						__( 'Handling Fees', 'flexible-shipping-usps' ),
+						__( 'Automatic Box Packing', 'flexible-shipping-usps' ),
+						__( 'Premium Support', 'flexible-shipping-usps' ),
+						__( 'Multicurrency Support', 'flexible-shipping-usps' ),
+					],
+					'https://octol.io/usps-up-box',
+					__( 'Upgrade Now', 'flexible-shipping-usps' ),
+					1320,
+					20,
+					'#mainform h2:first,#mainform h3:first'
+				);
+				( $settings_sidebar )->hooks();
+			}
 		);
-		$this->add_hookable( $settings_sidebar );
 
 		$this->hooks_on_hookable_objects();
 	}

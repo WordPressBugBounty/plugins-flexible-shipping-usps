@@ -145,24 +145,29 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 				$this->get_plugin_url().'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps'
 			)
 		);
-		$this->init_repository_rating();
+		add_action( 'init', [ $this, 'init_repository_rating' ] );
 
-		$admin_meta_data_interpreter = new AdminOrderMetaDataDisplay( UspsShippingService::UNIQUE_ID );
-		$admin_meta_data_interpreter->add_interpreter(
-			new SingleAdminOrderMetaDataInterpreterImplementation(
-				WooCommerceShippingMetaDataBuilder::SERVICE_TYPE,
-				__( 'Service Code', 'flexible-shipping-usps' )
-			)
-		);
-		$admin_meta_data_interpreter->add_interpreter( new FallbackAdminMetaDataInterpreter() );
-		$admin_meta_data_interpreter->add_hidden_order_item_meta_key(
-			WooCommerceShippingMetaDataBuilder::COLLECTION_POINT
-		);
-		$admin_meta_data_interpreter->add_interpreter( new PackedPackagesAdminMetaDataInterpreter() );
-		$this->add_hookable( $admin_meta_data_interpreter );
+		add_action(
+			'init',
+			function () {
+				$admin_meta_data_interpreter = new AdminOrderMetaDataDisplay( UspsShippingService::UNIQUE_ID );
+				$admin_meta_data_interpreter->add_interpreter(
+					new SingleAdminOrderMetaDataInterpreterImplementation(
+						WooCommerceShippingMetaDataBuilder::SERVICE_TYPE,
+						__( 'Service Code', 'flexible-shipping-usps' )
+					)
+				);
+				$admin_meta_data_interpreter->add_interpreter( new FallbackAdminMetaDataInterpreter() );
+				$admin_meta_data_interpreter->add_hidden_order_item_meta_key(
+					WooCommerceShippingMetaDataBuilder::COLLECTION_POINT
+				);
+				$admin_meta_data_interpreter->add_interpreter( new PackedPackagesAdminMetaDataInterpreter() );
+				( $admin_meta_data_interpreter )->hooks();
 
-		$meta_data_interpreter = new FrontOrderMetaDataDisplay( UspsShippingService::UNIQUE_ID );
-		$this->add_hookable( $meta_data_interpreter );
+				$meta_data_interpreter = new FrontOrderMetaDataDisplay( UspsShippingService::UNIQUE_ID );
+				( $meta_data_interpreter )->hooks();
+			}
+		);
 
 		/**
 		 * Handles API Status AJAX requests.
@@ -181,13 +186,13 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		UspsShippingMethod::set_plugin_shipping_decisions( $plugin_shipping_decisions );
 
-		$this->init_tracker();
-		$this->init_upgrade_onboarding();
+		add_action( 'init', [ $this, 'init_tracker' ] );
+		add_action( 'init', [ $this, 'init_upgrade_onboarding' ] );
 
 		parent::init();
 	}
 
-	private function init_upgrade_onboarding() {
+	public function init_upgrade_onboarding() {
 		$upgrade_onboarding = new PluginUpgradeOnboardingFactory(
 			$this->plugin_info->get_plugin_name(),
 			$this->plugin_info->get_version(),
@@ -210,21 +215,21 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	/**
 	 * @return void
 	 */
-	private function init_tracker(): void {
-		$this->add_hookable(
+	public function init_tracker(): void {
+		(
 			TrackerInitializer::create_from_plugin_info_for_shipping_method(
 				$this->plugin_info,
 				UspsShippingService::UNIQUE_ID,
 				new OctolizeReasonsFactory(
 					'https://octol.io/usps-docs-exit-pop-up',
 					'https://octol.io/usps-support-forum-exit-pop-up',
-					__( 'Flexible Shipping USPS PRO', 'flexible-shipping-ups' ),
+					__( 'Flexible Shipping USPS PRO', 'flexible-shipping-usps' ),
 					'https://octol.io/usps-contact-exit-pop-up'
 				)
 			)
-		);
+		)->hooks();
 
-		$this->add_hookable( new Tracker() );
+		( new Tracker() )->hooks();
 	}
 
 	/**
@@ -232,21 +237,21 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	 *
 	 * @return void
 	 */
-	private function init_repository_rating() {
-		$this->add_hookable( new AjaxHandler( trailingslashit( $this->get_plugin_url() ) . 'vendor_prefixed/wpdesk/wp-notice/assets' ) );
+	public function init_repository_rating() {
+		( new AjaxHandler( trailingslashit( $this->get_plugin_url() ) . 'vendor_prefixed/wpdesk/wp-notice/assets' ) )->hooks();
 
 		$time_tracker = new ShippingMethodGlobalSettingsWatcher( UspsShippingService::UNIQUE_ID );
-		$this->add_hookable( $time_tracker );
-		$this->add_hookable(
+		( $time_tracker )->hooks();
+		(
 			new RatingPetitionNotice(
 				$time_tracker,
 				UspsShippingService::UNIQUE_ID,
 				$this->plugin_info->get_plugin_name(),
 				'https://octol.io/rate-usps'
 			)
-		);
+		)->hooks();
 
-		$this->add_hookable(
+		(
 			new TextPetitionDisplayer(
 				'woocommerce_after_settings_shipping',
 				new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), 'flexible_shipping_usps' ),
@@ -257,7 +262,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 					'center'
 				)
 			)
-		);
+		)->hooks();
 	}
 
 	/**
