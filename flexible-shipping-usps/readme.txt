@@ -1,4 +1,4 @@
-=== USPS Shipping for WooCommerce - Live Rates ===
+=== Shipping Live Rates for USPS for WooCommerce ===
 
 Contributors: octolize,grola,sebastianpisula
 Tags: usps rates, usps, usps shipping, usps woocommerce, usps live rates

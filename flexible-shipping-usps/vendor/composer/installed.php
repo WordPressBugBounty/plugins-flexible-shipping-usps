@@ -3,7 +3,7 @@
         'name' => 'wpdesk/flexible-shipping-usps',
         'pretty_version' => '3.0.4',
         'version' => '3.0.4.0',
-        'reference' => 'ddf67375779d43584dced23ecad717b4a5f788be',
+        'reference' => 'a0737bf350fee03561eac2ddc6d4f29969350d69',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'wpdesk/flexible-shipping-usps' => array(
             'pretty_version' => '3.0.4',
             'version' => '3.0.4.0',
-            'reference' => 'ddf67375779d43584dced23ecad717b4a5f788be',
+            'reference' => 'a0737bf350fee03561eac2ddc6d4f29969350d69',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
