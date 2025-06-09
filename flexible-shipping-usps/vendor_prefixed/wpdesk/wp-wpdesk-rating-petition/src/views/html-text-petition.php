@@ -8,7 +8,7 @@ namespace FlexibleShippingUspsVendor;
  * @var string $plugin_title
  * @var string $rating_url
  */
-?><div class="wpdesk-rating-petition" style="text-align: <?php 
+?><div class="flexible-shipping-usps" style="text-align: <?php 
 echo \esc_attr($text_align);
 ?>;">
 	<?php 

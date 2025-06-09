@@ -7,6 +7,7 @@
 
 namespace WPDesk\FlexibleShippingUsps;
 
+use FlexibleShippingUspsVendor\Octolize\Csat\Csat;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\MessageFactory\LiveRatesFsRulesTable;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeMessage;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeOnboardingFactory;
@@ -188,6 +189,15 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		add_action( 'init', [ $this, 'init_tracker' ] );
 		add_action( 'init', [ $this, 'init_upgrade_onboarding' ] );
+
+		$this->add_hookable(
+			Csat::create_for_shipping_method_instance(
+				UspsShippingService::UNIQUE_ID,
+				UspsShippingService::UNIQUE_ID,
+				__DIR__ . '/views/csat.php',
+				'woocommerce_after_settings_shipping'
+			)
+		);
 
 		parent::init();
 	}
