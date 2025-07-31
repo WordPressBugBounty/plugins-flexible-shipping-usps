@@ -13,8 +13,9 @@ namespace FlexibleShippingUspsVendor;
  * @var array $params Params.
  * @var string $tooltip_html Tooltip.
  * @var string $description_html Description.
+ * @var array $services Services.
  */
-$params = isset($params) ? $params : array();
+$params = $params ?? array();
 ?>
 <tr style="display:none">
 	<th scope="row" class="titledesc">

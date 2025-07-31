@@ -359,6 +359,7 @@ trait SettingsTrait
             $price_adjustment_type_none = PriceAdjustmentNone::ADJUSTMENT_TYPE;
             include __DIR__ . '/view/shipping-method-java-script-handling-fees.php';
         }
+        include __DIR__ . '/view/shipping-method-java-script-dynamic-fields.php';
     }
     /**
      * @return SettingsValuesAsArray

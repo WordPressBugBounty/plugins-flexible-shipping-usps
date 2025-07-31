@@ -56,7 +56,7 @@ class FieldServices implements CustomField
      * Sort services.
      *
      * @param array $options Services from field definition.
-     * @param array $values  Services from settings.
+     * @param array $values Services from settings.
      *
      * @return array
      */
@@ -109,5 +109,13 @@ class FieldServices implements CustomField
      */
     public function render_footer($key)
     {
+    }
+    public static function convert_services_to_settings_services(array $services): array
+    {
+        $settings_services = [];
+        foreach ($services as $service_id => $service) {
+            $settings_services[$service_id] = ['name' => $service, 'enabled' => $service_id];
+        }
+        return $settings_services;
     }
 }

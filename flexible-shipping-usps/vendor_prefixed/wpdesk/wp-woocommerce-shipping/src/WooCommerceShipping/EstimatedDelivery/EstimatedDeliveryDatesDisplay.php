@@ -54,7 +54,28 @@ class EstimatedDeliveryDatesDisplay implements Hookable
     public function hooks()
     {
         add_action('woocommerce_after_shipping_rate', array($this, 'display_estimated_delivery_time_for_method_if_enabled_and_present'), 10, 2);
+        add_filter('woocommerce_package_rates', [$this, 'add_description_to_rate_if_enabled_and_present']);
         add_action('woocommerce_hidden_order_itemmeta', array($this, 'add_hidden_order_item_meta'), 10);
+    }
+    /**
+     * @param \WC_Shipping_Rate[] $rates .
+     *
+     * @return \WC_Shipping_Rate[]
+     */
+    public function add_description_to_rate_if_enabled_and_present($rates)
+    {
+        foreach ($rates as $rate) {
+            if ($rate->get_method_id() !== $this->service_id) {
+                continue;
+            }
+            $meta_data = $rate->get_meta_data();
+            if (isset($meta_data[self::DELIVERY_DATES]) && $meta_data[self::DELIVERY_DATES] !== self::OPTION_NONE) {
+                ob_start();
+                $this->display_estimated_delivery_time_for_method_if_present($rate, $meta_data[self::DELIVERY_DATES]);
+                $rate->description = trim(strip_tags(ob_get_clean()));
+            }
+        }
+        return $rates;
     }
     /**
      * Display delivery time for method.
@@ -64,6 +85,9 @@ class EstimatedDeliveryDatesDisplay implements Hookable
      */
     public function display_estimated_delivery_time_for_method_if_enabled_and_present($shipping_rate, $index)
     {
+        if ($shipping_rate->get_method_id() !== $this->service_id) {
+            return;
+        }
         $meta_data = $shipping_rate->get_meta_data();
         if (isset($meta_data[self::DELIVERY_DATES]) && $meta_data[self::DELIVERY_DATES] !== self::OPTION_NONE) {
             $this->display_estimated_delivery_time_for_method_if_present($shipping_rate, $meta_data[self::DELIVERY_DATES]);

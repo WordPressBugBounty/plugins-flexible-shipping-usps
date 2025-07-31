@@ -6,6 +6,7 @@ use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\DefinitionModifi
 use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\Settings\SettingsDefinition;
 use FlexibleShippingUspsVendor\WPDesk\Packer\Box;
 use FlexibleShippingUspsVendor\WpDesk\WooCommerce\ShippingMethod\PackerBoxesFactory;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\CustomField;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShippingPro\CustomFields\ShippingBoxes;
 /**
  * Settings required for packer.
@@ -27,7 +28,7 @@ class PackerSettings
     /**
      * @var string
      */
-    private $description;
+    private string $shipping_boxes_description;
     /**
      * @var bool
      */
@@ -37,13 +38,12 @@ class PackerSettings
      *
      * @param string $info_url Url with info about packages size.
      * @param string $description Description.
-     * @param bool   $shipping_service_id Shipping service Id.
+     * @param bool $shipping_service_id Shipping service Id.
      */
-    public function __construct($info_url, $description = '', $shipping_service_id = '')
+    public function __construct($info_url, $description = '')
     {
         $this->info_url = $info_url;
-        $this->description = $description;
-        $this->shipping_service_id = $shipping_service_id;
+        $this->shipping_boxes_description = $description;
     }
     /**
      * @param \WC_Settings_API $settings
@@ -52,11 +52,7 @@ class PackerSettings
      */
     public function get_packaging_method(\WC_Settings_API $settings)
     {
-        $packing_method = $settings->get_option(self::OPTION_PACKAGING_METHOD, self::PACKING_METHOD_WEIGHT);
-        if (self::PACKING_METHOD_BOX_3D === $packing_method && !$this->is_3d_algorithm_available()) {
-            $packing_method = self::PACKING_METHOD_BOX;
-        }
-        return $packing_method;
+        return $settings->get_option(self::OPTION_PACKAGING_METHOD, self::PACKING_METHOD_WEIGHT);
     }
     /**
      * @param Box[] $boxes
@@ -102,27 +98,11 @@ class PackerSettings
                 '</a>'
             );
         }
-        if (!empty($this->description)) {
-            $description .= '<br/>' . $this->description;
+        if (!empty($this->shipping_boxes_description)) {
+            $description .= '<br/>' . $this->shipping_boxes_description;
         }
         $definition = new SettingsDefinitionModifierAfter($definition, $add_after, self::OPTION_SHIPPING_BOXES, ['title' => __('Shipping boxes', 'flexible-shipping-usps'), 'type' => ShippingBoxes::get_type_name(), 'class' => 'no-flat-rate', 'description' => $description, 'desc_tip' => \false, 'default' => '']);
-        $packing_options = array(self::PACKING_METHOD_WEIGHT => __('Pack into one box by weight', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX => __('Pack into custom boxes', 'flexible-shipping-usps'), self::PACKING_METHOD_SEPARATELY => __('Pack items separately', 'flexible-shipping-usps'));
-        if ($this->is_3d_algorithm_available()) {
-            unset($packing_options[self::PACKING_METHOD_SEPARATELY]);
-            $packing_options[self::PACKING_METHOD_BOX_3D] = __('Pack into custom boxes (3D bin packing)', 'flexible-shipping-usps');
-            $packing_options[self::PACKING_METHOD_BOX] = __('Pack into custom boxes (volume packing)', 'flexible-shipping-usps');
-            $packing_options[self::PACKING_METHOD_SEPARATELY] = __('Pack items separately', 'flexible-shipping-usps');
-        }
-        return new SettingsDefinitionModifierAfter($definition, $add_after, self::OPTION_PACKAGING_METHOD, ['title' => __('Parcel Packing Method', 'flexible-shipping-usps'), 'type' => 'select', 'options' => $packing_options, 'description' => __('Define the way how the ordered products should be packed. Changing your choice here may affect the rates.', 'flexible-shipping-usps'), 'desc_tip' => \true, 'default' => self::PACKING_METHOD_WEIGHT]);
-    }
-    /**
-     * @return false|mixed
-     */
-    private function is_3d_algorithm_available()
-    {
-        if ($this->shipping_service_id !== '') {
-            return apply_filters($this->shipping_service_id . '/packer/enable_3d_packer', \false);
-        }
-        return \false;
+        $packing_options = [self::PACKING_METHOD_WEIGHT => __('Pack into one box by weight', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX_3D => __('Pack into custom boxes (3D bin packing)', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX => __('Pack into custom boxes (volume packing)', 'flexible-shipping-usps'), self::PACKING_METHOD_SEPARATELY => __('Pack items separately', 'flexible-shipping-usps')];
+        return new SettingsDefinitionModifierAfter($definition, $add_after, self::OPTION_PACKAGING_METHOD, ['title' => __('Parcel Packing Method', 'flexible-shipping-usps'), 'type' => 'select', 'options' => $packing_options, 'desc_tip' => __('Define the way how the ordered products should be packed. Changing your choice here may affect the rates.', 'flexible-shipping-usps'), 'custom_attributes' => ['data-descriptions' => json_encode([self::PACKING_METHOD_WEIGHT => __('Packs all items into a single box.', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX_3D => __('Optimizes item placement in custom boxes using a 3D algorithm that considers item dimensions and available space.', 'flexible-shipping-usps'), self::PACKING_METHOD_BOX => __('Groups items by total volume and fits them into boxes to maximize capacity. Also ensures each item can physically fit into an empty box.', 'flexible-shipping-usps'), self::PACKING_METHOD_SEPARATELY => __('Packs each item in a separate box.', 'flexible-shipping-usps')])], 'class' => 'no-flat-rate oct-packer-settings oct-dynamic-description', 'description' => ' ', 'default' => self::PACKING_METHOD_WEIGHT]);
     }
 }

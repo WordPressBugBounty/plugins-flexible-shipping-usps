@@ -43,6 +43,7 @@ use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\Api\Rest\OauthApi
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\ShippingMethodsChecker;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\Tracker;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\UspsShippingMethod;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Usps\WebApiNotice;
 use FlexibleShippingUspsVendor\WPDesk_Plugin_Info;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareInterface;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareTrait;
@@ -105,7 +106,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	 *
 	 * @return string[]
 	 */
-	private function get_global_usps_settings() {
+	private function get_global_usps_settings(): array {
 		// @phpstan-ignore-next-line.
 		return get_option( 'woocommerce_' . UspsShippingService::UNIQUE_ID . '_settings', [] );
 	}
@@ -290,6 +291,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		$this->add_hookable( new ShippingExtensions( $this->plugin_info ) );
 
 		$this->add_hookable( new ShippingMethodsChecker() );
+
+		$this->add_hookable( new WebApiNotice( $this->get_global_usps_settings() ) );
 
 		$this->hooks_on_hookable_objects();
 	}

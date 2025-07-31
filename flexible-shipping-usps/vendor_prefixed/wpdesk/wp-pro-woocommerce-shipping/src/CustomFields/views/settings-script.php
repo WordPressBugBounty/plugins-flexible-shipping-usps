@@ -60,6 +60,7 @@ echo \esc_attr($packaging_method_field);
 ?>').change(function () {
 			shipping_method_pro_packaging_method_change()
 		});
+
 	})(jQuery);
 </script>
 <?php 

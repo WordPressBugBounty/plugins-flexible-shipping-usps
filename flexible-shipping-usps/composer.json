@@ -1,11 +1,19 @@
 {
-	"name": "wpdesk/flexible-shipping-usps",
+	"name": "octolize-plugin/flexible-shipping-usps",
 	"authors": [
 		{
-			"name": "Krzysiek",
-			"email": "krzysiek@wpdesk.net"
+			"name": "Grzegorz",
+			"email": "grzegorz@octolize.com"
+		},
+		{
+			"name": "Sebastian",
+			"email": "sebastian@octolize.com"
 		}
 	],
+	"description": "Shipping Live Rates for USPS WooCommerce shipping methods with real-time calculated shipping rates based on the established USPS API connection.",
+	"type": "wordpress-plugin",
+	"keywords": ["woocommerce", "usps", "live rates", "octolize", "plugin", "shipping"],
+	"homepage": "https://wordpress.org/plugins/flexible-shipping-usps/",
 	"autoload": {
 		"psr-4": {
 			"WPDesk\\FlexibleShippingUsps\\": "src"
@@ -101,5 +109,6 @@
 			"type": "composer",
 			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
-	}
+	},
+	"version": "3.1.0"
 }

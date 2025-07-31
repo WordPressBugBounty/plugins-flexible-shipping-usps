@@ -7,7 +7,6 @@
  */
 namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping;
 
-use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingService;
 use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRate;
 use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingServiceCapability\CanRateToCollectionPoint;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingBuilder\WooCommerceShippingMetaDataBuilder;

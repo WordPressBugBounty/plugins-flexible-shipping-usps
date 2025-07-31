@@ -4,7 +4,7 @@ Contributors: octolize,grola,sebastianpisula
 Tags: usps rates, usps, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
 Tested up to: 6.8
-Stable tag: 3.0.7
+Stable tag: 3.1.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,6 +19,10 @@ Use this free USPS WooCommerce Live Rates plugin to offer your customers the USP
 
 > **Upgrade to USPS WooCommerce Live Rates PRO**<br />
 > Get the priority e-mail support and the access to all advanced PRO features - upgrade to [USPS WooCommerce Live Rates PRO now &rarr;](https://octol.io/usps-repo-upgrade)
+
+= Fully compatible with the latest USPS API =
+
+This plugin works seamlessly with the current USPS API platform, ensuring uninterrupted service even as USPS phases out the legacy Web Tools APIs.
 
 = Features =
 
@@ -126,6 +130,9 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.1.0 - 2025-07-31 =
+* Added WebTools API deprecation notice
 
 = 3.0.7 - 2025-06-23 =
 * Added support for WooCommerce 10.0

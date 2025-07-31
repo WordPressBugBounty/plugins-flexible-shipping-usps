@@ -10,7 +10,7 @@ namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\FreeShipping;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerInterface;
 use WC_Cart;
 use WC_Shipping_Method;
-use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\DisplayNoticeLogger;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Logger\DisplayNoticeLogger;
 /**
  * Can apply handling fees to price.
  */

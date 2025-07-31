@@ -21,12 +21,21 @@ trait LoggerTrait
         return $shipping_method->get_plugin_shipping_decisions()->get_logger();
     }
     /**
-     * User can see logs?
+     * User can see debug notices?
      *
      * @return bool
      */
-    private function can_see_logs()
+    private function can_see_debug_notices(): bool
     {
         return 'yes' === $this->get_option('debug_mode', 'no') && current_user_can('manage_woocommerce');
+    }
+    /**
+     * User can see error notices?
+     *
+     * @return bool
+     */
+    private function can_see_error_notices(): bool
+    {
+        return current_user_can('manage_woocommerce');
     }
 }

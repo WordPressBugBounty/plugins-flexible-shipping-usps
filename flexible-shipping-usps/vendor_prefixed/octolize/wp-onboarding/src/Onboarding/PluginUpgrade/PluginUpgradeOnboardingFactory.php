@@ -76,7 +76,9 @@ class PluginUpgradeOnboardingFactory
         if ($this->has_onboarding_messages($previous_version, $this->current_plugin_version)) {
             $onboarding_should_display_strategy = $this->prepare_display_strategy();
             $onboarding = new Onboarding($onboarding_id, \true, $onboarding_should_display_strategy, $this->prepare_steps($previous_version, $this->current_plugin_version), $onboarding_ajax, $onboarding_option);
-            $onboarding->hooks();
+            if (is_admin() && $onboarding_option->update_option(self::PLUGIN_VERSION, $this->current_plugin_version)) {
+                $onboarding->hooks();
+            }
         } else if ($onboarding_option->get_option_value(self::PLUGIN_VERSION, self::MINIMAL_VERSION) !== $this->current_plugin_version) {
             $onboarding_option->update_option(self::PLUGIN_VERSION, $this->current_plugin_version);
         }

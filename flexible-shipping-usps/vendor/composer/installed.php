@@ -1,20 +1,20 @@
 <?php return array(
     'root' => array(
-        'name' => 'wpdesk/flexible-shipping-usps',
-        'pretty_version' => '3.0.7',
-        'version' => '3.0.7.0',
-        'reference' => 'a34d68fa046b269f5c490e63f80f84f47c8b6cc8',
-        'type' => 'library',
+        'name' => 'octolize-plugin/flexible-shipping-usps',
+        'pretty_version' => '3.1.0',
+        'version' => '3.1.0.0',
+        'reference' => 'f7debb8460376c649d70e7a71a0f014478533d1d',
+        'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => false,
     ),
     'versions' => array(
-        'wpdesk/flexible-shipping-usps' => array(
-            'pretty_version' => '3.0.7',
-            'version' => '3.0.7.0',
-            'reference' => 'a34d68fa046b269f5c490e63f80f84f47c8b6cc8',
-            'type' => 'library',
+        'octolize-plugin/flexible-shipping-usps' => array(
+            'pretty_version' => '3.1.0',
+            'version' => '3.1.0.0',
+            'reference' => 'f7debb8460376c649d70e7a71a0f014478533d1d',
+            'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,

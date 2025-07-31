@@ -46,7 +46,7 @@ class PackedPackagesMetaDataBuilder
                     $items[$item->name]++;
                 }
             }
-            $packed_packages[] = ['package' => isset($package->description) ? $package->description : __('Custom', 'flexible-shipping-usps'), 'items' => $items];
+            $packed_packages[] = ['package' => isset($package->description) ? $package->description : __('Custom', 'flexible-shipping-usps'), 'items' => $items, 'weight' => $package->weight, 'dimensions' => $package->dimensions, 'package_type' => $package->package_type];
         }
         return json_encode($packed_packages);
     }

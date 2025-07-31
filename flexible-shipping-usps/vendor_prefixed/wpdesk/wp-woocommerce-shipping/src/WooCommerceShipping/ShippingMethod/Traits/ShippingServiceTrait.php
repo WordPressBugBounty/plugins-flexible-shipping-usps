@@ -7,10 +7,13 @@
  */
 namespace FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod\Traits;
 
+use FlexibleShippingUspsVendor\Monolog\Handler\FilterHandler;
+use FlexibleShippingUspsVendor\Monolog\Handler\PsrHandler;
+use FlexibleShippingUspsVendor\Monolog\Logger;
 use FlexibleShippingUspsVendor\Psr\Log\LoggerInterface;
-use FlexibleShippingUspsVendor\Psr\Log\NullLogger;
+use FlexibleShippingUspsVendor\Psr\Log\LogLevel;
 use FlexibleShippingUspsVendor\WPDesk\AbstractShipping\ShippingService;
-use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\DisplayNoticeLogger;
+use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Logger\DisplayNoticeLogger;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod;
 /**
  * Facilitates access to ShippingService abstract class with rates.
@@ -53,8 +56,16 @@ trait ShippingServiceTrait
     private function get_service_logger(ShippingService $service)
     {
         if (null === $this->service_logger) {
-            if ($this->can_see_logs()) {
-                $this->service_logger = new DisplayNoticeLogger($this->get_logger($this), $service->get_name(), $this->instance_id);
+            if ($this->can_see_error_notices()) {
+                $logger = new Logger('notice_logger_handler_' . $service->get_unique_id());
+                $notice_logger = new PsrHandler(new DisplayNoticeLogger($service->get_name(), $this->instance_id));
+                if ($this->can_see_debug_notices()) {
+                    $logger->pushHandler($notice_logger);
+                } else {
+                    $logger->pushHandler(new FilterHandler($notice_logger, LogLevel::ERROR));
+                }
+                $logger->pushHandler(new PsrHandler($this->get_logger($this)));
+                $this->service_logger = $logger;
             } else {
                 $this->service_logger = $this->get_logger($this);
             }
