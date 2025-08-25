@@ -9,10 +9,8 @@ use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 class TrackerData implements Hookable
 {
     use TrackerOption;
-    /**
-     * @var string
-     */
-    private $method_id;
+    private string $method_id;
+    private string $tracker_name;
     /**
      * @param string $method_id
      * @param string $tracker_name

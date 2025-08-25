@@ -110,5 +110,5 @@
 			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
 	},
-	"version": "3.1.1"
+	"version": "3.2.0"
 }

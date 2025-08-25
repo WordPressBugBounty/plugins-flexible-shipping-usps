@@ -16,7 +16,6 @@ use FlexibleShippingUspsVendor\Psr\Log\LogLevel;
 class DisplayNoticeLogger implements LoggerInterface
 {
     const WC_NOTICE = 'notice';
-    const WC_ERROR = 'error';
     const SERVICE_NAME = 'service_name';
     const DATA = 'data';
     const INSTANCE_ID = 'instance_id';
@@ -51,11 +50,7 @@ class DisplayNoticeLogger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        if (in_array($level, [LogLevel::DEBUG, LogLevel::INFO], \true)) {
-            $this->show($message, $context, self::WC_NOTICE);
-        } else {
-            $this->show($message, $context, self::WC_ERROR);
-        }
+        $this->show($message, $context, self::WC_NOTICE);
     }
     /**
      * Format message.
@@ -126,6 +121,7 @@ class DisplayNoticeLogger implements LoggerInterface
             include __DIR__ . '/view/display-notice-context-single-value.php';
             $dump .= trim(ob_get_clean());
         }
+        $dump .= sprintf('<br/><div><i>%1$s</i></div>', __('This notice is visible only for Administrators.', 'flexible-shipping-usps'));
         $message = trim($message . $dump);
         if (!wc_has_notice($message, $type)) {
             wc_add_notice($message, $type, [self::SERVICE_NAME => $this->service_name, self::INSTANCE_ID => $this->instance_id]);
