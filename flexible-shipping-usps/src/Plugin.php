@@ -80,8 +80,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		parent::__construct( $plugin_info );
 		$this->setLogger( $this->is_debug_mode() ? ( new SimpleLoggerFactory( 'usps' ) )->getLogger()->pushProcessor( new SensitiveDataProcessor(
 			[
-				'USERID="' . $this->get_global_usps_settings()[UspsSettingsDefinition::USER_ID] . '"' => 'USERID="***"',
-				'PASSWORD="' . $this->get_global_usps_settings()[UspsSettingsDefinition::PASSWORD] . '"' => 'PASSWORD="***"',
+				'USERID="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::USER_ID ] . '"'    => 'USERID="***"',
+				'PASSWORD="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::PASSWORD ] . '"' => 'PASSWORD="***"',
 			]
 		) ) : new NullLogger() );
 
@@ -144,7 +144,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		$this->add_hookable(
 			new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Assets(
-				$this->get_plugin_url().'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps'
+				$this->get_plugin_url() . 'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps'
 			)
 		);
 		add_action( 'init', [ $this, 'init_repository_rating' ] );
@@ -228,16 +228,16 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	 */
 	public function init_tracker(): void {
 		(
-			TrackerInitializer::create_from_plugin_info_for_shipping_method(
-				$this->plugin_info,
-				UspsShippingService::UNIQUE_ID,
-				new OctolizeReasonsFactory(
-					'https://octol.io/usps-docs-exit-pop-up',
-					'https://octol.io/usps-support-forum-exit-pop-up',
-					__( 'Flexible Shipping USPS PRO', 'flexible-shipping-usps' ),
-					'https://octol.io/usps-contact-exit-pop-up'
-				)
+		TrackerInitializer::create_from_plugin_info_for_shipping_method(
+			$this->plugin_info,
+			UspsShippingService::UNIQUE_ID,
+			new OctolizeReasonsFactory(
+				'https://octol.io/usps-docs-exit-pop-up',
+				'https://octol.io/usps-support-forum-exit-pop-up',
+				__( 'Flexible Shipping USPS PRO', 'flexible-shipping-usps' ),
+				'https://octol.io/usps-contact-exit-pop-up'
 			)
+		)
 		)->hooks();
 
 		( new Tracker() )->hooks();
@@ -254,25 +254,25 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		$time_tracker = new ShippingMethodGlobalSettingsWatcher( UspsShippingService::UNIQUE_ID );
 		( $time_tracker )->hooks();
 		(
-			new RatingPetitionNotice(
-				$time_tracker,
-				UspsShippingService::UNIQUE_ID,
-				$this->plugin_info->get_plugin_name(),
-				'https://octol.io/rate-usps'
-			)
+		new RatingPetitionNotice(
+			$time_tracker,
+			UspsShippingService::UNIQUE_ID,
+			$this->plugin_info->get_plugin_name(),
+			'https://octol.io/rate-usps'
+		)
 		)->hooks();
 
 		(
-			new TextPetitionDisplayer(
-				'woocommerce_after_settings_shipping',
-				new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), 'flexible_shipping_usps' ),
-				new RepositoryRatingPetitionText(
-					'Flexible Shipping',
-					__( 'Live rates for USPS and WooCommerce', 'flexible-shipping-usps' ),
-					'https://octol.io/rate-usps',
-					'center'
-				)
+		new TextPetitionDisplayer(
+			'woocommerce_after_settings_shipping',
+			new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), 'flexible_shipping_usps' ),
+			new RepositoryRatingPetitionText(
+				'Flexible Shipping',
+				__( 'Live rates for USPS and WooCommerce', 'flexible-shipping-usps' ),
+				'https://octol.io/rate-usps',
+				'center'
 			)
+		)
 		)->hooks();
 	}
 

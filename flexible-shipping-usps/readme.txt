@@ -4,7 +4,7 @@ Contributors: octolize,grola,sebastianpisula
 Tags: usps rates, usps, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
 Tested up to: 6.8
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,6 +14,8 @@ Offer USPS shipping methods with real-time rates. Show dynamic prices at WooComm
 == Description ==
 
 = The best free plugin to display the USPS live rates =
+
+[https://www.youtube.com/watch?v=jpSO6suEZaQ]
 
 Use this free USPS WooCommerce Live Rates plugin to offer your customers the USPS shipping options for domestic and international shipping. Don't waste your time, enter your USPS credentials and set everything up in your shop effortlessy in just 5 minutes! Show your clients the USPS shipping services with their dynamically calculated real prices in the cart and checkout. One the USPS API connection is established, the shipping cost for each USPS service is calculated real-time based on the products' weight, shop location and delivery destination.
 
@@ -130,6 +132,9 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.2.1 - 2025-09-25 =
+* Added description in shipping method settings
 
 = 3.2.0 - 2025-08-25 =
 * Changed the notice type in debug mode
