@@ -1,10 +1,10 @@
 === Shipping Live Rates for USPS for WooCommerce ===
 
 Contributors: octolize,grola,sebastianpisula
-Tags: usps rates, usps, usps shipping, usps woocommerce, usps live rates
+Tags: usps, usps rates, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
-Tested up to: 6.8
-Stable tag: 3.2.1
+Tested up to: 6.9
+Stable tag: 3.2.5
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -13,14 +13,16 @@ Offer USPS shipping methods with real-time rates. Show dynamic prices at WooComm
 
 == Description ==
 
-= The best free plugin to display the USPS live rates =
+= The best free plugin to display the USPS live rates in your WooCommerce store =
 
-[https://www.youtube.com/watch?v=jpSO6suEZaQ]
+Use this free USPS Live Rates plugin for WooCommerce to offer your customers the USPS shipping options for domestic and international shipping. Save time: enter your USPS credentials and set everything up in your shop effortlessly in just 5 minutes
 
-Use this free USPS WooCommerce Live Rates plugin to offer your customers the USPS shipping options for domestic and international shipping. Don't waste your time, enter your USPS credentials and set everything up in your shop effortlessy in just 5 minutes! Show your clients the USPS shipping services with their dynamically calculated real prices in the cart and checkout. One the USPS API connection is established, the shipping cost for each USPS service is calculated real-time based on the products' weight, shop location and delivery destination.
+[youtube https://www.youtube.com/watch?v=jpSO6suEZaQ]
 
-> **Upgrade to USPS WooCommerce Live Rates PRO**<br />
-> Get the priority e-mail support and the access to all advanced PRO features - upgrade to [USPS WooCommerce Live Rates PRO now &rarr;](https://octol.io/usps-repo-upgrade)
+A connection with the USPS API allows you to display real-time prices based on the products’ weight, shop location, and delivery destination.
+
+**Upgrade to USPS WooCommerce Live Rates PRO**
+Get the priority e-mail support and the access to all advanced PRO features – upgrade to [USPS WooCommerce Live Rates PRO now →](https://octol.io/usps-repo-upgrade)
 
 = Fully compatible with the latest USPS API =
 
@@ -29,25 +31,25 @@ This plugin works seamlessly with the current USPS API platform, ensuring uninte
 = Features =
 
 * Automatic shipping costs calculation and displaying the USPS live rates in the cart and checkout
-* Domestic and international USPS services' support
-* USPS services' shipping cost calculation based on the cart weight and the shipping destination
+* Domestic and international USPS services’ support
+* USPS services’ shipping cost calculation based on the cart weight and the shipping destination
 * USPS Commercial Pricing support
-* Limiting services only for those available for the customer's address
-* Manual USPS services limiting and possibility to choose which services should be displayed and which not
+* Limiting services only to those available for the customer’s address
+* Manual USPS services limiting and the possibility to choose which services should be displayed
 * Possibility to set the fixed fallback amount in case no USPS rates were returned
-* Free shipping over amount threshold
-* Possibility to add the shipment insurance
+* Free shipping over the amount threshold
+* Possibility to add shipment insurance
 * Dedicated debug mode for easy troubleshooting
 
 = PRO Features =
 
 * Automatic multiple products box packing algorithm based on their weight and volume
-* Possibility to define the custom boxes used for shipping and specify their size, weight and padding
+* Possibility to define custom boxes used for shipping and specify their size, weight, and padding
 * Fixed and percentage handling fees or discounts for USPS rates
-* Custom Origin allowing to use the different shipper's address than the default defined in the WooCommerce settings
+* Custom Origin allowing to use the different shipper’s address than the default defined in the WooCommerce settings
 * Multi-currency support
 
-[Upgrade to PRO now &rarr;](https://octol.io/usps-repo-upgrade)
+[Upgrade to PRO now →](https://octol.io/usps-repo-upgrade)
 
 = Available Domestic USPS Services =
 
@@ -71,15 +73,17 @@ This plugin works seamlessly with the current USPS API platform, ensuring uninte
 
 = Actively developed and supported =
 
-The USPS WooCommerce Live Rates plugin is constantly being developed by Octolize. Our plugins are used by over **250.000 WooCommerce stores worldwide**. Over the years we proved to have become not only the authors of stable and high-quality plugins, but also as a team providing excellent technical support. Join the community of our satisfied plugins' users. Bet on quality and let our plugins do the rest.
+Over **250.000 WooCommerce stores worldwide** use our plugins. We constantly develop them, earning the reputation of authors of stable and high-quality solutions. We are also praised for providing excellent technical support. Join the community of our satisfied plugin users: bet on quality, and let our plugins do the rest.
 
-= Power of Table Rate =
+= The power of Table Rate =
 
-The USPS WooCommerce Live Rates plugin is now compatible with [Flexible Shipping](https://wordpress.org/plugins/flexible-shipping/) - the most powerful Table Rate shipping plugin for WooCommerce. This provides greater control over delivery costs and allows you to take advantage of both live rates and condition-based shipping costs. You can now combine rates returned by USPS WooCommerce Live Rates with cost calculated based on price and weight. Moreover, when using [Flexible Shipping PRO](https://octol.io/fs-repo-up), you get access to 15+ conditions, such as shipping class or product categories. Try for free with [Flexible Shipping](https://wordpress.org/plugins/flexible-shipping/)!
+The USPS Live Rates plugin for WooCommerce is now compatible with [Flexible Shipping](https://wordpress.org/plugins/flexible-shipping/) – the most powerful Table Rate shipping plugin for WooCommerce. This provides greater control over delivery costs and allows you to take advantage of both live rates and condition-based shipping costs.
+
+You can now combine the prices from the USPS Live Rates plugin with costs calculated based on price and weight.  Moreover, when using [Flexible Shipping PRO](https://octol.io/fs-repo-up), you get access to **15+ conditions**, such as shipping class or product categories. Try for free with [Flexible Shipping](https://wordpress.org/plugins/flexible-shipping/)
 
 = Conditional Shipping Methods =
 
-Extend the default functionalities and **conditionally display or hide the USPS shipping methods** in your WooCommerce store with Conditional Shipping Methods plugin. Define the rules when the specific shipping methods should be available to pick by your customers and when not to.
+Extend the default functionalities and **conditionally display or hide the USPS shipping methods** in your WooCommerce store with the Conditional Shipping Methods plugin. Define the rules when the specific shipping methods should be available to pick by your customers and when not to.
 
 Hide the USPS shipping methods based on numerous conditions:
 
@@ -88,23 +92,23 @@ Hide the USPS shipping methods based on numerous conditions:
 * Destination & Time (Day of the week, Time of the day, Location)
 * Other shipping methods and shipping methods with zero cost.
 
-[Buy Conditional Shipping Methods now &rarr;](https://octol.io/csm-repo-usps)
+[Buy Conditional Shipping Methods now →](https://octol.io/csm-repo-usps)
 
 = Docs =
 
-View the dedicated [USPS WooCommerce Live Rates documentation &rarr;](https://octol.io/usps-repo-docs)
+View the dedicated [USPS WooCommerce Live Rates documentation →](https://octol.io/usps-repo-docs)
 
 = Why should you choose our USPS WooCommerce Live Rates plugin as a shipping integration in your shop? =
 
-Our USPS for WooCommerce plugin is a free USPS integration allowing to display live rates for USPS services in your shop. It combines the powerful and useful features with USPS quality and reliability as a world-known trademark. Trust our experience and move your business forward with our latest plugin!
+Our USPS for WooCommerce plugin is a free USPS integration that allows you to display live rates for USPS services in your shop. It combines the powerful and useful features with USPS quality and reliability as a world-renowned trademark. Trust our experience and move your business forward with our latest plugin
 
 = Interested in plugin translations? =
 
-We are actively looking for contributors to translate this and [other Octolize plugins](https://profiles.wordpress.org/octolize/#content-plugins). Each supported language tremendously help store owners to conveniently manage shipping operations.
+We are actively looking for contributors to translate this and [other Octolize plugins](https://profiles.wordpress.org/octolize/#content-plugins). Each supported language tremendously helps store owners to conveniently manage shipping operations.
 
-Your translations contribute to the WordPress community at large. Moreover, we're glad to offer you discounts for our PRO plugins and establish long-term collaboration. If you have any translation related questions, please email us at [translations@octolize.com](mailto:translations@octolize.com).
+Your translations contribute to the WordPress community at large. Moreover, **we’re glad to offer you discounts** for our PRO plugins and establish long-term collaboration. If you have any translation-related questions, please email us at translations@octolize.com.
 
-Head over here and help us to translate this plugin:
+Head over here and help us translate this plugin:
 [https://translate.wordpress.org/projects/wp-plugins/flexible-shipping-usps/](https://translate.wordpress.org/projects/wp-plugins/flexible-shipping-usps/)
 
 == Installation	 ==
@@ -132,6 +136,18 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.2.5 - 2026-01-20 =
+* Added support for WooCommerce 10.5
+
+= 3.2.4 - 2025-12-02 =
+* Added support for WordPress 6.9
+
+= 3.2.3 - 2025-11-25 =
+* Added support for WooCommerce 10.4
+
+= 3.2.2 - 2025-10-06 =
+* Added support for WooCommerce 10.3
 
 = 3.2.1 - 2025-09-25 =
 * Added description in shipping method settings

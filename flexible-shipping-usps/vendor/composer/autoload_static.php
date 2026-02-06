@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInitFsUsps
 {
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WPDesk\\FlexibleShippingUsps\\' => 28,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'WPDesk\\FlexibleShippingUsps\\' => 
+        'WPDesk\\FlexibleShippingUsps\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
