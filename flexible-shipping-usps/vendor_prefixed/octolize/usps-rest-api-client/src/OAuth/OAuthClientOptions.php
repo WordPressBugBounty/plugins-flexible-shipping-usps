@@ -50,4 +50,8 @@ class OAuthClientOptions implements ApiClientOptions, LoggerAwareInterface
     {
         return ContentSerializer::class;
     }
+    public function getRequestOptions(): array
+    {
+        return [];
+    }
 }

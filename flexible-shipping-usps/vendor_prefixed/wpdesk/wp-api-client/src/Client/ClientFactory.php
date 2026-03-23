@@ -16,7 +16,7 @@ class ClientFactory
         $httpClientFactory = new HttpClientFactory();
         $serializerFactory = new SerializerFactory();
         $className = $options->getApiClientClass();
-        $client = new $className($httpClientFactory->createClient($options), $serializerFactory->createSerializer($options), $options->getLogger(), $options->getApiUrl(), $options->getDefaultRequestHeaders(), $options instanceof ApiClientOptionsTimeout ? $options->getTimeout() : null);
+        $client = new $className($httpClientFactory->createClient($options), $serializerFactory->createSerializer($options), $options->getLogger(), $options->getApiUrl(), $options->getDefaultRequestHeaders(), $options instanceof ApiClientOptionsTimeout ? $options->getTimeout() : null, $options->getRequestOptions());
         if ($options->isCachedClient()) {
             $client = new CachedClient($client, new WordpressCache());
         }

@@ -51,4 +51,8 @@ class InternationalPricesClientOptions implements ApiClientOptions, LoggerAwareI
     {
         return JsonContentSerializer::class;
     }
+    public function getRequestOptions(): array
+    {
+        return [];
+    }
 }

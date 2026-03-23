@@ -26,10 +26,10 @@ class ClientImplementation implements Client, LoggerAwareInterface
     private $apiUrl;
     /** @var array */
     private $defaultRequestHeaders;
-    /** @var int */
-    private $timeout;
     /** @var bool */
     private $is_logger_available = \false;
+    private $requestOptions;
+    private $timeout;
     /**
      * Client constructor.
      * @param HttpClient $client
@@ -39,14 +39,15 @@ class ClientImplementation implements Client, LoggerAwareInterface
      * @param array $defaultRequestHeaders
      * @param int $timeout
      */
-    public function __construct(HttpClient $client, Serializer $serializer, LoggerInterface $logger, $apiUri, array $defaultRequestHeaders, $timeout = 10)
+    public function __construct(HttpClient $client, Serializer $serializer, LoggerInterface $logger, $apiUri, array $defaultRequestHeaders, ?int $timeout, array $requestOptions)
     {
+        $this->timeout = $timeout;
+        $this->requestOptions = $requestOptions;
         $this->client = $client;
         $this->serializer = $serializer;
         $this->logger = $logger;
         $this->apiUrl = $apiUri;
         $this->defaultRequestHeaders = $defaultRequestHeaders;
-        $this->timeout = $timeout;
         $this->is_logger_available = !$logger instanceof NullLogger;
     }
     /**
@@ -62,7 +63,7 @@ class ClientImplementation implements Client, LoggerAwareInterface
             $this->logger->debug("Sends request with METHOD: {$request->getMethod()}; to ENDPOINT {$request->getEndpoint()}", $this->getLoggerContext());
         }
         try {
-            $httpResponse = $this->client->send($fullUrl = $this->prepareFullUrl($request), $method = $request->getMethod(), $body = $this->prepareRequestBody($request), $headers = $this->prepareRequestHeaders($request), $this->timeout);
+            $httpResponse = $this->client->send($fullUrl = $this->prepareFullUrl($request), $method = $request->getMethod(), $body = $this->prepareRequestBody($request), $headers = $this->prepareRequestHeaders($request), $this->timeout, $this->requestOptions);
             if ($this->is_logger_available) {
                 $this->logger->debug("Sent request with: URL: {$fullUrl};\n METHOD: {$method};\n BODY: {$body};\n" . "HEADERS: " . json_encode($headers) . "\n\n and got response as CODE: {$httpResponse->getResponseCode()};\n" . "with RESPONSE BODY {$httpResponse->getBody()}", $this->getLoggerContext());
             }

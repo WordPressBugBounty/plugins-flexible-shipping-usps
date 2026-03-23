@@ -27,4 +27,5 @@ interface ApiClientOptions extends HttpClientOptions, SerializerOptions
      * @return string
      */
     public function getApiClientClass();
+    public function getRequestOptions(): array;
 }

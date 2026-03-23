@@ -24,9 +24,9 @@ class CurlClient implements HttpClient
      * @return HttpClientResponse
      * @throws HttpClientRequestException
      */
-    public function get($url, $body, array $headers, $timeOut)
+    public function get($url, $body, array $headers, $timeOut, array $requestOptions = [])
     {
-        return $this->send($url, 'GET', $body, $headers, $timeOut);
+        return $this->send($url, 'GET', $body, $headers, $timeOut, $requestOptions);
     }
     /**
      * @param string $url
@@ -38,11 +38,11 @@ class CurlClient implements HttpClient
      * @return HttpClientResponse
      * @throws HttpClientRequestException
      */
-    public function send($url, $method, $body, array $headers, $timeOut)
+    public function send($url, $method, $body, array $headers, $timeOut, array $requestOptions = [])
     {
         $this->initResource();
         try {
-            $this->prepareConnection($url, $method, $body, $headers, $timeOut);
+            $this->prepareConnection($url, $method, $body, $headers, $timeOut, $requestOptions);
             $this->sendRequest();
             $this->throwExceptionIfError();
             $this->closeConnection();
@@ -68,7 +68,7 @@ class CurlClient implements HttpClient
      * @param array  $headers The request headers.
      * @param int    $timeOut The timeout in seconds for the request.
      */
-    private function prepareConnection($url, $method, $body, array $headers, $timeOut)
+    private function prepareConnection($url, $method, $body, array $headers, $timeOut, array $requestOptions)
     {
         $options = [
             \CURLOPT_CUSTOMREQUEST => $method,
@@ -88,6 +88,7 @@ class CurlClient implements HttpClient
                 return $len;
             },
         ];
+        $options = $options + $requestOptions;
         if (!empty($body)) {
             $options[\CURLOPT_POSTFIELDS] = $body;
         }
@@ -163,9 +164,9 @@ class CurlClient implements HttpClient
      * @return HttpClientResponse
      * @throws HttpClientRequestException
      */
-    public function post($url, $body, array $headers, $timeOut)
+    public function post($url, $body, array $headers, $timeOut, array $requestOptions = [])
     {
-        return $this->send($url, 'POST', $body, $headers, $timeOut);
+        return $this->send($url, 'POST', $body, $headers, $timeOut, $requestOptions);
     }
     /**
      * @param string $url
@@ -176,9 +177,9 @@ class CurlClient implements HttpClient
      * @return HttpClientResponse
      * @throws HttpClientRequestException
      */
-    public function delete($url, $body, array $headers, $timeOut)
+    public function delete($url, $body, array $headers, $timeOut, array $requestOptions = [])
     {
-        return $this->send($url, 'DELETE', $body, $headers, $timeOut);
+        return $this->send($url, 'DELETE', $body, $headers, $timeOut, $requestOptions);
     }
     /**
      * @param string $url
@@ -189,8 +190,8 @@ class CurlClient implements HttpClient
      * @return HttpClientResponse
      * @throws HttpClientRequestException
      */
-    public function put($url, $body, array $headers, $timeOut)
+    public function put($url, $body, array $headers, $timeOut, array $requestOptions = [])
     {
-        return $this->send($url, 'PUT', $body, $headers, $timeOut);
+        return $this->send($url, 'PUT', $body, $headers, $timeOut, $requestOptions);
     }
 }

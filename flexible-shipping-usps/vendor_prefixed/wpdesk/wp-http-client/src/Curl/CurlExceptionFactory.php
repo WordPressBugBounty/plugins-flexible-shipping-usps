@@ -30,7 +30,7 @@ class CurlExceptionFactory
      * @param \Exception|null $prev
      * @return CurlException
      */
-    public static function createDefaultException($code, $message, \Exception $prev = null)
+    public static function createDefaultException($code, $message, ?\Exception $prev = null)
     {
         return new CurlException('Default exception: ' . $message, $code, $prev);
     }

@@ -162,13 +162,14 @@ class RateShipmentRestApi implements LoggerAwareInterface
             $api_rates = $api_rates_for_package['rates'];
             $include_extra_services = $api_rates_for_package['extra_services'];
             foreach ($api_rates['rateOptions'] as $api_rate) {
-                $sku = $api_rate['rates'][0]['SKU'];
-                $price = (float) $api_rate['rates'][0]['price'] + $this->get_extra_services_price($api_rate['extraServices'], $include_extra_services);
-                $description = $api_rate['rates'][0]['description'];
+                $rate_data = $api_rate['rates'][0];
+                $sku = $rate_data['SKU'];
+                $price = (float) $rate_data['price'] + $this->get_rate_fees_price($rate_data['fees'] ?? []) + $this->get_extra_services_price($api_rate['extraServices'] ?? [], $include_extra_services);
+                $description = $rate_data['description'];
                 $service_id = $sku . '-' . $description;
                 if (!isset($merged_rates[$service_id])) {
                     $rate = new SingleRate();
-                    $rate->service_name = $api_rate['rates'][0]['productName'] === '' ? $api_rate['rates'][0]['description'] : $api_rate['rates'][0]['productName'];
+                    $rate->service_name = $rate_data['productName'] === '' ? $rate_data['description'] : $rate_data['productName'];
                     $rate->service_type = $this->service_type_from_sku($sku);
                     $rate->total_charge = new Money();
                     $rate->total_charge->amount = $price;
@@ -181,6 +182,14 @@ class RateShipmentRestApi implements LoggerAwareInterface
             }
         }
         return $this->get_complete_rates($merged_rates, count($api_rates_per_package));
+    }
+    private function get_rate_fees_price(array $fees): float
+    {
+        $price = 0.0;
+        foreach ($fees as $fee) {
+            $price += (float) ($fee['price'] ?? 0);
+        }
+        return $price;
     }
     private function get_extra_services_price(array $extra_services, array $include_extra_services): float
     {

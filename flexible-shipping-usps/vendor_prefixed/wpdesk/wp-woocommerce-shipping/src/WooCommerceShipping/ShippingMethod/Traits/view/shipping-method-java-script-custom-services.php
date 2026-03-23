@@ -41,6 +41,13 @@
                     jQuery(status_field).removeClass('wpdesk_wc_shipping_api_status_ok');
                     jQuery(status_field).removeClass('wpdesk_wc_shipping_api_status_error');
                     jQuery(status_field).addClass(data.class_name);
+
+                    document.dispatchEvent(
+                        new CustomEvent(
+                            'wpdesk_wc_shipping_api_status',
+                            {detail:{shipping_service_id:shipping_service_id,...data}}
+                        )
+                    );
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     jQuery(status_field).html(thrownError);

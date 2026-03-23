@@ -3,8 +3,8 @@
 Contributors: octolize,grola,sebastianpisula
 Tags: usps, usps rates, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
-Tested up to: 6.9
-Stable tag: 3.2.6
+Tested up to: 7.0
+Stable tag: 3.3.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -136,6 +136,10 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.3.0 - 2026-03-23 =
+* Added support for WordPress 7.0
+* Fixed missing fees in USPS rates pricing
 
 = 3.2.6 - 2026-02-24 =
 * Added support for WooCommerce 10.6

@@ -54,4 +54,8 @@ class DomesticPricesClientOptions implements ApiClientOptions, LoggerAwareInterf
     {
         return JsonContentSerializer::class;
     }
+    public function getRequestOptions(): array
+    {
+        return [];
+    }
 }
