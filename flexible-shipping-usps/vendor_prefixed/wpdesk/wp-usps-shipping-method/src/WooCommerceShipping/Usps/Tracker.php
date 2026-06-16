@@ -11,6 +11,7 @@ use WC_Shipping_Zones;
 use WP_Screen;
 use FlexibleShippingUspsVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 use FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSettingsDefinition;
+use FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSkuComponents;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\FreeShipping\FreeShippingFields;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\ShippingMethod;
 /**
@@ -46,7 +47,7 @@ class Tracker implements Hookable
         } else {
             $origin_country = 'not set';
         }
-        $plugin_data = ['custom_origin' => $flexible_shipping_usps->get_option(UspsSettingsDefinition::CUSTOM_ORIGIN, self::OPTION_VALUE_NO), 'api_type' => $flexible_shipping_usps->get_option(UspsSettingsDefinition::API_TYPE, UspsSettingsDefinition::API_TYPE_WEB), 'shipping_methods' => 0, 'custom_services' => 0, 'insurance_option' => 0, 'fallback' => 0, 'free_shipping' => 0, 'access_point' => 0, 'access_point_only' => 0, 'origin_country' => $origin_country, 'shipping_zones' => []];
+        $plugin_data = ['custom_origin' => $flexible_shipping_usps->get_option(UspsSettingsDefinition::CUSTOM_ORIGIN, self::OPTION_VALUE_NO), 'api_type' => $flexible_shipping_usps->get_option(UspsSettingsDefinition::API_TYPE, UspsSettingsDefinition::API_TYPE_WEB), 'shipping_methods' => 0, 'custom_services' => 0, 'insurance_option' => 0, 'fallback' => 0, 'free_shipping' => 0, 'sku_service_type' => [], 'sku_service_sub_type' => [], 'sku_shape' => [], 'sku_delivery_type' => [], 'sku_settings' => [], 'access_point' => 0, 'access_point_only' => 0, 'origin_country' => $origin_country, 'shipping_zones' => []];
         return $plugin_data;
     }
     /**
@@ -65,6 +66,9 @@ class Tracker implements Hookable
         if (self::OPTION_VALUE_YES === $shipping_method->get_instance_option('custom_services', self::OPTION_VALUE_NO)) {
             $plugin_data['custom_services']++;
         }
+        if ($this->is_rest_api_enabled($shipping_method)) {
+            $plugin_data = $this->append_sku_settings($plugin_data, $shipping_method);
+        }
         if (self::OPTION_VALUE_YES === $shipping_method->get_instance_option(UspsSettingsDefinition::INSURANCE, self::OPTION_VALUE_NO)) {
             $plugin_data['insurance_option']++;
         }
@@ -76,6 +80,77 @@ class Tracker implements Hookable
             $plugin_data['free_shipping']++;
         }
         return $plugin_data;
+    }
+    /**
+     * Append REST API SKU settings counts.
+     *
+     * @param array              $plugin_data Plugin data.
+     * @param UspsShippingMethod $shipping_method Shipping method.
+     *
+     * @return array
+     */
+    private function append_sku_settings(array $plugin_data, UspsShippingMethod $shipping_method): array
+    {
+        $sku_components = new UspsSkuComponents();
+        $sku_settings = [UspsSettingsDefinition::SKU_SERVICE_TYPE => $this->get_setting_values($shipping_method->get_instance_option(UspsSettingsDefinition::SKU_SERVICE_TYPE, []), $sku_components->get_default_service_types()), UspsSettingsDefinition::SKU_SERVICE_SUB_TYPE => $this->get_setting_values($shipping_method->get_instance_option(UspsSettingsDefinition::SKU_SERVICE_SUB_TYPE, []), $sku_components->get_default_service_sub_types()), UspsSettingsDefinition::SKU_SHAPE => $this->get_setting_values($shipping_method->get_instance_option(UspsSettingsDefinition::SKU_SHAPE, []), $sku_components->get_default_shapes()), UspsSettingsDefinition::SKU_DELIVERY_TYPE => $this->get_setting_values($shipping_method->get_instance_option(UspsSettingsDefinition::SKU_DELIVERY_TYPE, []), $sku_components->get_default_delivery_types())];
+        $plugin_data['sku_service_type'] = $this->append_setting_values($plugin_data['sku_service_type'], $sku_settings[UspsSettingsDefinition::SKU_SERVICE_TYPE]);
+        $plugin_data['sku_service_sub_type'] = $this->append_setting_values($plugin_data['sku_service_sub_type'], $sku_settings[UspsSettingsDefinition::SKU_SERVICE_SUB_TYPE]);
+        $plugin_data['sku_shape'] = $this->append_setting_values($plugin_data['sku_shape'], $sku_settings[UspsSettingsDefinition::SKU_SHAPE]);
+        $plugin_data['sku_delivery_type'] = $this->append_setting_values($plugin_data['sku_delivery_type'], $sku_settings[UspsSettingsDefinition::SKU_DELIVERY_TYPE]);
+        $plugin_data['sku_settings'][] = $sku_settings;
+        return $plugin_data;
+    }
+    /**
+     * Append setting values counts.
+     *
+     * @param array $values_counts Setting values counts.
+     * @param array $values Setting values.
+     *
+     * @return array
+     */
+    private function append_setting_values(array $values_counts, array $values): array
+    {
+        foreach ($values as $setting_value) {
+            if (!isset($values_counts[$setting_value])) {
+                $values_counts[$setting_value] = 0;
+            }
+            $values_counts[$setting_value]++;
+        }
+        return $values_counts;
+    }
+    /**
+     * Get normalized setting values.
+     *
+     * @param mixed $setting_values Setting values from shipping method instance.
+     * @param array $default_values Default values used by REST API.
+     *
+     * @return array
+     */
+    private function get_setting_values($setting_values, array $default_values): array
+    {
+        if (!is_array($setting_values) || empty($setting_values)) {
+            $setting_values = $default_values;
+        }
+        $values = [];
+        foreach ($setting_values as $setting_value) {
+            if (!is_scalar($setting_value)) {
+                continue;
+            }
+            $values[] = (string) $setting_value;
+        }
+        sort($values);
+        return array_values(array_unique($values));
+    }
+    /**
+     * Checks if REST API is enabled.
+     *
+     * @param UspsShippingMethod $shipping_method Shipping method.
+     *
+     * @return bool
+     */
+    private function is_rest_api_enabled(UspsShippingMethod $shipping_method): bool
+    {
+        return UspsSettingsDefinition::API_TYPE_REST === $shipping_method->get_option(UspsSettingsDefinition::API_TYPE, UspsSettingsDefinition::API_TYPE_WEB);
     }
     /**
      * Add plugin data tracker.

@@ -4,6 +4,10 @@ namespace FlexibleShippingUspsVendor\WPDesk\UspsShippingService;
 
 class UspsSkuComponents
 {
+    private const DEFAULT_SERVICE_TYPES = ['U', 'P', 'E'];
+    private const DEFAULT_SERVICE_SUB_TYPES = ['X', 'F', 'U'];
+    private const DEFAULT_SHAPES = ['X', 'P', 'B', 'E', 'R'];
+    private const DEFAULT_DELIVERY_TYPES = ['X'];
     public function get_service_types(): array
     {
         return ['P' => __('Priority Mail', 'flexible-shipping-usps'), 'E' => __('Priority Mail Express', 'flexible-shipping-usps'), 'M' => __('Media', 'flexible-shipping-usps'), 'F' => __('First-Class Mail', 'flexible-shipping-usps'), 'U' => __('USPS Ground Advantage*', 'flexible-shipping-usps'), 'L' => __('Library', 'flexible-shipping-usps')];
@@ -19,6 +23,22 @@ class UspsSkuComponents
     public function get_delivery_types(): array
     {
         return ['X' => __('None', 'flexible-shipping-usps'), 'H' => __('Hold for Pickup', 'flexible-shipping-usps'), 'S' => __('Sunday/Holiday', 'flexible-shipping-usps'), 'R' => __('Return', 'flexible-shipping-usps')];
+    }
+    public function get_default_service_types(): array
+    {
+        return self::DEFAULT_SERVICE_TYPES;
+    }
+    public function get_default_service_sub_types(): array
+    {
+        return self::DEFAULT_SERVICE_SUB_TYPES;
+    }
+    public function get_default_shapes(): array
+    {
+        return self::DEFAULT_SHAPES;
+    }
+    public function get_default_delivery_types(): array
+    {
+        return self::DEFAULT_DELIVERY_TYPES;
     }
     public function add_codes_to_labels(array $array): array
     {

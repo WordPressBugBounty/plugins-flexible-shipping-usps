@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Shipping Live Rates for USPS for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.3.4\n"
+"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping-usps\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-08T23:10:59+00:00\n"
+"POT-Creation-Date: 2026-06-16T11:07:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-shipping-usps\n"
@@ -257,232 +257,244 @@ msgid ""
 "Extensions"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/Plugin.php:122
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/Plugin.php:160
 msgid "Buy bundle →"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/Plugin.php:122
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/Plugin.php:160
 msgid "Buy plugin →"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:20
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:25
 msgid "Flexible Shipping PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:20
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:25
 msgid "The best and the most powerful Table Rate shipping plugin for WooCommerce. Define the shipping rules based on numerous conditions and configure even the most complex shipping scenarios with ease."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:23
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:29
+msgid "Shipping Analytics PRO"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:29
+msgid "Get actionable recommendations based on real checkout issues, missing rates, abandoned carts, and shipping configuration gaps. Be the first to try it out!"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:29
+msgid "Get early access →"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:30
 msgid "All Plugins Bundle"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:23
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:30
 msgid "Grab a pack of all Octolize plugins as a cut-price tailor-made limited offer for developers, agencies and freelancers. Move the WooCommerce shipping to a whole new level. No strings attached, each plugin's 25‑sites subscription included."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:26
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:33
 msgid "Complete UPS Integration Bundle"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:26
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:33
 msgid "Connect your WooCommerce store with your UPS account, offer your customers real-time shipping rates and generate printable shipping labels for each placed order."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:29
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:36
 msgid "Advanced DPD UK Integration Bundle"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:29
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:36
 msgid "Integrate your WooCommerce store with your DPD UK account, customize the UK locations and automate the whole order processing including generating and printing the shipping labels."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:32
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:39
 msgid "Flexible Shipping Bundle"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:32
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:39
 msgid "Fully customize the shipping cost in your shop, define its calculation rules based on numerous conditions, hide and display the shipping methods and divide orders into separate packages."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:35
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:42
 msgid "Live Rates Bundle"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:35
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:42
 msgid "Serve your customers the UPS, FedEx, DHL Express or USPS shipping methods with automatically calculated rates and use multiple conditions to display them according to your terms and needs."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:38
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:45
 msgid "UPS Live Rates and Access Points PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:38
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:45
 msgid "WooCommerce UPS integration packed with many advanced features. Display the dynamically calculated live rates for UPS shipping methods and adjust them to your needs."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:41
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:48
 msgid "FedEx WooCommerce Live Rates PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:41
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:48
 msgid "Enable the FedEx live rates for international delivery and integrate it with your shop in less than 5 minutes. Save your time and money – let the shipping cost be calculated automatically."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:44
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:51
 msgid "USPS Live Rates PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:44
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:51
 msgid "Serve your customers the automatically and real-time calculated USPS shipping rates. Add the handling fees, insurance and adjust them to your needs with just a few clicks."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:47
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:54
 msgid "Flexible Shipping Import / Export"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:47
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:54
 msgid "Use the CSV files to import or export your shipping methods. Edit, update, move or backup the ready configurations and shipping scenarios."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:50
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:57
 msgid "Flexible Shipping Locations"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:50
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:57
 msgid "Calculate the shipping cost based on location. Define your own custom locations, use the WooCommerce defaults or the ones created by 3rd party plugins."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:53
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:60
 msgid "Distance Based Shipping Rates"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:53
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:60
 msgid "Offer shipping rates based on Distance or Total Travel Time calculated by Google Distance Matrix API and don't overpay for shipping."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:56
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:63
 msgid "Pickup Points PRO WooCommerce Plugin"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:56
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:63
 msgid "Provide your customers with multiple carriers' pickup points at the checkout and let them choose the preferred one to collect their order from."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:59
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:66
 msgid "Shipping Cost on Product Page PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:59
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:66
 msgid "Let your customers calculate and see the shipping cost on product pages based on the entered shipping destination and cart contents. Decide how and when exactly you want the shipping cost calculator to display."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:62
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:69
 msgid "Flexible Shipping Box Packing"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:62
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:69
 msgid "Use the advanced box packing WooCommerce algorithm to fit the ordered products into your shipping boxes the most optimal way. Configure the shipping cost based on the type and number of the used shipping boxes."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:65
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:72
 msgid "Shipping Packages"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:65
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:72
 msgid "Split the WooCommerce cart content into multiple packages based on various conditions like shipping class."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:68
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:75
 msgid "Multi Vendor Shipping"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:68
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:75
 msgid "Define precisely the shipping cost calculation rules for each Vendor / Product Author in your marketplace or multivendor store."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:71
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:78
 msgid "Delivery Date Picker"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:71
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:78
 msgid "Let your customers choose a convenient delivery date for the ordered products and make the shipping cost dependent on the date they choose."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:74
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:81
 msgid "DPD UK & DPD Local"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:74
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:81
 msgid "Ship your DPD orders faster with advanced DPD UK & DPD Local WooCommerce integration. Gather shipping details, download printable shipping labels and track parcels - everything is automated."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:77
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:84
 msgid "Flexible Printing"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:77
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:84
 msgid "Automate your shipping process. Print the shipping labels on thermal printers via PrintNode service. Let the labels be printed automatically the same time the order is placed."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:80
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:87
 msgid "UPS Labels and Tracking"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:80
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:87
 msgid "Create the shipments, generate the printable UPS shipping labels for the placed orders and track the parcels directly from your WooCommerce store."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:83
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:90
 msgid "DHL Express Live Rates PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:83
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:90
 msgid "WooCommerce DHL Express integration packed with many advanced features. Display the dynamically calculated live rates for DHL Express shipping methods and adjust them to your needs."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:86
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:93
 msgid "Canada Post WooCommerce Plugin - Live Rates PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:86
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:93
 msgid "Offer your customers the Canada Post services with real-time calculated shipping rates. Add the handling fees, insurance and adjust them to your needs with just a few clicks."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:89
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:96
 msgid "Royal Mail WooCommerce - Live Rates PRO"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:89
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:96
 msgid "Let your customers choose the Royal Mail shipping methods with the real-time calculated shipping rates. Add the handling fees, insurance and adjust them to your needs in no time."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:92
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:99
 msgid "Conditional Shipping Methods"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:92
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:99
 msgid "Conditionally display and hide the shipping methods in your WooCommerce store. Define the rules when the specific shipping methods, e.g., live rates should be available to pick and when not to."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:117
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:128
 #: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/views/html-shipping-extensions-page.php:32
 msgid "All"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:117
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:128
 msgid "Bundles"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:117
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:128
 msgid "Live Rates"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:117
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:128
 msgid "Customizable Rates"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:117
+#: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:128
 msgid "Shipping Labels"
 msgstr ""
 
@@ -567,7 +579,7 @@ msgid "First-Class Package Service - Retail"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php:20
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "Priority Mail"
 msgstr ""
 
@@ -576,7 +588,7 @@ msgid "Priority Mail Express; Hold For Pickup"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsServices.php:20
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "Priority Mail Express"
 msgstr ""
 
@@ -1170,206 +1182,206 @@ msgstr ""
 msgid "USPS integration"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "Media"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "First-Class Mail"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "USPS Ground Advantage*"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:9
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 msgid "Library"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 #: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:25
 #: vendor_prefixed/wpdesk/wp-woocommerce-shipping/src/WooCommerceShipping/CustomFields/FieldHandlingFees.php:33
 msgid "None"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Automation"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Nonautomation"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Carrier Route"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Carrier Route Nonautomation"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Pending Periodicals"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Flat Rate"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "USPS Connect Local"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "USPS Connect Regional"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Irregular"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Share Mail"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Metered"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Machinable"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Nonmachinable"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "USPS Connect Flat Rate"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Presorted"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Automation Disc"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Regional Rate"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Simple Samples"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Permit Reply Mail"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Cubic"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Nonpresorted"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Nonautomation Disc"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:13
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
 msgid "Customized"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Bag"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Box"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Postcards"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Envelope"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Flats or Large Envelope"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Half Tray"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Full Tray"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "EMM Tray"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Tub"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Letters"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "M-Bag"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Balloon"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Oversize"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Parcel or Package"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Keys and IDs"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Dimensional Weight"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Pallet"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Half Pallet Box"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:17
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
 msgid "Full Pallet Box"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:25
 msgid "Hold for Pickup"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:25
 msgid "Sunday/Holiday"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:21
+#: vendor_prefixed/wpdesk/usps-shipping-service/src/UspsShippingService/UspsSkuComponents.php:25
 msgid "Return"
 msgstr ""
 

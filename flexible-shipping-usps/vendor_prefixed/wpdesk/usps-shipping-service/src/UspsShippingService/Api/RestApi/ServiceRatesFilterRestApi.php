@@ -27,10 +27,10 @@ class ServiceRatesFilterRestApi
     public function filter_service_rates(SettingsValues $settings, array $usps_rates): array
     {
         $sku_components = new UspsSkuComponents();
-        $service_type = $settings->get_value(UspsSettingsDefinition::SKU_SERVICE_TYPE, []);
-        $service_sub_type = $settings->get_value(UspsSettingsDefinition::SKU_SERVICE_SUB_TYPE, []);
-        $shape = $settings->get_value(UspsSettingsDefinition::SKU_SHAPE, []);
-        $delivery_type = $settings->get_value(UspsSettingsDefinition::SKU_DELIVERY_TYPE, []);
+        $service_type = $this->get_setting_codes($settings, UspsSettingsDefinition::SKU_SERVICE_TYPE, $sku_components->get_default_service_types());
+        $service_sub_type = $this->get_setting_codes($settings, UspsSettingsDefinition::SKU_SERVICE_SUB_TYPE, $sku_components->get_default_service_sub_types());
+        $shape = $this->get_setting_codes($settings, UspsSettingsDefinition::SKU_SHAPE, $sku_components->get_default_shapes());
+        $delivery_type = $this->get_setting_codes($settings, UspsSettingsDefinition::SKU_DELIVERY_TYPE, $sku_components->get_default_delivery_types());
         $rates = [];
         $context = ['Configuration' => ['Allowed service types' => $sku_components->get_filtered_array_by_codes($sku_components->get_service_types(), $service_type), 'Allowed service sub types' => $sku_components->get_filtered_array_by_codes($sku_components->get_service_sub_types(), $service_sub_type), 'Allowed shapes' => $sku_components->get_filtered_array_by_codes($sku_components->get_shapes(), $shape), 'Allowed delivery types' => $sku_components->get_filtered_array_by_codes($sku_components->get_delivery_types(), $delivery_type)], self::MATCHED_SK_US => [], self::UNMATCHED_SK_US => []];
         foreach ($usps_rates as $usps_single_rate) {
@@ -42,6 +42,14 @@ class ServiceRatesFilterRestApi
         }
         $this->logger->info('SKU matching results', $context);
         return $rates;
+    }
+    private function get_setting_codes(SettingsValues $settings, string $setting_name, array $default_codes): array
+    {
+        $codes = $settings->get_value($setting_name, []);
+        if (!is_array($codes) || empty($codes)) {
+            return $default_codes;
+        }
+        return $codes;
     }
     private function is_service_matched(UspsSkuComponents $sku_components, string $sku, string $service_name, array $service_type, array $service_sub_type, array $shape, array $delivery_type, array &$context): bool
     {
