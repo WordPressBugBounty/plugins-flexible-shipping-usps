@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Shipping Live Rates for USPS for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.4.0\n"
+"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping-usps\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-16T11:07:26+00:00\n"
+"POT-Creation-Date: 2026-07-14T09:33:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-shipping-usps\n"
@@ -64,32 +64,59 @@ msgstr ""
 msgid "Upgrade Now"
 msgstr ""
 
-#: src/Plugin.php:159
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:79
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "Do you consent to sending data to the chat?"
+msgstr ""
+
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:80
+msgid "To start the chat, we need to send your inputs and technical data to the chat service."
+msgstr ""
+
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:81
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "Accept"
+msgstr ""
+
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:82
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "Decline"
+msgstr ""
+
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:86
+msgid "If you don’t want to give consent, you can contact our support using this: "
+msgstr ""
+
+#: src/HookProvider/Admin/DocsChatSettingsProvider.php:87
+msgid "support forum"
+msgstr ""
+
+#: src/Plugin.php:164
 msgid "Service Code"
 msgstr ""
 
-#: src/Plugin.php:216
+#: src/Plugin.php:245
 msgid "We added USPS API Password field"
 msgstr ""
 
-#: src/Plugin.php:217
+#: src/Plugin.php:246
 msgid "On January 31, 2024, USPS will be changing the API used to present live rates to your customers. We have made the necessary improvements to ensure that our plugin is ready for this update. However, in order for USPS live rates to be visible in your checkout, you will need to provide a password in the plugin settings."
 msgstr ""
 
-#: src/Plugin.php:237
+#: src/Plugin.php:266
 msgid "Flexible Shipping USPS PRO"
 msgstr ""
 
-#: src/Plugin.php:271
+#: src/Plugin.php:300
 msgid "Live rates for USPS and WooCommerce"
 msgstr ""
 
-#: src/Plugin.php:324
+#: src/Plugin.php:353
 #: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:188
 msgid "Settings"
 msgstr ""
 
-#: src/Plugin.php:329
+#: src/Plugin.php:358
 msgid "Buy PRO"
 msgstr ""
 
@@ -105,6 +132,56 @@ msgstr ""
 
 #: vendor_prefixed/octolize/usps-rest-api-client/src/ResponseErrorException.php:14
 msgid "Unknown exception!"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:121
+msgid "Hi there! 👋 I’m here to help you set up and use the plugin."
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:121
+msgid ""
+"You can ask me about:\n"
+"- settings and configuration,\n"
+"- common errors and how to fix them,\n"
+"- integrations with other tools.\n"
+"\n"
+"Just tell me what you need help with 🙂"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:129
+msgid "Hi there! 👋"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:132
+msgid "I’m your AI Assistant. I’ll help you quickly configure the plugin and solve any issues."
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:135
+msgid "Type your question to get instant answer.."
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:138
+msgid "AI can make mistakes. Octolize has access to the conversation held in this chat."
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:141
+msgid "New conversation"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "To start the chat, we need to send your inputs and technical data to the chat service. Read more in our Privacy Policy."
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "Privacy Policy"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "If you don’t want to give consent, you can contact our support using this form:"
+msgstr ""
+
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ConsentSettings.php:77
+msgid "Support form"
 msgstr ""
 
 #: vendor_prefixed/octolize/wp-octolize-tracker/src/DeactivationTracker/OctolizeProReasonsFactory.php:22
@@ -334,11 +411,11 @@ msgid "WooCommerce UPS integration packed with many advanced features. Display t
 msgstr ""
 
 #: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:48
-msgid "FedEx WooCommerce Live Rates PRO"
+msgid "FedEx WooCommerce Live Rates PRO<br>(with LTL Freight)"
 msgstr ""
 
 #: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:48
-msgid "Enable the FedEx live rates for international delivery and integrate it with your shop in less than 5 minutes. Save your time and money – let the shipping cost be calculated automatically."
+msgid "Enable the FedEx live rates for international delivery and integrate it with your shop in less than 5 minutes. Save your time and money – let the shipping cost be calculated automatically. Now with LTL Freight support!"
 msgstr ""
 
 #: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:51

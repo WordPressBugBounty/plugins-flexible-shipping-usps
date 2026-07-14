@@ -8,6 +8,7 @@
 namespace WPDesk\FlexibleShippingUsps;
 
 use FlexibleShippingUspsVendor\Octolize\Csat\Csat;
+use FlexibleShippingUspsVendor\Octolize\Docs\Chat\DocsChat;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\MessageFactory\LiveRatesFsRulesTable;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeMessage;
 use FlexibleShippingUspsVendor\Octolize\Onboarding\PluginUpgrade\PluginUpgradeOnboardingFactory;
@@ -27,6 +28,9 @@ use FlexibleShippingUspsVendor\WPDesk\RepositoryRating\RatingPetitionNotice;
 use FlexibleShippingUspsVendor\WPDesk\RepositoryRating\RepositoryRatingPetitionText;
 use FlexibleShippingUspsVendor\WPDesk\RepositoryRating\TextPetitionDisplayer;
 use FlexibleShippingUspsVendor\WPDesk\RepositoryRating\TimeWatcher\ShippingMethodGlobalSettingsWatcher;
+use FlexibleShippingUspsVendor\WPDesk\ShowDecision\OrStrategy;
+use FlexibleShippingUspsVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodInstanceStrategy;
+use FlexibleShippingUspsVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodStrategy;
 use FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsSettingsDefinition;
 use FlexibleShippingUspsVendor\WPDesk\UspsShippingService\UspsShippingService;
 use FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\CustomFields\ApiStatus\FieldApiStatusAjax;
@@ -50,6 +54,7 @@ use FlexibleShippingUspsVendor\Psr\Log\LoggerAwareTrait;
 use FlexibleShippingUspsVendor\Psr\Log\NullLogger;
 use Octolize\Brand\UpsellingBox\SettingsSidebar;
 use WPDesk\FlexibleShippingUsps\AdvertMetabox\ProPluginMetaBox;
+use WPDesk\FlexibleShippingUsps\HookProvider\Admin\DocsChatSettingsProvider;
 
 /**
  * Main plugin class. The most important flow decisions are made here.
@@ -200,7 +205,31 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 			)
 		);
 
+		$this->initialize_docs_chat();
+
 		parent::init();
+	}
+
+	private function initialize_docs_chat(): void {
+		$show_strategy = new OrStrategy(
+			new ShippingMethodStrategy( UspsShippingService::UNIQUE_ID )
+		);
+		$show_strategy->addCondition(
+			new ShippingMethodInstanceStrategy(
+				new \WC_Shipping_Zones(),
+				UspsShippingService::UNIQUE_ID
+			)
+		);
+
+		$this->add_hookable(
+			new DocsChat(
+				'flexible-shipping-usps',
+				$this->get_plugin_url(),
+				$this->plugin_info->get_version(),
+				$show_strategy,
+				new DocsChatSettingsProvider( 'Flexible Shipping USPS' )
+			)
+		);
 	}
 
 	public function init_upgrade_onboarding() {
