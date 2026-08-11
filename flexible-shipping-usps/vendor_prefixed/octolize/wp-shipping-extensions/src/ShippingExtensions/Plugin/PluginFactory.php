@@ -14,7 +14,7 @@ class PluginFactory
     const GROUP_UPS = 'ups';
     private const SHIPPING_ANALYTICS_TIMED_UPDATE = 'shipping_analytics_pro_early_access';
     private const SHIPPING_ANALYTICS_VISIBILITY_START_DATE = '2026-05-17';
-    private const SHIPPING_ANALYTICS_VISIBILITY_END_DATE = '2026-06-17';
+    private const SHIPPING_ANALYTICS_VISIBILITY_END_DATE = '2026-09-30';
     /**
      * @return Plugin[]
      */

@@ -4,7 +4,7 @@ Contributors: octolize,grola,sebastianpisula
 Tags: usps, usps rates, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
 Tested up to: 7.0
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -40,6 +40,7 @@ This plugin works seamlessly with the current USPS API platform, ensuring uninte
 * Free shipping over the amount threshold
 * Possibility to add shipment insurance
 * Dedicated debug mode for easy troubleshooting
+* AI-powered chat assistant with optional handoff to human support
 
 = PRO Features =
 
@@ -136,6 +137,9 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.5.2 - 2026-08-05 =
+* Updated readme
 
 = 3.5.1 - 2026-07-20 =
 * Added support for WooCommerce 11.0
