@@ -109,7 +109,6 @@ class WooCommerceShippingBuilder extends \FlexibleShippingUspsVendor\WPDesk\WooC
             $reason .= __('height', 'flexible-shipping-usps') . ', ';
         }
         if (!empty($reason)) {
-            wc_clear_notices();
             $reason = trim(trim($reason), ',');
             // Translators: reasons.
             $reason = sprintf(__('Item %1$s not set!', 'flexible-shipping-usps'), $reason);

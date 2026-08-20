@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Shipping Live Rates for USPS for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.5.2\n"
+"Project-Id-Version: Shipping Live Rates for USPS for WooCommerce 3.5.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping-usps\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-05T12:28:46+00:00\n"
+"POT-Creation-Date: 2026-08-20T15:18:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-shipping-usps\n"
@@ -117,15 +117,19 @@ msgid "Settings"
 msgstr ""
 
 #: src/Plugin.php:358
-msgid "Buy PRO"
+msgid "Buy USPS Live Rates PRO"
 msgstr ""
 
 #: src/PluginLinks.php:37
+msgid "Rate USPS Live Rates"
+msgstr ""
+
+#: src/PluginLinks.php:38
 #: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:184
 msgid "Docs"
 msgstr ""
 
-#: src/PluginLinks.php:38
+#: src/PluginLinks.php:39
 #: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:181
 msgid "Support"
 msgstr ""
@@ -1708,7 +1712,7 @@ msgid "height"
 msgstr ""
 
 #. Translators: reasons.
-#: vendor_prefixed/wpdesk/wp-pro-woocommerce-shipping/src/ShippingBuilder/WooCommerceShippingBuilder.php:115
+#: vendor_prefixed/wpdesk/wp-pro-woocommerce-shipping/src/ShippingBuilder/WooCommerceShippingBuilder.php:114
 #, php-format
 msgid "Item %1$s not set!"
 msgstr ""
@@ -2175,12 +2179,12 @@ msgid "Created with %1$s by %2$s - If you like %3$s you can %4$srate us %5$s in 
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:12
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:28
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:29
 msgid "The plugin suddenly stopped working"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:14
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:38
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:39
 msgid "The plugin broke my site"
 msgstr ""
 
@@ -2189,27 +2193,27 @@ msgid "I have found a better plugin"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:16
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:53
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:54
 msgid "What's the plugin's name?"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:18
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:63
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:64
 msgid "I only needed the plugin for a short period"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:20
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:73
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:74
 msgid "I no longer need the plugin"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:22
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:83
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:84
 msgid "It's a temporary deactivation. I'm just debugging an issue."
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/DefaultReasonsFactory.php:24
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:93
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:94
 msgid "Other"
 msgstr ""
 
@@ -2222,7 +2226,7 @@ msgid "Plugin deactivation"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/views/thickbox.php:23
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:11
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:12
 #, php-format
 msgid "You are deactivating %s plugin."
 msgstr ""
@@ -2232,114 +2236,114 @@ msgid "Before you proceed, please take 30 seconds to let us know what brought yo
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/views/thickbox.php:92
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:110
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:111
 msgid "Skip &amp; Deactivate"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/views/thickbox.php:99
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/class-wpdesk-tracker.php:164
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/class-wpdesk-tracker.php:194
 msgid "Submit &amp; Deactivate"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker-deactivation/src/WPDesk/Tracker/Deactivation/views/thickbox.php:102
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:107
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:108
 msgid "Cancel"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/OptOut.php:42
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/OptOut.php:42
 #, php-format
 msgid "You successfully opted out of collecting usage data by %1$s. If you change your mind, you can always opt in later in the plugin's quick links."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/PluginActionLinks.php:70
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:41
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/PluginActionLinks.php:70
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:43
 msgid "Enable usage tracking"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/PluginActionLinks.php:75
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/PluginActionLinks.php:75
 msgid "Disable usage tracking"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:23
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:15
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:19
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:23
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:19
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:21
 #, php-format
 msgid "Hey %s,"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:26
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:18
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:26
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:22
 msgid "Please help us improve our plugins! If you opt-in, we will collect some non-sensitive data and usage information anonymously. If you skip this, that's okay! All plugins will work just fine."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:35
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:27
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:35
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:31
 msgid "Allow & Continue &rarr;"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:40
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:32
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:40
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:36
 msgid "Skip"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:47
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:39
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:47
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:43
 msgid "What permissions are being granted?"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:56
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:48
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:56
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:52
 msgid "Your Site Overview"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:59
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:51
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:59
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:55
 msgid "WP version, PHP info"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:67
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:59
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:67
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:63
 msgid "Plugin Usage"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:70
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:70
 #, php-format
 msgid "Current settings and usage information of %1$s plugins"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:78
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:70
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:78
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:74
 msgid "Your Store Overview"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:81
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:73
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:81
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:77
 msgid "Anonymized and non-sensitive store usage information"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/PSR/WPDesk/Tracker/views/tracker-connect.php:91
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:83
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:27
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/Tracker/views/tracker-connect.php:91
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:87
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:29
 msgid "Find out more &raquo;"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:62
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-connect.php:66
 msgid "Current settings and usage information of WP Desk plugins"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:19
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:20
 msgid " If you have a moment, please let us know why you are deactivating plugin (anonymous feedback):"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:48
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:49
 msgid "I found a better plugin"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:98
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-deactivate.php:99
 msgid "Kindly tell us the reason so we can improve"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:22
+#: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/views/tracker-notice.php:24
 msgid "We need your help to improve <strong>WP Desk plugins</strong>, so they are more useful for you and the rest of <strong>30,000+ users</strong>. By collecting data on how you use our plugins, you will help us a lot. We will not collect any sensitive data, so you can feel safe."
 msgstr ""
 

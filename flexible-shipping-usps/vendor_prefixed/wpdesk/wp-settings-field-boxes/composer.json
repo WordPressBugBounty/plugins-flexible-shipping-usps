@@ -6,7 +6,7 @@
         "woocommerce",
         "boxes"
     ],
-    "homepage": "https:\/\/gitlab.com\/wpdesk\/wp-settings-field-boxes",
+    "homepage": "https:\/\/gitlab.octolize.dev\/wpdesk\/predators\/library\/wp-settings-field-boxes",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -15,16 +15,32 @@
         }
     ],
     "config": {
+        "allow-plugins": {
+            "dealerdirect\/phpcodesniffer-composer-installer": false
+        },
+        "gitlab-domains": [
+            "gitlab.octolize.dev"
+        ],
+        "platform": {
+            "php": "7.4"
+        },
         "sort-packages": true
     },
+    "repositories": {
+        "wpdesk": {
+            "type": "composer",
+            "url": "https:\/\/gitlab.octolize.dev\/api\/v4\/group\/wpdesk\/-\/packages\/composer\/"
+        }
+    },
     "require": {
+        "php": ">=7.4",
         "wpdesk\/wpdesk-packer": "^2|^3"
     },
     "require-dev": {
         "10up\/wp_mock": "*",
         "mockery\/mockery": "*",
-        "phpunit\/phpunit": "<7",
-        "wp-coding-standards\/wpcs": "^0.14.1",
+        "phpunit\/phpunit": "^7||^8||^9",
+        "wp-coding-standards\/wpcs": "^3.4.1",
         "squizlabs\/php_codesniffer": "^3.0.2",
         "wimg\/php-compatibility": "^8"
     },

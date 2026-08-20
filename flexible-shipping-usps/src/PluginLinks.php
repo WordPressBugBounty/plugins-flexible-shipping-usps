@@ -34,6 +34,7 @@ class PluginLinks implements Hookable {
 			$external_attributes = ' target="_blank" ';
 
 			$plugin_links = [
+				'<a target="_blank" rel="noopener noreferrer" href="' . esc_url( 'https://octol.io/rate-usps' ) . '" aria-label="' . esc_attr__( 'Rate USPS Live Rates', 'flexible-shipping-usps' ) . '" style="color:#ffb900;font-size:20px;text-decoration:none;">★★★★★</a>',
 				'<a href="' . esc_url( $docs_link ) . '"' . $external_attributes . '>' . __( 'Docs', 'flexible-shipping-usps' ) . '</a>',
 				'<a href="' . esc_url( $support_link ) . '"' . $external_attributes . '>' . __( 'Support', 'flexible-shipping-usps' ) . '</a>',
 			];

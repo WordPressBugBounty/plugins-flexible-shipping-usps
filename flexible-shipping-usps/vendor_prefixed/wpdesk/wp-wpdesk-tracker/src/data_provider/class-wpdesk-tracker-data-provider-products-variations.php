@@ -27,10 +27,7 @@ if (!\class_exists('FlexibleShippingUspsVendor\WPDesk_Tracker_Data_Provider_Prod
          */
         public function get_data()
         {
-            $data['number_of_variations'] = 0;
-            $number_of_variations = \wp_count_posts('product_variation');
-            $data['number_of_variations'] = $number_of_variations;
-            return $data;
+            return ['number_of_variations' => \wp_count_posts('product_variation')];
         }
     }
 }

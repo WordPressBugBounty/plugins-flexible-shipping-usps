@@ -7,13 +7,19 @@
         "woocommerce",
         "shipping"
     ],
-    "homepage": "https:\/\/gitlab.com\/wpdesk\/wp-pro-woocommerce-shipping",
+    "homepage": "https:\/\/gitlab.octolize.dev\/wpdesk\/predators\/library\/wp-pro-woocommerce-shipping",
     "authors": [
         {
             "name": "grola",
             "email": "grola@wpdesk.net"
         }
     ],
+    "repositories": {
+        "wpdesk": {
+            "type": "composer",
+            "url": "https:\/\/gitlab.octolize.dev\/api\/v4\/group\/wpdesk\/-\/packages\/composer\/"
+        }
+    },
     "require": {
         "php": ">=7.4",
         "psr\/log": "^1.1",
@@ -46,6 +52,11 @@
             "pl_PL": "pl_PL.po",
             "de_DE": "de_DE.po"
         }
+    },
+    "config": {
+        "gitlab-domains": [
+            "gitlab.octolize.dev"
+        ]
     },
     "scripts": {
         "phpcs": "phpcs",

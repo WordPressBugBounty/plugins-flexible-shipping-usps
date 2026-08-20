@@ -355,7 +355,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		if ( ! defined( 'FLEXIBLE_SHIPPING_USPS_PRO_VERSION' ) ) {
 			$upgrade_link   = 'https://octol.io/usps-upgrade';
-			$plugin_links[] = '<a target="_blank" href="' . $upgrade_link . '" style="color:#d64e07;font-weight:bold;">' . __( 'Buy PRO', 'flexible-shipping-usps' ) . '</a>';
+			$plugin_links[] = '<a href="' . esc_url( $upgrade_link ) . '" target="_blank" style="color:#00e3c0;font-weight:bold;">' . __( 'Buy USPS Live Rates PRO', 'flexible-shipping-usps' ) . '</a>';
 		}
 
 		return array_merge( $plugin_links, $links );
