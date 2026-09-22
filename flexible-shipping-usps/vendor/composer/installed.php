@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'octolize-plugin/flexible-shipping-usps',
-        'pretty_version' => '3.5.4',
-        'version' => '3.5.4.0',
-        'reference' => 'e6d9cf2e9ccfbb03d61ea2eaa4165d3bc4cf0ea2',
+        'pretty_version' => '3.5.5',
+        'version' => '3.5.5.0',
+        'reference' => '67d2a28edf86c1cccb36cac33c7a73ced7433f5b',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'octolize-plugin/flexible-shipping-usps' => array(
-            'pretty_version' => '3.5.4',
-            'version' => '3.5.4.0',
-            'reference' => 'e6d9cf2e9ccfbb03d61ea2eaa4165d3bc4cf0ea2',
+            'pretty_version' => '3.5.5',
+            'version' => '3.5.5.0',
+            'reference' => '67d2a28edf86c1cccb36cac33c7a73ced7433f5b',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
