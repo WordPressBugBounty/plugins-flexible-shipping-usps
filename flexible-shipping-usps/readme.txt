@@ -4,7 +4,7 @@ Contributors: octolize,grola,sebastianpisula
 Tags: usps, usps rates, usps shipping, usps woocommerce, usps live rates
 Requires at least: 5.7
 Tested up to: 7.1
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -137,6 +137,9 @@ To determine which USPS services should be available for the customers to choose
 6. USPS Live Rates shipping methods in the cart
 
 == Changelog ==
+
+= 3.6.1 - 2026-10-13 =
+* Poprawiono kontrast linku zakupu USPS PRO na liście wtyczek
 
 = 3.6.0 - 2026-09-28 =
 * Redesigned the USPS PRO upgrade box in general settings and shipping method settings
