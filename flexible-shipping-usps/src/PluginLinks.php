@@ -44,5 +44,4 @@ class PluginLinks implements Hookable {
 
 		return $plugin_meta;
 	}
-
 }

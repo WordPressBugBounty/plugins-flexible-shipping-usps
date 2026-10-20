@@ -59,6 +59,8 @@ use WPDesk\FlexibleShippingUsps\HookProvider\Admin\DocsChatSettingsProvider;
 /**
  * Main plugin class. The most important flow decisions are made here.
  *
+ * @property WPDesk_Plugin_Info $plugin_info
+ *
  * @package WPDesk\FlexibleShippingUsps
  */
 class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCollection {
@@ -82,13 +84,18 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		if ( defined( 'FLEXIBLE_SHIPPING_USPS_VERSION' ) ) {
 			$this->scripts_version = FLEXIBLE_SHIPPING_USPS_VERSION . '.' . $this->scripts_version;
 		}
+		// @phpstan-ignore argument.type (The library PHPDoc omits the WPDesk_Plugin_Info class prefix.)
 		parent::__construct( $plugin_info );
-		$this->setLogger( $this->is_debug_mode() ? ( new SimpleLoggerFactory( 'usps' ) )->getLogger()->pushProcessor( new SensitiveDataProcessor(
-			[
-				'USERID="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::USER_ID ] . '"'    => 'USERID="***"',
-				'PASSWORD="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::PASSWORD ] . '"' => 'PASSWORD="***"',
-			]
-		) ) : new NullLogger() );
+		$this->setLogger(
+			$this->is_debug_mode() ? ( new SimpleLoggerFactory( 'usps' ) )->getLogger()->pushProcessor(
+				new SensitiveDataProcessor(
+					[
+						'USERID="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::USER_ID ] . '"'    => 'USERID="***"',
+						'PASSWORD="' . $this->get_global_usps_settings()[ UspsSettingsDefinition::PASSWORD ] . '"' => 'PASSWORD="***"',
+					]
+				)
+			) : new NullLogger()
+		);
 
 		$this->plugin_url       = $this->plugin_info->get_plugin_url();
 		$this->plugin_namespace = $this->plugin_info->get_text_domain();
@@ -112,7 +119,6 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 	 * @return string[]
 	 */
 	private function get_global_usps_settings(): array {
-		// @phpstan-ignore-next-line.
 		return get_option( 'woocommerce_' . UspsShippingService::UNIQUE_ID . '_settings', [] );
 	}
 
@@ -136,7 +142,6 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 			OauthApiCached::class
 		);
 
-		// @phpstan-ignore-next-line.
 		$usps_service = apply_filters(
 			'flexible_shipping_usps_shipping_service',
 			new UspsShippingService(
@@ -149,7 +154,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 
 		$this->add_hookable(
 			new \FlexibleShippingUspsVendor\WPDesk\WooCommerceShipping\Assets(
-				$this->get_plugin_url() . 'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets', 'usps'
+				$this->get_plugin_url() . 'vendor_prefixed/wpdesk/wp-woocommerce-shipping/assets',
+				'usps'
 			)
 		);
 		add_action( 'init', [ $this, 'init_repository_rating' ] );
@@ -181,13 +187,11 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		 *
 		 * @var FieldApiStatusAjax $api_ajax_status_handler .
 		 */
-		// @phpstan-ignore-next-line.
 		$api_ajax_status_handler = new FieldApiStatusAjax( $usps_service, $global_usps_settings, $this->logger );
 		$this->add_hookable( $api_ajax_status_handler );
 
 		$this->add_hookable( new PluginLinks( $this->plugin_info->get_plugin_file_name() ) );
 
-		// @phpstan-ignore-next-line.
 		$plugin_shipping_decisions = new PluginShippingDecisions( $usps_service, $this->logger );
 		$plugin_shipping_decisions->set_field_api_status_ajax( $api_ajax_status_handler );
 
@@ -375,10 +379,8 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 			$origin_country_code_with_state = get_option( 'woocommerce_default_country', '' );
 		}
 
-		// @phpstan-ignore-next-line.
 		[ $origin_country ] = explode( ':', $origin_country_code_with_state );
 
 		return $origin_country;
 	}
-
 }

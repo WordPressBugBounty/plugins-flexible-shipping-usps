@@ -43,6 +43,7 @@
 			"cweagans/composer-patches": true,
 			"kylekatarnls/update-helper": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true,
 			"wpdesk/wp-codeception": true,
 			"wpdesk/wp-wpdesk-composer": true
 		}
@@ -63,8 +64,10 @@
 		"octolize/wp-onboarding": "^1.6",
 		"octolize/wp-shipping-extensions": "^1.5",
 		"phpunit/phpunit": "^7||^8||^9",
+		"wpdesk/phpstan-rules": "^1.1",
 		"wpdesk/usps-shipping-service": "^1.14.5",
 		"wpdesk/wp-codeception": "^2.3.0",
+		"wpdesk/wp-code-sniffer": "^1",
 		"wpdesk/wp-logs": "^1.7.3",
 		"wpdesk/wp-plugin-flow-free": "^1.0.2",
 		"wpdesk/wp-pro-woocommerce-shipping": "^2",
@@ -97,6 +100,8 @@
 	"scripts": {
 		"test": "echo composer is alive",
 		"phpcs": "phpcs",
+		"phpcbf": "phpcbf src",
+		"phpstan": "php -d memory_limit=2G vendor/bin/phpstan",
 		"phpunit-unit": "phpunit --configuration phpunit-unit.xml --coverage-text --colors=never",
 		"phpunit-integration": "phpunit --configuration phpunit-integration.xml --coverage-text --colors=never",
 		"docs": "apigen generate"
@@ -111,5 +116,5 @@
 			"url": "https://gitlab.octolize.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
 	},
-	"version": "3.6.1"
+	"version": "3.6.2"
 }

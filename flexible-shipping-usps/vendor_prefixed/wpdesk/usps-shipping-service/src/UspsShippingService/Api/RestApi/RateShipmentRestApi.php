@@ -163,6 +163,9 @@ class RateShipmentRestApi implements LoggerAwareInterface
             $include_extra_services = $api_rates_for_package['extra_services'];
             foreach ($api_rates['rateOptions'] as $api_rate) {
                 $rate_data = $api_rate['rates'][0];
+                if (!is_numeric($rate_data['price'] ?? null) || !is_finite((float) $rate_data['price']) || (float) $rate_data['price'] <= 0.0) {
+                    continue;
+                }
                 $sku = $rate_data['SKU'];
                 $price = (float) $rate_data['price'] + $this->get_rate_fees_price($rate_data['fees'] ?? []) + $this->get_extra_services_price($api_rate['extraServices'] ?? [], $include_extra_services);
                 $description = $rate_data['description'];
